@@ -21,7 +21,7 @@ jobs:
               uses: docker/setup-buildx-action@v3
 
             - name: Login to GitHub Container Registry
-              uses: docker/login-action@v2
+              uses: docker/login-action@v3
               with:
                 registry: ghcr.io
                 username: ${{ github.actor }}
@@ -30,14 +30,14 @@ jobs:
             - name: Build Frontend
               run: |
                 docker build -t frontend:latest ./frontend
-                docker tag frontend:latest ghcr.io/IchiiDev/survivor-frontend:latest
-                docker push ghcr.io/IchiiDev/survivor-frontend:latest
+                docker tag frontend:latest ghcr.io/ichiidev/survivor-frontend:latest
+                docker push ghcr.io/ichiidev/survivor-frontend:latest
 
             - name: Build Backend
               run: |
                 docker build -t backend:latest ./backend
-                docker tag backend:latest ghcr.io/IchiiDev/survivor-backend:latest
-                docker push ghcr.io/IchiiDev/survivor-backend:latest
+                docker tag backend:latest ghcr.io/ichiidev/survivor-backend:latest
+                docker push ghcr.io/ichiidev/survivor-backend:latest
 
     mirror:
         needs: build
@@ -46,7 +46,7 @@ jobs:
             - name: Checkout repository
               uses: actions/checkout@v4
               with:
-                ref: main
+                fetch-depth: 0
 
             - name: Push to Mirror
               uses: pixta-dev/repository-mirroring-action@v1
