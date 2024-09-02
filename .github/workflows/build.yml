@@ -28,20 +28,16 @@ jobs:
                 password: ${{ secrets.FG_TOKEN }}
 
             - name: Build Frontend
-              uses: docker/build-push-action@v6
-              with:
-                tags: frontend:latest
-                context: ./frontend
-                file: ./frontend/Dockerfile
-                push: true
+              run: |
+                docker build -t frontend:latest ./frontend
+                docker tag frontend:latest ghcr.io/IchiiDev/survivor-frontend:latest
+                docker push ghcr.io/IchiiDev/survivor-frontend:latest
 
             - name: Build Backend
-              uses: docker/build-push-action@v6
-              with:
-                tags: backend:latest
-                context: ./backend
-                file: ./backend/Dockerfile
-                push: true
+              run: |
+                docker build -t backend:latest ./backend
+                docker tag backend:latest ghcr.io/IchiiDev/survivor-backend:latest
+                docker push ghcr.io/IchiiDev/survivor-backend:latest
 
     mirror:
         needs: build
