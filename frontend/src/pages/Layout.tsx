@@ -2,30 +2,37 @@ import { Outlet, Link } from "react-router-dom";
 import "./pages.scss"
 
 const Layout = () => {
+  function manageNav() {
+    const sidenav = document.getElementById("mySidenav");
+    const docnav = document.getElementById("main");
+    if (sidenav && docnav) {
+      if (sidenav.style.width === "250px") {
+        sidenav.style.width = "0px";
+        docnav.style.marginLeft = "0px";
+      } else {
+        sidenav.style.width = "250px";
+        docnav.style.marginLeft = "250px";
+      }
+    }
+  }
   return (
     <div>
-      <nav className="navbar" role="navigation" aria-label="dropdown navigation">
-        <div className="navbar-item has-dropdown is-hoverable">
-          <div className="navbar-link">
-            <img src="https://w7.pngwing.com/pngs/267/362/png-transparent-computer-icons-encapsulated-postscript-others-miscellaneous-button-icon-burger-menu.png" alt="Menu" />
-          </div>
-          <div className="navbar-dropdown">
-            <Link className="navbar-item" to="/">Home</Link>
-            <Link className="navbar-item" to="/compatibility">Compatibility</Link>
-            <Link className="navbar-item" to="/wardrobe">Wardrobe</Link>
-            <Link className="navbar-item" to="/coaches">Coaches</Link>
-            <Link className="navbar-item" to="/customers">Customers</Link>
-            <Link className="navbar-item" to="/statistics">Statistics</Link>
-            <Link className="navbar-item" to="/tips">Tips</Link>
-            <Link className="navbar-item" to="/events">Events</Link>
-            {/* <hr className="navbar-divider"/>
-            <div className="navbar-item">
-              Version 0.1.0
-            </div> */}
-          </div>
-        </div>
+      <div id="mySidenav" className="sidenav">
+        <Link onClick={manageNav} to="/">Home</Link>
+        <Link onClick={manageNav} to="/compatibility">Compatibility</Link>
+        <Link onClick={manageNav} to="/wardrobe">Wardrobe</Link>
+        <Link onClick={manageNav} to="/coaches">Coaches</Link>
+        <Link onClick={manageNav} to="/customers">Customers</Link>
+        <Link onClick={manageNav} to="/statistics">Statistics</Link>
+        <Link onClick={manageNav} to="/tips">Tips</Link>
+        <Link onClick={manageNav} to="/events">Events</Link>
+      </div>
+      <nav className="navbar" role="navigation">
+        <img className="navbar-item" onClick={manageNav} src="https://w7.pngwing.com/pngs/267/362/png-transparent-computer-icons-encapsulated-postscript-others-miscellaneous-button-icon-burger-menu.png" alt="Menu"></img>
       </nav>
-      <Outlet />
+      <div id="main">
+        <Outlet />
+      </div>
     </div>
   )
 };
