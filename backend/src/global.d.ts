@@ -7,10 +7,11 @@ declare namespace NodeJS {
     JWT_SECRET: string;
     JWT_EXPIRATION_TIME: string;
 
-    DATABASE_URL: string;
+    DATABASE_HOST: string;
+    DATABASE_PORT: number;
     DATABASE_NAME: string;
     DATABASE_USER: string;
-    DATABASE_PASSWORD: string;
+    DATABASE_PASS: string;
 
     API_KEY: string;
   }
