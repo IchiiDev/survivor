@@ -1,31 +1,34 @@
 import { Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
+import { EncountersService } from './encounters.service';
 
 @Controller('encounters')
 @ApiTags('encounters')
 export class EncountersController {
-  @Get()
-  getAllEncounters(): string {
-    return 'This action returns all encounters';
-  }
+    constructor(private readonly encountersService: EncountersService) { }
 
-  @Post()
-  createEncounter(): string {
-    return 'This action creates a new encounter';
-  }
+    @Get()
+    getAllEncounters(): string {
+        return this.encountersService.getAllEncounters();
+    }
 
-  @Get(':id')
-  getEncounter(@Param('id') id: string): string {
-    return `This action returns an encounter with id ${id}`;
-  }
+    @Post()
+    createEncounter(): string {
+        return this.encountersService.createEncounter();
+    }
 
-  @Put(':id')
-  updateEncounter(@Param('id') id: string): string {
-    return `This action updates an encounter with id ${id}`;
-  }
+    @Get(':id')
+    getEncounter(@Param('id') id: string): string {
+        return this.encountersService.getEncounter(+id);
+    }
 
-  @Delete(':id')
-  deleteEncounter(@Param('id') id: string): string {
-    return `This action deletes an encounter with id ${id}`;
-  }
+    @Put(':id')
+    updateEncounter(@Param('id') id: string): string {
+        return this.encountersService.updateEncounter(+id);
+    }
+
+    @Delete(':id')
+    deleteEncounter(@Param('id') id: string): string {
+        return this.encountersService.deleteEncounter(+id);
+    }
 }

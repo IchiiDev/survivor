@@ -1,46 +1,49 @@
 import { Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
+import { EmployeesService } from './employees.service';
 
 @Controller('employees')
 @ApiTags('employees')
 export class EmployeesController {
-  @Get()
-  getAllEmployees(): string {
-    return 'This action returns all employees';
-  }
+    constructor(private readonly employeesService: EmployeesService) { }
 
-  @Post()
-  createEmployee(): string {
-    return 'This action creates a new employee';
-  }
+    @Get()
+    getAllEmployees(): string {
+        return this.employeesService.getAllEmployees();
+    }
 
-  @Get(':id')
-  getEmployee(@Param('id') id: string): string {
-    return `This action returns an employee with id ${id}`;
-  }
+    @Post()
+    createEmployee(): string {
+        return this.employeesService.createEmployee();
+    }
 
-  @Put(':id')
-  updateEmployee(@Param('id') id: string): string {
-    return `This action updates an employee with id ${id}`;
-  }
+    @Get(':id')
+    getEmployee(@Param('id') id: string): string {
+        return this.employeesService.getEmployee(+id);
+    }
 
-  @Delete(':id')
-  deleteEmployee(@Param('id') id: string): string {
-    return `This action deletes an employee with id ${id}`;
-  }
+    @Put(':id')
+    updateEmployee(@Param('id') id: string): string {
+        return this.employeesService.updateEmployee(+id);
+    }
 
-  @Get('me')
-  getCurrentEmployee(): string {
-    return 'This action returns the current employee';
-  }
+    @Delete(':id')
+    deleteEmployee(@Param('id') id: string): string {
+        return this.employeesService.deleteEmployee(+id);
+    }
 
-  @Put('me')
-  updateCurrentEmployee(): string {
-    return 'This action updates the current employee';
-  }
+    @Get('me')
+    getCurrentEmployee(): string {
+        return this.employeesService.getCurrentEmployee();
+    }
 
-  // @Delete('me')
-  // deleteCurrentEmployee(): string {
-  //   return 'This action deletes the current employee';
-  // }
+    @Put('me')
+    updateCurrentEmployee(): string {
+        return this.employeesService.updateCurrentEmployee();
+    }
+
+    // @Delete('me')
+    // deleteCurrentEmployee(): string {
+    //   return this.employeesService.deleteCurrentEmployee();
+    // }
 }

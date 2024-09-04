@@ -1,31 +1,34 @@
 import { Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
+import { CustomersService } from './customer.service';
 
 @Controller('customers')
 @ApiTags('customers')
 export class CustomerController {
-  @Get()
-  getAllCustomers(): string {
-    return 'This action returns all customers';
-  }
+    constructor(private readonly customerService: CustomersService) { }
 
-  @Post()
-  createCustomer(): string {
-    return 'This action creates a new customer';
-  }
+    @Get()
+    getAllCustomers(): string {
+        return this.customerService.getAllCustomers();
+    }
 
-  @Get(':id')
-  getCustomer(@Param('id') id: string): string {
-    return `This action returns a customer with id ${id}`;
-  }
+    @Post()
+    createCustomer(): string {
+        return this.customerService.createCustomer();
+    }
 
-  @Put(':id')
-  updateCustomer(@Param('id') id: string): string {
-    return `This action updates a customer with id ${id}`;
-  }
+    @Get(':id')
+    getCustomer(@Param('id') id: string): string {
+        return this.customerService.getCustomer(+id);
+    }
 
-  @Delete(':id')
-  deleteCustomer(@Param('id') id: string): string {
-    return `This action deletes a customer with id ${id}`;
-  }
+    @Put(':id')
+    updateCustomer(@Param('id') id: string): string {
+        return this.customerService.updateCustomer(+id);
+    }
+
+    @Delete(':id')
+    deleteCustomer(@Param('id') id: string): string {
+        return this.customerService.deleteCustomer(+id);
+    }
 }
