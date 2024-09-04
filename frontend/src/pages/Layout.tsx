@@ -1,23 +1,33 @@
-import { Outlet, Link } from "react-router-dom";
+import { Outlet } from "react-router-dom";
+import "./pages.scss"
+import Sidenav from "../components/Sidenav"
 
 const Layout = () => {
+  function manageNav() {
+    const sidenav = document.getElementById("mySidenav");
+    const docnav = document.getElementById("main");
+    if (sidenav && docnav) {
+      if (sidenav.style.width === "250px") {
+        sidenav.style.width = "0px";
+        docnav.style.marginLeft = "0px";
+        sidenav.style.borderRight = "0px solid #9e9a9a";
+      } else {
+        sidenav.style.width = "250px";
+        docnav.style.marginLeft = "250px";
+        sidenav.style.borderRight = "2px solid #9e9a9a";
+      }
+    }
+  }
   return (
-    <>
-      <nav>
-        <ul>
-          <li> <Link to="/">Home</Link> </li>
-          <li> <Link to="/compatibility">Compatibility</Link> </li>
-          <li> <Link to="/wardrobe">Wardrobe</Link> </li>
-          <li> <Link to="/coaches">Coaches</Link> </li>
-          <li> <Link to="/customers">Customers</Link> </li>
-          <li> <Link to="/statistics">Statistics</Link> </li>
-          <li> <Link to="/tips">Tips</Link> </li>
-          <li> <Link to="/events">Events</Link> </li>
-        </ul>
+    <div>
+      <Sidenav manageNav={manageNav} />
+      <nav className="navbar" role="navigation">
+        <img onClick={manageNav} className="navbar-item" src="/assets/icon-menu.svg" alt="menu"/>
       </nav>
-      <hr />
-      <Outlet />
-    </>
+      <div id="main">
+        <Outlet />
+      </div>
+    </div>
   )
 };
 
