@@ -56,7 +56,7 @@ CREATE TABLE IF NOT EXISTS `events` (
 CREATE TABLE IF NOT EXISTS `images` (
   `uuid` varchar(100) NOT NULL,
   `scope` varchar(100) NOT NULL,
-  `content` blob NOT NULL,
+  `content` mediumblob NOT NULL,
   `format` varchar(10) NOT NULL
 );
 
