@@ -1,10 +1,12 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
-import { initDB } from './initDB';
+import { DatabaseHandler } from './initDB';
+
+export const db = new DatabaseHandler();
 
 async function bootstrap() {
-  await initDB();
+  await db.init();
 
   const app = await NestFactory.create(AppModule);
 
