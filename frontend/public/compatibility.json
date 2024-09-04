@@ -1,0 +1,746 @@
+{
+    "Aries": {
+      "Aries": [
+        {
+          "value": "50"
+        }
+      ],
+      "Taurus": [
+        {
+          "value": "38"
+        }
+      ],
+      "Gemini": [
+        {
+          "value": "83"
+        }
+      ],
+      "Cancer": [
+        {
+          "value": "42"
+        }
+      ],
+      "Leo": [
+        {
+          "value": "97"
+        }
+      ],
+      "Virgo": [
+        {
+          "value": "63"
+        }
+      ],
+      "Libra": [
+        {
+          "value": "85"
+        }
+      ],
+      "Scorpio": [
+        {
+          "value": "50"
+        }
+      ],
+      "Aquarius": [
+        {
+          "value": "78"
+        }
+      ],
+      "Sagittarius": [
+        {
+          "value": "93"
+        }
+      ],
+      "Capricorn": [
+        {
+          "value": "47"
+        }
+      ],
+      "Pisces": [
+        {
+          "value": "67"
+        }
+      ]
+    },
+    "Taurus": {
+      "Aries": [
+        {
+          "value": "50"
+        }
+      ],
+      "Taurus": [
+        {
+          "value": "65"
+        }
+      ],
+      "Gemini": [
+        {
+          "value": "33"
+        }
+      ],
+      "Cancer": [
+        {
+          "value": "97"
+        }
+      ],
+      "Leo": [
+        {
+          "value": "73"
+        }
+      ],
+      "Virgo": [
+        {
+          "value": "90"
+        }
+      ],
+      "Libra": [
+        {
+          "value": "65"
+        }
+      ],
+      "Scorpio": [
+        {
+          "value": "88"
+        }
+      ],
+      "Aquarius": [
+        {
+          "value": "58"
+        }
+      ],
+      "Sagittarius": [
+        {
+          "value": "30"
+        }
+      ],
+      "Capricorn": [
+        {
+          "value": "68"
+        }
+      ],
+      "Pisces": [
+        {
+          "value": "85"
+        }
+      ]
+    },
+    "Gemini": {
+      "Aries": [
+        {
+          "value": "83"
+        }
+      ],
+      "Taurus": [
+        {
+          "value": "33"
+        }
+      ],
+      "Gemini": [
+        {
+          "value": "60"
+        }
+      ],
+      "Cancer": [
+        {
+          "value": "65"
+        }
+      ],
+      "Leo": [
+        {
+          "value": "88"
+        }
+      ],
+      "Virgo": [
+        {
+          "value": "68"
+        }
+      ],
+      "Libra": [
+        {
+          "value": "93"
+        }
+      ],
+      "Scorpio": [
+        {
+          "value": "28"
+        }
+      ],
+      "Aquarius": [
+        {
+          "value": "85"
+        }
+      ],
+      "Sagittarius": [
+        {
+          "value": "60"
+        }
+      ],
+      "Capricorn": [
+        {
+          "value": "68"
+        }
+      ],
+      "Pisces": [
+        {
+          "value": "53"
+        }
+      ]
+    },
+    "Cancer": {
+      "Aries": [
+        {
+          "value": "42"
+        }
+      ],
+      "Taurus": [
+        {
+          "value": "97"
+        }
+      ],
+      "Gemini": [
+        {
+          "value": "65"
+        }
+      ],
+      "Cancer": [
+        {
+          "value": "75"
+        }
+      ],
+      "Leo": [
+        {
+          "value": "35"
+        }
+      ],
+      "Virgo": [
+        {
+          "value": "90"
+        }
+      ],
+      "Libra": [
+        {
+          "value": "43"
+        }
+      ],
+      "Scorpio": [
+        {
+          "value": "94"
+        }
+      ],
+      "Aquarius": [
+        {
+          "value": "27"
+        }
+      ],
+      "Sagittarius": [
+        {
+          "value": "53"
+        }
+      ],
+      "Capricorn": [
+        {
+          "value": "83"
+        }
+      ],
+      "Pisces": [
+        {
+          "value": "98"
+        }
+      ]
+    },
+    "Leo": {
+      "Aries": [
+        {
+          "value": "97"
+        }
+      ],
+      "Taurus": [
+        {
+          "value": "73"
+        }
+      ],
+      "Gemini": [
+        {
+          "value": "88"
+        }
+      ],
+      "Cancer": [
+        {
+          "value": "35"
+        }
+      ],
+      "Leo": [
+        {
+          "value": "45"
+        }
+      ],
+      "Virgo": [
+        {
+          "value": "35"
+        }
+      ],
+      "Libra": [
+        {
+          "value": "97"
+        }
+      ],
+      "Scorpio": [
+        {
+          "value": "58"
+        }
+      ],
+      "Aquarius": [
+        {
+          "value": "68"
+        }
+      ],
+      "Sagittarius": [
+        {
+          "value": "93"
+        }
+      ],
+      "Capricorn": [
+        {
+          "value": "35"
+        }
+      ],
+      "Pisces": [
+        {
+          "value": "38"
+        }
+      ]
+    },
+    "Virgo": {
+      "Aries": [
+        {
+          "value": "63"
+        }
+      ],
+      "Taurus": [
+        {
+          "value": "90"
+        }
+      ],
+      "Gemini": [
+        {
+          "value": "68"
+        }
+      ],
+      "Cancer": [
+        {
+          "value": "90"
+        }
+      ],
+      "Leo": [
+        {
+          "value": "35"
+        }
+      ],
+      "Virgo": [
+        {
+          "value": "65"
+        }
+      ],
+      "Libra": [
+        {
+          "value": "68"
+        }
+      ],
+      "Scorpio": [
+        {
+          "value": "88"
+        }
+      ],
+      "Aquarius": [
+        {
+          "value": "30"
+        }
+      ],
+      "Sagittarius": [
+        {
+          "value": "48"
+        }
+      ],
+      "Capricorn": [
+        {
+          "value": "95"
+        }
+      ],
+      "Pisces": [
+        {
+          "value": "88"
+        }
+      ]
+    },
+    "Libra": {
+      "Aries": [
+        {
+          "value": "85"
+        }
+      ],
+      "Taurus": [
+        {
+          "value": "65"
+        }
+      ],
+      "Gemini": [
+        {
+          "value": "93"
+        }
+      ],
+      "Cancer": [
+        {
+          "value": "43"
+        }
+      ],
+      "Leo": [
+        {
+          "value": "97"
+        }
+      ],
+      "Virgo": [
+        {
+          "value": "68"
+        }
+      ],
+      "Libra": [
+        {
+          "value": "75"
+        }
+      ],
+      "Scorpio": [
+        {
+          "value": "35"
+        }
+      ],
+      "Aquarius": [
+        {
+          "value": "90"
+        }
+      ],
+      "Sagittarius": [
+        {
+          "value": "73"
+        }
+      ],
+      "Capricorn": [
+        {
+          "value": "55"
+        }
+      ],
+      "Pisces": [
+        {
+          "value": "98"
+        }
+      ]
+    },
+    "Scorpio": {
+      "Aries": [
+        {
+          "value": "78"
+        }
+      ],
+      "Taurus": [
+        {
+          "value": "88"
+        }
+      ],
+      "Gemini": [
+        {
+          "value": "28"
+        }
+      ],
+      "Cancer": [
+        {
+          "value": "94"
+        }
+      ],
+      "Leo": [
+        {
+          "value": "58"
+        }
+      ],
+      "Virgo": [
+        {
+          "value": "88"
+        }
+      ],
+      "Libra": [
+        {
+          "value": "35"
+        }
+      ],
+      "Scorpio": [
+        {
+          "value": "80"
+        }
+      ],
+      "Aquarius": [
+        {
+          "value": "73"
+        }
+      ],
+      "Sagittarius": [
+        {
+          "value": "3828"
+        }
+      ],
+      "Capricorn": [
+        {
+          "value": "95"
+        }
+      ],
+      "Pisces": [
+        {
+          "value": "97"
+        }
+      ]
+    },
+    "Aquarius": {
+      "Aries": [
+        {
+          "value": "78"
+        }
+      ],
+      "Taurus": [
+        {
+          "value": "58"
+        }
+      ],
+      "Gemini": [
+        {
+          "value": "85"
+        }
+      ],
+      "Cancer": [
+        {
+          "value": "27"
+        }
+      ],
+      "Leo": [
+        {
+          "value": "68"
+        }
+      ],
+      "Virgo": [
+        {
+          "value": "30"
+        }
+      ],
+      "Libra": [
+        {
+          "value": "90"
+        }
+      ],
+      "Scorpio": [
+        {
+          "value": "73"
+        }
+      ],
+      "Aquarius": [
+        {
+          "value": "45"
+        }
+      ],
+      "Sagittarius": [
+        {
+          "value": "90"
+        }
+      ],
+      "Capricorn": [
+        {
+          "value": "68"
+        }
+      ],
+      "Pisces": [
+        {
+          "value": "45"
+        }
+      ]
+    },
+    "Sagittarius": {
+      "Aries": [
+        {
+          "value": "93"
+        }
+      ],
+      "Taurus": [
+        {
+          "value": "30"
+        }
+      ],
+      "Gemini": [
+        {
+          "value": "60"
+        }
+      ],
+      "Cancer": [
+        {
+          "value": "53"
+        }
+      ],
+      "Leo": [
+        {
+          "value": "93"
+        }
+      ],
+      "Virgo": [
+        {
+          "value": "48"
+        }
+      ],
+      "Libra": [
+        {
+          "value": "73"
+        }
+      ],
+      "Scorpio": [
+        {
+          "value": "28"
+        }
+      ],
+      "Aquarius": [
+        {
+          "value": "90"
+        }
+      ],
+      "Sagittarius": [
+        {
+          "value": "45"
+        }
+      ],
+      "Capricorn": [
+        {
+          "value": "60"
+        }
+      ],
+      "Pisces": [
+        {
+          "value": "63"
+        }
+      ]
+    },
+    "Capricorn": {
+      "Aries": [
+        {
+          "value": "47"
+        }
+      ],
+      "Taurus": [
+        {
+          "value": "68"
+        }
+      ],
+      "Gemini": [
+        {
+          "value": "68"
+        }
+      ],
+      "Cancer": [
+        {
+          "value": "83"
+        }
+      ],
+      "Leo": [
+        {
+          "value": "35"
+        }
+      ],
+      "Virgo": [
+        {
+          "value": "95"
+        }
+      ],
+      "Libra": [
+        {
+          "value": "55"
+        }
+      ],
+      "Scorpio": [
+        {
+          "value": "95"
+        }
+      ],
+      "Aquarius": [
+        {
+          "value": "68"
+        }
+      ],
+      "Sagittarius": [
+        {
+          "value": "60"
+        }
+      ],
+      "Capricorn": [
+        {
+          "value": "75"
+        }
+      ],
+      "Pisces": [
+        {
+          "value": "88"
+        }
+      ]
+    },
+    "Pesces": {
+      "Aries": [
+        {
+          "value": "65"
+        }
+      ],
+      "Taurus": [
+        {
+          "value": "85"
+        }
+      ],
+      "Gemini": [
+        {
+          "value": "53"
+        }
+      ],
+      "Cancer": [
+        {
+          "value": "98"
+        }
+      ],
+      "Leo": [
+        {
+          "value": "38"
+        }
+      ],
+      "Virgo": [
+        {
+          "value": "88"
+        }
+      ],
+      "Libra": [
+        {
+          "value": "88"
+        }
+      ],
+      "Scorpio": [
+        {
+          "value": "97"
+        }
+      ],
+      "Aquarius": [
+        {
+          "value": "45"
+        }
+      ],
+      "Sagittarius": [
+        {
+          "value": "63"
+        }
+      ],
+      "Capricorn": [
+        {
+          "value": "88"
+        }
+      ],
+      "Pisces": [
+        {
+          "value": "60"
+        }
+      ]
+    }
+  }
