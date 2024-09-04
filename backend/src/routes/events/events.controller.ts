@@ -1,26 +1,29 @@
 import { Controller, Get, Param, Post, Put } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
+import { EventsService } from './events.service';
 
 @Controller('events')
 @ApiTags('events')
 export class EventsController {
-  @Get()
-  getAllEvents(): string {
-    return 'This action returns all events';
-  }
+    constructor(private readonly eventsService: EventsService) { }
 
-  @Post()
-  createEvent(): string {
-    return 'This action creates a new event';
-  }
+    @Get()
+    getAllEvents(): string {
+        return this.eventsService.getAllEvents();
+    }
 
-  @Get(':id')
-  getEvent(@Param('id') id: string): string {
-    return `This action returns an event with id ${id}`;
-  }
+    @Post()
+    createEvent(): string {
+        return this.eventsService.createEvent();
+    }
 
-  @Put(':id')
-  updateEvent(@Param('id') id: string): string {
-    return `This action updates an event with id ${id}`;
-  }
+    @Get(':id')
+    getEvent(@Param('id') id: string): string {
+        return this.eventsService.getEvent(+id);
+    }
+
+    @Put(':id')
+    updateEvent(@Param('id') id: string): string {
+        return this.eventsService.updateEvent(+id);
+    }
 }
