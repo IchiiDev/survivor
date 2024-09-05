@@ -9,7 +9,7 @@ export class CustomerController {
 
     @Get()
     async getAllCustomers(): Promise<{
-        id: number,
+        id: string,
         email: string,
         name: string,
         surname: string,

@@ -4,7 +4,7 @@ import { db } from '../../main';
 @Injectable()
 export class CustomersService {
     async getAllCustomers(): Promise<{
-        id: number,
+        id: string,
         email: string,
         name: string,
         surname: string,
