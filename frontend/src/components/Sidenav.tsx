@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import "../pages/pages.scss"
 import "./components.scss"
 
 const Sidenav = ({ manageNav }: { manageNav: () => void }) => {
