@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { db } from 'src/main';
 import * as bcrypt from 'bcryptjs';
 import * as jwt from 'jsonwebtoken';
+import { ResultSetHeader } from 'mysql2';
 
 @Injectable()
 export class LoginService {
@@ -14,8 +15,11 @@ export class LoginService {
   }
 
   checkPassword(password: string): boolean {
-    // TODO: Update this to check for a valid password
-    return password.length >= 0 ? true : false;
+    return password.match(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[\d])(?=.*[@$!%*#?&_^*-])[a-zA-Z0-9@$!%#?&_^*-]{8,}$/,
+    )
+      ? true
+      : false;
   }
 
   compareHash(hash: string, password: string): boolean {
@@ -34,6 +38,27 @@ export class LoginService {
       [email],
     );
 
-    return user[0][0].id ? user[0][0] : null;
+    return user[0][0] ? user[0][0] : null;
+  }
+
+  genHash(password: string): string {
+    return bcrypt.hashSync(password, 10);
+  }
+
+  async createUser(user: {
+    email: string;
+    password: string;
+    surname: string;
+    name: string;
+  }): Promise<void> {
+    const result = await db.query(
+      'INSERT INTO employees (email, password, name, surname) VALUES (?, ?, ?, ?)',
+      [user.email, user.password, user.name, user.surname],
+    );
+
+    if ((<ResultSetHeader>result[0]).affectedRows !== 1)
+      throw new Error('User not created');
+
+    return;
   }
 }
