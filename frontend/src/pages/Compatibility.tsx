@@ -48,44 +48,37 @@ const Compatibility: React.FC = () => {
   	return (
     	<>
       	<form onSubmit={handleSubmit} className="compatibility-form">
-      	  <div className="compatibility-container">
-      	    <div className="select-container">
-      	      <div className="select is-responsive">
-      	        <select onChange={handleFirstSelectChange} value={firstSelectedClient || ""}>
-      	          <option value="" disabled>Select first client</option>
-      	          {clients.map((client, index) => (
-      	            <option key={index} value={client}>
-      	              {client}
-      	            </option>
-      	          ))}
-      	        </select>
-      	      </div>
-      	    </div>
+      	  	<div className="compatibility-container">
+      	    	<div className="select-container">
+      	      		<div className="select is-responsive">
+      	        		<select onChange={handleFirstSelectChange} value={firstSelectedClient || ""}>
+      	          			<option value="" disabled>Select first client</option>
+      	          			{clients.map((client, index) => (
+      	            			<option key={index} value={client}> {client} </option>
+      	          			))}
+      	        		</select>
+      	      		</div>
+      	    	</div>
 
-      	    <div className="heart-container">
-      	      <img className="heart-image" src="assets/compatibility-heart.png" alt="Heart" />
-      	      <h1 className="compatibility-percentage">{compatibilityValue}%</h1>
-      	    </div>
+      	    	<div className="heart-container">
+      	      		<img className="heart-image" src="assets/compatibility-heart.png" alt="Heart" />
+					<h1 className="compatibility-percentage"> {compatibilityValue ? `${compatibilityValue}%` : null} </h1>
+      	    	</div>
 
-      	    <div className="select-container">
-      	      <div className="select is-responsive">
-      	        <select onChange={handleSecondSelectChange} value={secondSelectedClient || ""}>
-      	          <option value="" disabled>Select second client</option>
-      	          {clients.map((client, index) => (
-      	            <option key={index} value={client}>
-      	              {client}
-      	            </option>
-      	          ))}
-      	        </select>
-      	      </div>
-      	    </div>
-      	  </div>
-
-      	  <div className="submit-container">
-      	    <button className="button is-danger submit-button" type="submit">
-      	      Submit
-      	    </button>
-      	  </div>
+      	    	<div className="select-container">
+      	      		<div className="select is-responsive">
+      	        		<select onChange={handleSecondSelectChange} value={secondSelectedClient || ""}>
+      	          			<option value="" disabled>Select second client</option>
+      	          				{clients.map((client, index) => (
+      	            				<option key={index} value={client}> {client} </option>
+      	          				))}
+      	        		</select>
+      	      		</div>
+      	    	</div>
+			</div>
+      	  		<div className="submit-container">
+      	    		<button className="button is-danger submit-button" type="submit"> Submit </button>
+      	  		</div>
       	</form>
     	</>
   	);
