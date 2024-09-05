@@ -1,0 +1,22 @@
+.client-img {
+    width: 100px;
+    height: 100px;
+}
+
+.info-client {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.info-tab {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.fixed-hr {
+    position: relative;
+    width: 100%;
+    margin-top: 20px;
+}

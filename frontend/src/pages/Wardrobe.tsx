@@ -23,8 +23,9 @@ const Wardrobe = () => {
         });
     };
 	const handleClientChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-		  setSelectedClient(event.target.value);
-		  setClientImg("/assets/icon-customer-service.svg"); // selectedClient.img
+		const client = event.target.value;
+		setSelectedClient(client);
+		setClientImg("/assets/icon-customer-service.svg"); // selectedClient.img
 	};
     return (
     	<div>
@@ -33,7 +34,7 @@ const Wardrobe = () => {
 				<div className="select-client-container">
       	      		<div className="select is-responsive">
       	        		<select onChange={handleClientChange} value={selectedClient || ""}>
-      	        			<option value="" disabled>Select first client</option>
+      	        			<option value="" disabled>Select client</option>
       	        			{clients.map((client, index) => (
 								  <option key={index} value={client}>
       	        	  				{client}
