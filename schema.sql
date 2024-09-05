@@ -112,6 +112,9 @@ ALTER TABLE `events`
 ALTER TABLE `payments`
   MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
+ALTER TABLE `tips`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+
 ALTER TABLE `encounters`
   ADD CONSTRAINT `encounters_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`);
 
