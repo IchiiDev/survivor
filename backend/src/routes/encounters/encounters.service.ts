@@ -1,24 +1,84 @@
 import { Injectable } from "@nestjs/common";
+import { db } from "../../main";
 
 @Injectable()
 export class EncountersService {
-    getAllEncounters(): string {
-        return 'This service returns all encounters';
+    async getAllEncounters(): Promise<{
+        id: string,
+        customer_id: string,
+        date: string,
+        rating: string,
+        comment: string,
+        source: string
+    }[] | null> {
+        const result = await db.query('SELECT * FROM encounters');
+
+        if (Array.isArray(result[0])) {
+            return result[0].map((row: any) => ({
+                id: row.id,
+                customer_id: row.customer_id,
+                date: row.date,
+                rating: row.rating,
+                comment: row.comment,
+                source: row.source
+            }));
+        }
+        return null;
     }
 
-    createEncounter(): string {
-        return 'This service creates a new encounter';
+    async createEncounter(
+        customer_id: string,
+        date: string,
+        rating: string,
+        comment: string,
+        source: string
+    ): Promise<string> {
+        await db.query(
+            'INSERT INTO encounters (customer_id, date, rating, comment, source) VALUES (?, ?, ?, ?, ?)',
+            [customer_id, date, rating, comment, source],
+        );
+        return 'New encounters created';
     }
 
-    getEncounter(id: number): string {
-        return `This service returns an encounter with id ${id}`;
+    async getEncounter(id: string): Promise<{
+        customer_id: string,
+        date: string,
+        rating: string,
+        comment: string,
+        source: string
+    }> {
+        const result = await db.query('SELECT * FROM encounters WHERE id=?', id);
+        return result[0][0];
     }
 
-    updateEncounter(id: number): string {
-        return `This service updates an encounter with id ${id}`;
+    async updateEncounter(
+        id: string,
+        customer_id: string,
+        date: string,
+        rating: string,
+        comment: string,
+        source: string
+    ): Promise<{
+        id: string,
+        customer_id: string,
+        date: string,
+        rating: string,
+        comment: string,
+        source: string
+    }> {
+        await db.query(
+            'UPDATE encounters SET customer_id=?, date=?, rating=?, comment=?, source=? WHERE id=?',
+            [customer_id, date, rating, comment, source, id],
+        );
+        const result = await db.query(
+            'SELECT * FROM encounters WHERE id=?',
+            id
+        );
+        return result[0][0];
     }
 
-    deleteEncounter(id: number): string {
-        return `This action deletes an encounter with id ${id}`;
+    async deleteEncounter(id: string): Promise<string> {
+        await db.query('DELETE FROM encounters WHERE id=?', id);
+        return `Encounter with id ${id} successfully deleted`;
     }
 }
