@@ -89,12 +89,46 @@ export class EmployeesService {
         return `Employee with id ${id} successfully deleted`;
     }
 
-    getCurrentEmployee(): string {
-        return 'This service returns the current employee';
+    async getCurrentEmployee(id: string): Promise<{
+        id: string,
+        email: string,
+        name: string,
+        surname: string,
+        birthdate?: string,
+        gender?: string,
+        work?: string
+    }> {
+        const result = await db.query('SELECT * FROM employees WHERE id=?', id);
+
+        return result[0][0];
     }
 
-    updateCurrentEmployee(): string {
-        return 'This service updates the current employee';
+    async updateCurrentEmployee(
+        id: string,
+        email: string,
+        name: string,
+        surname: string,
+        birthdate?: string,
+        gender?: string,
+        work?: string
+    ): Promise<{
+        id: string,
+        email: string,
+        name: string,
+        surname: string,
+        birthdate?: string,
+        gender?: string,
+        work?: string
+    } | null> {
+        await db.query(
+            'UPDATE employees SET email=?, name=?, surname=?, birthdate=?, gender=?, work=? WHERE id=?',
+            [email, name, surname, birthdate, gender, work, id],
+        );
+        const result = await db.query(
+            'SELECT * FROM employees WHERE id=?',
+            id
+        );
+        return result[0][0];
     }
 
     // deleteCurrentEmployee(): string {

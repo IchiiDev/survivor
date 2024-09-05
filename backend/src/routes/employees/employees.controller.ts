@@ -1,6 +1,7 @@
-import { Body, Controller, Delete, Get, HttpException, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpException, Param, Post, Put, Request as Req } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { EmployeesService } from './employees.service';
+import { Request } from 'express';
 
 @Controller('employees')
 @ApiTags('employees')
@@ -102,13 +103,50 @@ export class EmployeesController {
     }
 
     @Get('me')
-    getCurrentEmployee(): string {
-        return this.employeesService.getCurrentEmployee();
+    async getCurrentEmployee(@Req() req: Request): Promise<{
+        id: string,
+        email: string,
+        name: string,
+        surname: string,
+        birthdate?: string,
+        gender?: string,
+        work?: string
+    }> {
+        const result = this.employeesService.getCurrentEmployee(String(req.user.id));
+
+        if (!result) {
+            throw new HttpException("Current employee not found", 404);
+        }
+        return result;
     }
 
     @Put('me')
-    updateCurrentEmployee(): string {
-        return this.employeesService.updateCurrentEmployee();
+    async updateCurrentEmployee(
+        @Req() req: Request,
+        @Body() data: {
+            email: string,
+            name: string,
+            surname: string,
+            birthdate?: string,
+            gender?: string,
+            work?: string
+        }
+    ): Promise<{
+        id: string,
+        email: string,
+        name: string,
+        surname: string,
+        birthdate?: string,
+        gender?: string,
+        work?: string
+    }> {
+        const { email, name, surname, birthdate, gender, work } = data;
+        const result = this.employeesService.updateCurrentEmployee(String(req.user.id), email, name, surname, birthdate, gender, work);
+
+        if (!result) {
+            throw new HttpException("Current employee not found", 404);
+        }
+        return result;
     }
 
     // @Delete('me')
