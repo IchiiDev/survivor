@@ -5,15 +5,17 @@ html {
     color: black;
 }
 
-.navbar {
-  background-color: white;
-  color: #333030;
-  overflow: hidden;
+.menu-button {
+  position: fixed;
+  top: 10px;
+  left: 10px;
   z-index: 1;
-  height: 50px;
-  border-bottom: 2px solid #9e9a9a;
+  width: 250px;
+  margin-right: 250px;
+  width: 50px;
+  height: auto;
+  cursor: pointer;
 }
-
 .sidenav {
   height: calc(100% - 50px);
   width: 0;
@@ -25,7 +27,16 @@ html {
   overflow-x: hidden;
   padding-top: 10px;
   transition: 0.5s;
-  border-top: 2px solid #9e9a9a;
+}
+
+.sidenav::before {
+  content: '';
+  position: absolute;
+  top: 0px;
+  bottom: 175px;
+  right: 0;
+  width: 2px;
+  background-color: #9e9a9a;
 }
 
 .sidenav a {

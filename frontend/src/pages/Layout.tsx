@@ -15,9 +15,10 @@ const Layout = () => {
 	}, []);
 
 	const handleLogout = () => {
-		localStorage.setItem('isAuthenticated', 'false');
-		navigate('/login');
+		localStorage.setItem("isAuthenticated", "false");
+		navigate("/login");
   	};
+
 
 	if (loading) {
 			return <button className="button is-info is-fullwidth is-loading loading-screen">Loading</button>;
@@ -33,11 +34,9 @@ const Layout = () => {
 			if (sidenav.style.width === "250px") {
     	    	sidenav.style.width = "0px";
     	    	docnav.style.marginLeft = "0px";
-    	    	sidenav.style.borderRight = "0px solid #9e9a9a";
     	  	} else {
     	    	sidenav.style.width = "250px";
     	    	docnav.style.marginLeft = "250px";
-    	    	sidenav.style.borderRight = "2px solid #9e9a9a";
     	  	}
     	}
 	}
@@ -45,10 +44,10 @@ const Layout = () => {
   	return (
     	<div>
       		<Sidenav manageNav={manageNav} />
-      		<nav className="navbar" role="navigation">
-        		<img onClick={manageNav} className="navbar-item" src="/assets/icon-menu.svg" alt="menu"/>
+			<div>
+				<img onClick={manageNav} className="navbar-item menu-button" src="/assets/icon-menu.svg" alt="menu"/>
 				<button onClick={handleLogout} className="button is-danger logout" > Logout </button>
-      		</nav>
+			</div>
       		<div id="main">
         		<Outlet />
       		</div>

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import './Compatibility.css';
+import Titlebox from "../components/Titlebox"
+import './Compatibility.scss';
 
 const Compatibility: React.FC = () => {
 	const clients = ["Aries","Taurus","Gemini","Cancer","Leo","Virgo","Libra","Scorpio","Sagittarius","Capricorn","Aquarius","Pisces"];
@@ -47,6 +48,7 @@ const Compatibility: React.FC = () => {
 
   	return (
     	<>
+		<Titlebox title="Compatibility"></Titlebox>
       	<form onSubmit={handleSubmit} className="compatibility-form">
       	  	<div className="compatibility-container">
       	    	<div className="select-container">
