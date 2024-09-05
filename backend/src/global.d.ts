@@ -16,3 +16,8 @@ declare namespace NodeJS {
     API_KEY: string;
   }
 }
+declare namespace Express {
+  interface Request {
+    user: { id: number };
+  }
+}
