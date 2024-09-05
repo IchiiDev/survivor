@@ -41,6 +41,17 @@ html {
   color: #888686;
 }
 
+.logout {
+  position: absolute;
+  top: 10%;
+  left: 90%;
+}
+
+.loading-screen {
+  background-color: white;
+  border-color: white;
+}
+
 #main {
   transition: margin-left .5s;
   padding: 20px;
