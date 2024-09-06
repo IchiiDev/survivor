@@ -1,33 +1,38 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import "./Compatibility.css";
 
 const Compatibility: React.FC = () => {
-	const clients = ["Aries","Taurus","Gemini","Cancer","Leo","Virgo","Libra","Scorpio","Sagittarius","Capricorn","Aquarius","Pisces"];
+	const [clients, setClients] = useState<string[]>([]);
 	const [firstSelectedClient, setFirstSelectedClient] = useState<string | null>(null);
 	const [secondSelectedClient, setSecondSelectedClient] = useState<string | null>(null);
 	const [compatibilityValue, setCompatibilityValue] = useState<string | null>(null);
-	const [data, setData] = useState<any>(null);
+	const [data, setData] = useState<string | null>(null);
+	const apiUrlLogin = "http://localhost:3001/customers";
+	const token = localStorage.getItem("token")
 
-	useEffect(() => {
-		const apiUrlCust = "https://soul-connection.fr/api/customers";
+	const fetchCustomers = async () => {
+		try {
+		  	const response = await fetch(apiUrlLogin, {
+				method: "GET",
+				headers: {
+				  "Content-Type": "application/json",
+				  "Authorization": `Bearer ${token}`
+				},
+			});
 
-		const fetchData = async () => {
-			try {
-				const response = await axios.get(apiUrlCust, {
-					headers: {
-						"Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJqZWFubmUubWFydGluQHNvdWwtY29ubmVjdGlvbi5mciIsIm5hbWUiOiJKZWFubmUiLCJzdXJuYW1lIjoiTWFydGluIiwiZXhwIjoxNzI3MjUzMDI3fQ.Ijr5HQJ6iJEUI6YOolOrl22kFoJtxauIVHDnLGcgywc",
-					},
-				});
-				setData(response.data);
-				console.log("Données récupérées :", response.data);
-			} catch (error) {
-				console.error("Erreur lors de l'appel API", error);
-			}
-		};
-
-		fetchData();
-	}, []);
+		  	if (!response.ok) {
+				throw new Error(`Erreur HTTP: ${response.status}`);
+		  	}
+			const customersResponse = await response.json();
+			const updatedClients = customersResponse.map((customer: { name: string; surname: string }) =>
+				`${customer.name} ${customer.surname}`
+			);
+			setClients(updatedClients);
+		} catch (error) {
+		  console.error("Erreur lors de l'appel API", error);
+		}
+	};
+	fetchCustomers()
 
 	const handleFirstSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
 		setFirstSelectedClient(event.target.value);
@@ -44,11 +49,6 @@ const Compatibility: React.FC = () => {
     		console.log("First selected client:", firstSelectedClient);
     	  	console.log("Second selected client:", secondSelectedClient);
 			console.log("Combined Zodiac Signs:", addedZodiacSign);
-			if (data && data[1]) {
-				console.log("Donnée avec ID [1] :", data[1]);
-			} else {
-				console.log("Donnée avec ID [1] non trouvée.");
-			}
 			fetch("compatibility.json")
     			.then(response => response.json())
     			.then(data => {

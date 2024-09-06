@@ -12,7 +12,6 @@ export class LoginController {
   async loginRoute(
     @Body() body: { email: string; password: string },
   ): Promise<any> {
-    console.log(body);
     if (body.email === '' || !this.loginService.checkEmail(body.email))
       throw new HttpException('Invalid email', 400);
 
