@@ -67,6 +67,8 @@ services:
       ADMIN_PASS: ${ADMIN_PASS}
       API_URL: ${API_URL}
       NODE_ENV: ${NODE_ENV}
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_EXPIRATION_TIME: ${JWT_EXPIRATION_TIME}
 
     depends_on:
       - db
