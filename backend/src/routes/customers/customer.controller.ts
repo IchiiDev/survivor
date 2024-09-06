@@ -17,6 +17,8 @@ export class CustomerController {
         gender?: string,
         description?: string,
         astrological_sign?: string,
+        phone_number?: string,
+        address?: string
     }[]> {
         const result = await this.customerService.getAllCustomers();
 
@@ -35,8 +37,21 @@ export class CustomerController {
         gender?: string,
         description?: string,
         astrological_sign?: string,
+        phone_number?: string,
+        address?: string
     }): Promise<string> {
-        const { email, name, surname, birthdate, gender, description, astrological_sign } = data;
+        const {
+            email,
+            name,
+            surname,
+            birthdate,
+            gender,
+            description,
+            astrological_sign,
+            phone_number,
+            address
+        } = data;
+
         return this.customerService.createCustomer(
             email,
             name,
@@ -45,6 +60,8 @@ export class CustomerController {
             gender,
             description,
             astrological_sign,
+            phone_number,
+            address
         );
     }
 
@@ -58,6 +75,8 @@ export class CustomerController {
         gender?: string,
         description?: string,
         astrological_sign?: string
+        phone_number?: string,
+        address?: string
     }> {
         const result = this.customerService.getCustomer(id);
 
@@ -78,7 +97,9 @@ export class CustomerController {
             birthdate?: string,
             gender?: string,
             description?: string,
-            astrological_sign?: string
+            astrological_sign?: string,
+            phone_number?: string,
+            address?: string
         }
     ): Promise<{
         id: string,
@@ -89,9 +110,33 @@ export class CustomerController {
         gender?: string,
         description?: string,
         astrological_sign?: string
+        phone_number?: string,
+        address?: string
     }> {
-        const { email, name, surname, birthdate, gender, description, astrological_sign } = data;
-        const result = this.customerService.updateCustomer(id, email, name, surname, birthdate, gender, description, astrological_sign);
+        const {
+            email,
+            name,
+            surname,
+            birthdate,
+            gender,
+            description,
+            astrological_sign,
+            phone_number,
+            address
+        } = data;
+
+        const result = this.customerService.updateCustomer(
+            id,
+            email,
+            name,
+            surname,
+            birthdate,
+            gender,
+            description,
+            astrological_sign,
+            phone_number,
+            address
+        );
 
 
         if (!result) {

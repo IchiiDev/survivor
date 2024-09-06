@@ -19,7 +19,9 @@ CREATE TABLE IF NOT EXISTS `customers` (
   `birthdate` varchar(100) DEFAULT NULL,
   `gender` varchar(100) DEFAULT NULL,
   `description` varchar(100) DEFAULT NULL,
-  `astrological_sign` varchar(100) DEFAULT NULL
+  `astrological_sign` varchar(100) DEFAULT NULL,
+  `phone_number` varchar(100) DEFAULT NULL,
+  `address` varchar(100) DEFAULT NULL
 );
 
 CREATE TABLE IF NOT EXISTS `employees` (
@@ -46,6 +48,7 @@ CREATE TABLE IF NOT EXISTS `events` (
   `id` int NOT NULL,
   `name` varchar(100) NOT NULL,
   `date` date NOT NULL,
+  `duration` int NOT NULL,
   `max_participants` int NOT NULL,
   `location` varchar(100) NOT NULL,
   `type` varchar(100) NOT NULL,

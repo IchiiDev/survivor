@@ -12,6 +12,8 @@ export class CustomersService {
         gender?: string,
         description?: string,
         astrological_sign?: string,
+        phone_number?: string,
+        address?: string
     }[]
         | null> {
         const result = await db.query('SELECT * FROM customers');
@@ -26,6 +28,8 @@ export class CustomersService {
                 gender: row.gender,
                 description: row.description,
                 astrological_sign: row.astrological_sign,
+                phone_number: row.phone_number,
+                address: row.address
             }));
         }
         return null;
@@ -39,10 +43,12 @@ export class CustomersService {
         gender?: string,
         description?: string,
         astrological_sign?: string,
+        phone_number?: string,
+        address?: string
     ): Promise<string> {
         await db.query(
-            'INSERT INTO customers ( email, name, surname, birthdate, gender, description, astrological_sign ) VALUES (?, ?, ?, ?, ?, ?, ?)',
-            [email, name, surname, birthdate, gender, description, astrological_sign],
+            'INSERT INTO customers ( email, name, surname, birthdate, gender, description, astrological_sign, phone_number, address ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
+            [email, name, surname, birthdate, gender, description, astrological_sign, phone_number, address],
         );
         return 'New customer created';
     }
@@ -55,7 +61,9 @@ export class CustomersService {
         birthdate?: string,
         gender?: string,
         description?: string,
-        astrological_sign?: string
+        astrological_sign?: string,
+        phone_number?: string,
+        address?: string
     }> {
         const result = await db.query('SELECT * FROM customers WHERE id=?', id);
 
@@ -70,7 +78,9 @@ export class CustomersService {
         birthdate?: string,
         gender?: string,
         description?: string,
-        astrological_sign?: string
+        astrological_sign?: string,
+        phone_number?: string,
+        address?: string
     ): Promise<{
         id: string,
         email: string,
@@ -80,10 +90,12 @@ export class CustomersService {
         gender?: string,
         description?: string,
         astrological_sign?: string
+        phone_number?: string,
+        address?: string
     } | null> {
         await db.query(
-            'UPDATE customers SET email=?, name=?, surname=?, birthdate=?, gender=?, description=?, astrological_sign=? WHERE id=?',
-            [email, name, surname, birthdate, gender, description, astrological_sign, id]
+            'UPDATE customers SET email=?, name=?, surname=?, birthdate=?, gender=?, description=?, astrological_sign=?, phone_number=?, address=? WHERE id=?',
+            [email, name, surname, birthdate, gender, description, astrological_sign, phone_number, address, id]
         );
         const result = await db.query(
             'SELECT * FROM customers WHERE id=?',
