@@ -14,6 +14,8 @@ declare namespace NodeJS {
     DATABASE_PASS: string;
 
     API_KEY: string;
+    ADMIN_USER: string;
+    ADMIN_PASS: string;
   }
 }
 
