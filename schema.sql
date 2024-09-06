@@ -8,7 +8,8 @@ USE `survivor`;
 
 CREATE TABLE IF NOT EXISTS `clothes` (
   `id` int NOT NULL,
-  `type` varchar(100) NOT NULL
+  `type` varchar(100) NOT NULL,
+  `image` varchar(100) DEFAULT NULL
 );
 
 CREATE TABLE IF NOT EXISTS `customers` (
@@ -19,7 +20,10 @@ CREATE TABLE IF NOT EXISTS `customers` (
   `birthdate` varchar(100) DEFAULT NULL,
   `gender` varchar(100) DEFAULT NULL,
   `description` varchar(100) DEFAULT NULL,
-  `astrological_sign` varchar(100) DEFAULT NULL
+  `astrological_sign` varchar(100) DEFAULT NULL,
+  `image` varchar(100) DEFAULT NULL,
+  `phone` varchar(100) DEFAULT NULL,
+  `address` varchar(100) DEFAULT NULL
 );
 
 CREATE TABLE IF NOT EXISTS `employees` (
@@ -30,7 +34,8 @@ CREATE TABLE IF NOT EXISTS `employees` (
   `birth_date` date DEFAULT NULL,
   `gender` varchar(100) DEFAULT NULL,
   `work` varchar(100) DEFAULT NULL,
-  `password` varchar(100) NOT NULL
+  `password` varchar(100) NOT NULL,
+  `image` varchar(100) DEFAULT NULL
 );
 
 CREATE TABLE IF NOT EXISTS `encounters` (
@@ -46,6 +51,7 @@ CREATE TABLE IF NOT EXISTS `events` (
   `id` int NOT NULL,
   `name` varchar(100) NOT NULL,
   `date` date NOT NULL,
+  `duration` int NOT NULL,
   `max_participants` int NOT NULL,
   `location` varchar(100) NOT NULL,
   `type` varchar(100) NOT NULL,
@@ -100,6 +106,9 @@ ALTER TABLE `payments`
 ALTER TABLE `tips`
   ADD PRIMARY KEY (`id`);
 
+ALTER TABLE `customers`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+
 ALTER TABLE `employees`
   MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
@@ -110,6 +119,12 @@ ALTER TABLE `events`
   MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 ALTER TABLE `payments`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `tips`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `clothes`
   MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 ALTER TABLE `encounters`

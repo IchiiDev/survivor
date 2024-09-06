@@ -10,22 +10,22 @@ import { AuthGuard } from './auth.guard';
 import { JwtService } from '@nestjs/jwt';
 
 @Module({
-  imports: [
-    CustomersModule,
-    EmployeesModule,
-    EncountersModule,
-    EventsModule,
-    ImagesModule,
-    LoginModule,
-    TipsModule,
-  ],
-  controllers: [],
-  providers: [
-    JwtService,
-    {
-      provide: 'APP_GUARD',
-      useClass: AuthGuard,
-    },
-  ],
+    imports: [
+        CustomersModule,
+        EmployeesModule,
+        EncountersModule,
+        EventsModule,
+        ImagesModule,
+        LoginModule,
+        TipsModule,
+    ],
+    controllers: [],
+    providers: [
+        JwtService,
+        {
+            provide: 'APP_GUARD',
+            useClass: AuthGuard,
+        },
+    ],
 })
-export class AppModule {}
+export class AppModule { }
