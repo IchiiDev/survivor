@@ -8,7 +8,8 @@ USE `survivor`;
 
 CREATE TABLE IF NOT EXISTS `clothes` (
   `id` int NOT NULL,
-  `type` varchar(100) NOT NULL
+  `type` varchar(100) NOT NULL,
+  `image` varchar(100) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS `customers` (
@@ -102,6 +103,9 @@ ALTER TABLE `payments`
 
 ALTER TABLE `tips`
   ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `clothes`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 ALTER TABLE `employees`
   MODIFY `id` int NOT NULL AUTO_INCREMENT;

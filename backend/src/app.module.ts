@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { ClothesModule } from './routes/clothes/clothes.module';
 import { CustomersModule } from './routes/customers/customers.module';
 import { EmployeesModule } from './routes/employees/employees.module';
 import { EncountersModule } from './routes/encounters/encounters.module';
@@ -11,6 +12,7 @@ import { JwtService } from '@nestjs/jwt';
 
 @Module({
     imports: [
+        ClothesModule,
         CustomersModule,
         EmployeesModule,
         EncountersModule,
