@@ -12,8 +12,8 @@ const Customers = () => {
 	}
     return (
     	<div>
-        	<h1 className="basic-text-color">Customers</h1>
 			<div className='info-client'>
+        		<h1 className="basic-text-color">Customers</h1>
 				<div className="select is-responsive">
       	    		<select onChange={handleClientChange} value={selectedClient || ""}>
       	    			<option value="" disabled>Select client</option>
@@ -30,8 +30,8 @@ const Customers = () => {
 					)}
 				</div>
 			</div>
-			<hr className='fixed-hr'/>
 			<div className='info-tab'>
+				<hr className='fixed-hr'/>
 				{selectedClient && (
 					<p>Tabs info</p>
 				)}
