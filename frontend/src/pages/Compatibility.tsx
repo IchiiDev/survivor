@@ -1,19 +1,41 @@
-import React, { useState } from 'react';
-import './Compatibility.css';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import "./Compatibility.css";
 
 const Compatibility: React.FC = () => {
 	const clients = ["Aries","Taurus","Gemini","Cancer","Leo","Virgo","Libra","Scorpio","Sagittarius","Capricorn","Aquarius","Pisces"];
-  	const [firstSelectedClient, setFirstSelectedClient] = useState<string | null>(null);
-  	const [secondSelectedClient, setSecondSelectedClient] = useState<string | null>(null);
+	const [firstSelectedClient, setFirstSelectedClient] = useState<string | null>(null);
+	const [secondSelectedClient, setSecondSelectedClient] = useState<string | null>(null);
 	const [compatibilityValue, setCompatibilityValue] = useState<string | null>(null);
+	const [data, setData] = useState<any>(null);
 
-  	const handleFirstSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-  	  	setFirstSelectedClient(event.target.value);
-  	};
+	useEffect(() => {
+		const apiUrlCust = "https://soul-connection.fr/api/customers";
 
-  	const handleSecondSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-  		setSecondSelectedClient(event.target.value);
-  	};
+		const fetchData = async () => {
+			try {
+				const response = await axios.get(apiUrlCust, {
+					headers: {
+						"Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJqZWFubmUubWFydGluQHNvdWwtY29ubmVjdGlvbi5mciIsIm5hbWUiOiJKZWFubmUiLCJzdXJuYW1lIjoiTWFydGluIiwiZXhwIjoxNzI3MjUzMDI3fQ.Ijr5HQJ6iJEUI6YOolOrl22kFoJtxauIVHDnLGcgywc",
+					},
+				});
+				setData(response.data);
+				console.log("Données récupérées :", response.data);
+			} catch (error) {
+				console.error("Erreur lors de l'appel API", error);
+			}
+		};
+
+		fetchData();
+	}, []);
+
+	const handleFirstSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+		setFirstSelectedClient(event.target.value);
+	};
+
+	const handleSecondSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+		setSecondSelectedClient(event.target.value);
+	};
 
   	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     	event.preventDefault();
@@ -22,6 +44,11 @@ const Compatibility: React.FC = () => {
     		console.log("First selected client:", firstSelectedClient);
     	  	console.log("Second selected client:", secondSelectedClient);
 			console.log("Combined Zodiac Signs:", addedZodiacSign);
+			if (data && data[1]) {
+				console.log("Donnée avec ID [1] :", data[1]);
+			} else {
+				console.log("Donnée avec ID [1] non trouvée.");
+			}
 			fetch("compatibility.json")
     			.then(response => response.json())
     			.then(data => {
