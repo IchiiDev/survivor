@@ -51,6 +51,7 @@ CREATE TABLE IF NOT EXISTS `events` (
   `id` int NOT NULL,
   `name` varchar(100) NOT NULL,
   `date` date NOT NULL,
+  `duration` int NOT NULL,
   `max_participants` int NOT NULL,
   `location` varchar(100) NOT NULL,
   `type` varchar(100) NOT NULL,

@@ -1,31 +1,97 @@
-import { Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpException, Param, Post, Put } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
+import { EncountersService } from './encounters.service';
 
 @Controller('encounters')
 @ApiTags('encounters')
 export class EncountersController {
-  @Get()
-  getAllEncounters(): string {
-    return 'This action returns all encounters';
-  }
+    constructor(private readonly encountersService: EncountersService) { }
 
-  @Post()
-  createEncounter(): string {
-    return 'This action creates a new encounter';
-  }
+    @Get()
+    async getAllEncounters(): Promise<{
+        id: string,
+        customer_id: string,
+        date: string,
+        rating: string,
+        comment: string,
+        source: string
+    }[]> {
+        const result = await this.encountersService.getAllEncounters();
 
-  @Get(':id')
-  getEncounter(@Param('id') id: string): string {
-    return `This action returns an encounter with id ${id}`;
-  }
+        if (!result) {
+            throw new HttpException("No encounters found", 404);
+        }
+        return result;
+    }
 
-  @Put(':id')
-  updateEncounter(@Param('id') id: string): string {
-    return `This action updates an encounter with id ${id}`;
-  }
+    @Post()
+    async createEncounter(@Body() data: {
+        customer_id: string,
+        date: string,
+        rating: string,
+        comment: string,
+        source: string
+    }): Promise<string> {
+        const { customer_id, date, rating, comment, source } = data;
+        return this.encountersService.createEncounter(
+            customer_id,
+            date,
+            rating,
+            comment,
+            source
+        );
+    }
 
-  @Delete(':id')
-  deleteEncounter(@Param('id') id: string): string {
-    return `This action deletes an encounter with id ${id}`;
-  }
+    @Get(':id')
+    async getEncounter(@Param('id') id: string): Promise<{
+        customer_id: string,
+        date: string,
+        rating: string,
+        comment: string,
+        source: string,
+    }> {
+        const result = this.encountersService.getEncounter(id);
+
+        if (!result) {
+            throw new HttpException("Encounter not found", 404);
+        }
+        return result;
+    }
+
+    @Put(':id')
+    async updateEncounter(
+        @Param('id') id: string,
+        @Body() data: {
+            customer_id: string,
+            date: string,
+            rating: string,
+            comment: string,
+            source: string
+        }
+    ): Promise<{
+        id: string,
+        customer_id: string,
+        date: string,
+        rating: string,
+        comment: string,
+        source: string,
+    }> {
+        const { customer_id, date, rating, comment, source } = data;
+        const result = this.encountersService.updateEncounter(id, customer_id, date, rating, comment, source);
+
+        if (!result) {
+            throw new HttpException("Encounter not found", 404);
+        }
+        return result;
+    }
+
+    @Delete(':id')
+    deleteEncounter(@Param('id') id: string): Promise<string> {
+        const result = this.encountersService.deleteEncounter(id);
+
+        if (!result) {
+            throw new HttpException("Encounter not found", 404);
+        }
+        return result;
+    }
 }
