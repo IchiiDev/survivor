@@ -1,0 +1,35 @@
+.custom-box {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 60%;
+    height: 45px;
+    background-color: #ffffff;
+    margin: 35px auto;
+    border-bottom: 2px solid #9a9a9a;
+    transform: translateX(-50px);
+}
+
+.custom-box-content {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+}
+
+.custom-box-title {
+    font-size: 1.5vw;
+    color: #000000;
+    text-align: left;
+    margin-right: auto;
+}
+
+.title-soul {
+    cursor: pointer;
+    margin: 0 auto;
+    width: 45%;
+    height: auto;
+    display: block;
+    transform: translateX(-110px);
+}
