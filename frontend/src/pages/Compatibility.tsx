@@ -1,19 +1,46 @@
-import React, { useState } from 'react';
-import './Compatibility.css';
+import React, { useEffect, useState } from "react";
+import "./Compatibility.css";
 
 const Compatibility: React.FC = () => {
-	const clients = ["Aries","Taurus","Gemini","Cancer","Leo","Virgo","Libra","Scorpio","Sagittarius","Capricorn","Aquarius","Pisces"];
-  	const [firstSelectedClient, setFirstSelectedClient] = useState<string | null>(null);
-  	const [secondSelectedClient, setSecondSelectedClient] = useState<string | null>(null);
+	const [clients, setClients] = useState<string[]>([]);
+	const [firstSelectedClient, setFirstSelectedClient] = useState<string | null>(null);
+	const [secondSelectedClient, setSecondSelectedClient] = useState<string | null>(null);
 	const [compatibilityValue, setCompatibilityValue] = useState<string | null>(null);
+	const [data, setData] = useState<string | null>(null);
+	const apiUrlLogin = "http://localhost:3001/customers";
+	const token = localStorage.getItem("token")
 
-  	const handleFirstSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-  	  	setFirstSelectedClient(event.target.value);
-  	};
+	const fetchCustomers = async () => {
+		try {
+		  	const response = await fetch(apiUrlLogin, {
+				method: "GET",
+				headers: {
+				  "Content-Type": "application/json",
+				  "Authorization": `Bearer ${token}`
+				},
+			});
 
-  	const handleSecondSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-  		setSecondSelectedClient(event.target.value);
-  	};
+		  	if (!response.ok) {
+				throw new Error(`Erreur HTTP: ${response.status}`);
+		  	}
+			const customersResponse = await response.json();
+			const updatedClients = customersResponse.map((customer: { name: string; surname: string }) =>
+				`${customer.name} ${customer.surname}`
+			);
+			setClients(updatedClients);
+		} catch (error) {
+		  console.error("Erreur lors de l'appel API", error);
+		}
+	};
+	fetchCustomers()
+
+	const handleFirstSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+		setFirstSelectedClient(event.target.value);
+	};
+
+	const handleSecondSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+		setSecondSelectedClient(event.target.value);
+	};
 
   	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     	event.preventDefault();

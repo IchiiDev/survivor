@@ -1,6 +1,40 @@
 version: '3.7'
 
 services:
+  db:
+    image: mysql:latest
+    restart: always
+
+    ports:
+      - "3306:3306"
+
+    volumes:
+      - survivor_db:/var/lib/mysql
+      - ./schema.sql:/docker-entrypoint-initdb.d/init.sql
+
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+
+    ulimits:
+      nofile: 262144
+
+    networks:
+      - default
+
+  pma:
+    image: phpmyadmin
+    restart: always
+
+    ports:
+      - "8080:80"
+
+    environment:
+      PMA_HOST: db
+      MYSQL_ROOT_PASSWORD: root
+
+    networks:
+      - default
+
   frontend:
     build: ./frontend
 
@@ -10,34 +44,37 @@ services:
     depends_on:
       - backend
 
+    environment:
+      PORT: 3000
+
   backend:
     build: ./backend
+    restart: always
 
     ports:
       - "3001:3000"
 
+    environment:
+      PORT: 3000
+      DATABASE_HOST: db
+      DATABASE_USER: ${DATABASE_USER}
+      DATABASE_PASS: ${DATABASE_PASS}
+      DATABASE_NAME: ${DATABASE_NAME}
+      DATABASE_PORT: 3306
+
+      API_KEY: ${API_KEY}
+      ADMIN_USER: ${ADMIN_USER}
+      ADMIN_PASS: ${ADMIN_PASS}
+      API_URL: ${API_URL}
+      NODE_ENV: ${NODE_ENV}
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_EXPIRATION_TIME: ${JWT_EXPIRATION_TIME}
+
     depends_on:
       - db
 
-  db:
-    image: mysql:5.7
-    restart: always
-
-    ports:
-      - "3306:3306"
-
-    volumes:
-      - db_data:/var/lib/mysql
-      - ./schema.sql:/docker-entrypoint-initdb.d/init.sql
-
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-
-    networks:
-      - default
-
 volumes:
-  db_data:
+  survivor_db:
 
 networks:
   default:
