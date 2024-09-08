@@ -87,6 +87,7 @@ const Compatibility: React.FC = () => {
 
   	return (
     	<>
+		<Titlebox title="Compatibility"></Titlebox>
       	<form onSubmit={handleSubmit} className="compatibility-form">
       	  	<div className="compatibility-container">
       	    	<div className="select-container">
