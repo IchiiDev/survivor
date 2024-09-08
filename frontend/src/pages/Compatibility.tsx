@@ -1,28 +1,68 @@
-import React, { useState } from 'react';
-import Titlebox from "../components/Titlebox"
-import './Compatibility.scss';
+import React, { useEffect, useState } from "react";
+import "./Compatibility.css";
 
 const Compatibility: React.FC = () => {
-	const clients = ["Aries","Taurus","Gemini","Cancer","Leo","Virgo","Libra","Scorpio","Sagittarius","Capricorn","Aquarius","Pisces"];
-  	const [firstSelectedClient, setFirstSelectedClient] = useState<string | null>(null);
-  	const [secondSelectedClient, setSecondSelectedClient] = useState<string | null>(null);
+	const [clients, setClients] = useState<string[]>([]);
+	const [firstSelectedClient, setFirstSelectedClient] = useState<string | null>(null);
+	const [secondSelectedClient, setSecondSelectedClient] = useState<string | null>(null);
 	const [compatibilityValue, setCompatibilityValue] = useState<string | null>(null);
+	const [data, setData] = useState<any[]>([]);
+	const apiUrlLogin = "http://localhost:3001/customers";
+	const token = localStorage.getItem("token")
 
-  	const handleFirstSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-  	  	setFirstSelectedClient(event.target.value);
-  	};
+	const fetchCustomers = async () => {
+		try {
+		  	const response = await fetch(apiUrlLogin, {
+				method: "GET",
+				headers: {
+				  "Content-Type": "application/json",
+				  "Authorization": `Bearer ${token}`
+				},
+			});
 
-  	const handleSecondSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-  		setSecondSelectedClient(event.target.value);
-  	};
+		  	if (!response.ok) {
+				throw new Error(`Erreur HTTP: ${response.status}`);
+		  	}
+			const customersResponse = await response.json();
+			const updatedClients = customersResponse.map((customer: { name: string; surname: string }) =>
+				`${customer.name} ${customer.surname}`
+			);
+			setData(customersResponse)
+			setClients(updatedClients);
+		} catch (error) {
+		  console.error("Erreur lors de l'appel API", error);
+		}
+	};
+	const findAstrologicalSign = (fullName: string | null) => {
+		if (!fullName || !data)
+			return null;
+
+		const [name, surname] = fullName.split(" ");
+		const client = data.find((customer: { name: string; surname: string }) =>
+		  customer.name === name && customer.surname === surname
+		);
+
+		return client ? client.astrological_sign : null;
+	  };
+
+	useEffect(() => {
+		fetchCustomers();
+	}, []);
+
+	const handleFirstSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+		setFirstSelectedClient(event.target.value);
+	};
+
+	const handleSecondSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+		setSecondSelectedClient(event.target.value);
+	};
 
   	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     	event.preventDefault();
     	if (firstSelectedClient && secondSelectedClient) {
-			const addedZodiacSign = `${firstSelectedClient} + ${secondSelectedClient}`;
-    		console.log("First selected client:", firstSelectedClient);
-    	  	console.log("Second selected client:", secondSelectedClient);
-			console.log("Combined Zodiac Signs:", addedZodiacSign);
+			const firstClientSign = findAstrologicalSign(firstSelectedClient);
+			const secondClientSign = findAstrologicalSign(secondSelectedClient);
+			const addedZodiacSign = `${firstClientSign} + ${secondClientSign}`;
 			fetch("compatibility.json")
     			.then(response => response.json())
     			.then(data => {
@@ -30,7 +70,6 @@ const Compatibility: React.FC = () => {
     			        const compatibilityData = data[addedZodiacSign];
     			        if (compatibilityData && compatibilityData.value) {
 							setCompatibilityValue(compatibilityData.value.toString());
-    			            console.log(compatibilityValue, "compatibility for", addedZodiacSign);
     			        } else {
     			            console.log("Compatibility data not found for", addedZodiacSign);
     			        }
