@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Titlebox from "../components/Titlebox";
 import "./Compatibility.css";
 
 const Compatibility: React.FC = () => {
