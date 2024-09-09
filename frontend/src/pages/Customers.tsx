@@ -27,7 +27,6 @@ const Customers = () => {
 				},
 			});
 			console.log(clientId);
-			console.log("http://localhost:3001/customers/${clientId}/image");
 		  	if (!response.ok) {
 				throw new Error(`Erreur HTTP: ${response.status}`);
 		  	}

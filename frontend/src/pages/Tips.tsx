@@ -1,11 +1,20 @@
+import Titlebox from "../components/Titlebox";
+
 const Tips = () => {
     return (
     	<>
-        	<div className="columns">
-				<div className="column">
-					<h1 className="basic-text-color">Tips</h1>
+        	<Titlebox title="Tips"></Titlebox>
+			<div className="container">
+        		<div className="box">
+          			<h3 className="title is-4 dark-text">First Tip</h3>
+        		</div>
+				<div className="box">
+					<h3 className="title is-4 dark-text">Seconde Tip</h3>
 				</div>
-        	</div>
+				<div className="box">
+					<h3 className="title is-4 dark-text">Third Tip</h3>
+				</div>
+      		</div>
       	</>
     )
   };
