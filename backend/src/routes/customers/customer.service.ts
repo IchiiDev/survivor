@@ -12,7 +12,7 @@ export class CustomersService {
         gender: string,
         description: string,
         astrological_sign: string,
-        phone_number: string,
+        phone: string,
         address: string
     }[]
         | null> {
@@ -28,7 +28,7 @@ export class CustomersService {
                 gender: row.gender,
                 description: row.description,
                 astrological_sign: row.astrological_sign,
-                phone_number: row.phone_number,
+                phone: row.phone,
                 address: row.address
             }));
         }
@@ -43,7 +43,7 @@ export class CustomersService {
         gender?: string,
         description?: string,
         astrological_sign?: string,
-        phone_number?: string,
+        phone?: string,
         address?: string
     ): Promise<string> {
         let query = 'INSERT INTO customers ( email, name, surname';
@@ -70,10 +70,10 @@ export class CustomersService {
             values += ', ?';
             params.push(astrological_sign);
         }
-        if (phone_number) {
-            query += ', phone_number';
+        if (phone) {
+            query += ', phone';
             values += ', ?';
-            params.push(phone_number);
+            params.push(phone);
         }
         if (address) {
             query += ', address';
@@ -98,7 +98,7 @@ export class CustomersService {
         gender: string,
         description: string,
         astrological_sign: string,
-        phone_number: string,
+        phone: string,
         address: string
     }> {
         const result = await db.query('SELECT * FROM customers WHERE id=?', id);
@@ -115,7 +115,7 @@ export class CustomersService {
         gender?: string,
         description?: string,
         astrological_sign?: string,
-        phone_number?: string,
+        phone?: string,
         address?: string
     ): Promise<{
         id: string,
@@ -126,13 +126,13 @@ export class CustomersService {
         gender: string,
         description: string,
         astrological_sign: string
-        phone_number: string,
+        phone: string,
         address: string
     } | null> {
         let query = 'UPDATE customers SET ';
         let params = [];
 
-        if (!email && !name && !surname && !birthdate && !gender && !description && !astrological_sign && !phone_number && !address)
+        if (!email && !name && !surname && !birthdate && !gender && !description && !astrological_sign && !phone && !address)
             return null;
         if (email) {
             query += 'email=?, ';
@@ -162,9 +162,9 @@ export class CustomersService {
             query += 'astrological_sign=?, ';
             params.push(astrological_sign);
         }
-        if (phone_number) {
-            query += 'phone_number=?, ';
-            params.push(phone_number);
+        if (phone) {
+            query += 'phone=?, ';
+            params.push(phone);
         }
         if (address) {
             query += 'address=?, ';

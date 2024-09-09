@@ -46,9 +46,37 @@ export class EncountersService {
         rating: string,
         comment: string,
         source: string
-    }> {
+    }[] | null> {
         const result = await db.query('SELECT * FROM encounters WHERE id=?', id);
-        return result[0][0];
+        if (Array.isArray(result[0])) {
+            return result[0].map((row: any) => ({
+                customer_id: row.customer_id,
+                date: row.date,
+                rating: row.rating,
+                comment: row.comment,
+                source: row.source
+            }));
+        }
+        return null;
+    }
+
+    async getEncounterByCustomer(customer_id: string): Promise<{
+        customer_id: string,
+        date: string,
+        rating: string,
+        comment: string,
+        source: string
+    }[] | null> {
+        const result = await db.query('SELECT * FROM encounters WHERE customer_id=?', customer_id);
+        if (Array.isArray(result[0])) {
+            return result[0].map((row: any) => ({
+                customer_id: row.customer_id,
+                date: row.date,
+                rating: row.rating,
+                comment: row.comment,
+                source: row.source
+            }));
+        }
     }
 
     async updateEncounter(

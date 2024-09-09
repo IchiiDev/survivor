@@ -21,7 +21,8 @@ CREATE TABLE IF NOT EXISTS `customers` (
   `gender` varchar(100) DEFAULT NULL,
   `description` varchar(100) DEFAULT NULL,
   `astrological_sign` varchar(100) DEFAULT NULL,
-  `phone_number` varchar(100) DEFAULT NULL,
+  `image` varchar(100) DEFAULT NULL,
+  `phone` varchar(100) DEFAULT NULL,
   `address` varchar(100) DEFAULT NULL
 );
 
