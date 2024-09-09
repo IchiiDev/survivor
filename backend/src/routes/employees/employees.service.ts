@@ -3,132 +3,238 @@ import { db } from '../../main';
 
 @Injectable()
 export class EmployeesService {
-  async getAllEmployees(): Promise<
-    | {
-        id: string;
-        email: string;
-        name: string;
-        surname: string;
-        birthdate?: string;
-        gender?: string;
-        work?: string;
-      }[]
-    | null
-  > {
-    const result = await db.query('SELECT * FROM employees');
-    if (Array.isArray(result[0])) {
-      return result[0].map((row: any) => ({
-        id: row.id,
-        email: row.email,
-        name: row.name,
-        surname: row.surname,
-        birthdate: row.birthdate,
-        gender: row.gender,
-        work: row.work,
-      }));
+    async getAllEmployees(): Promise<{
+        id: string,
+        email: string,
+        name: string,
+        surname: string,
+        birthdate: string,
+        gender: string,
+        work: string,
+    }[] | null> {
+        const result = await db.query('SELECT * FROM employees');
+        if (Array.isArray(result[0])) {
+            return result[0].map((row: any) => ({
+                id: row.id,
+                email: row.email,
+                name: row.name,
+                surname: row.surname,
+                birthdate: row.birthdate,
+                gender: row.gender,
+                work: row.work
+            }));
+        }
+        return null;
     }
-    return null;
-  }
 
-  async createEmployee(
-    email: string,
-    name: string,
-    surname: string,
-    birthdate?: string,
-    gender?: string,
-    work?: string,
-  ): Promise<string> {
-    await db.query(
-      'INSERT INTO employees ( email, name, surname, birthdate, gender, work) VALUES (?, ?, ?, ?, ?, ?)',
-      [email, name, surname, birthdate, gender, work],
-    );
-    return 'New employee created';
-  }
+    async createEmployee(
+        email: string,
+        password: string,
+        name: string,
+        surname: string,
+        birthdate?: string,
+        gender?: string,
+        work?: string
+    ): Promise<string> {
+        let query = 'INSERT INTO employees ( email, password, name, surname';
+        let values = ' VALUES (?, ?, ?, ?';
+        let params = [email, password, name, surname];
 
-  async getEmployee(id: string): Promise<{
-    id: string;
-    email: string;
-    name: string;
-    surname: string;
-    birthdate?: string;
-    gender?: string;
-    work?: string;
-  } | null> {
-    const result = await db.query('SELECT * FROM employees WHERE id=?', id);
+        if (birthdate) {
+            query += ', birthdate';
+            values += ', ?';
+            params.push(birthdate);
+        }
+        if (gender) {
+            query += ', gender';
+            values += ', ?';
+            params.push(gender);
+        }
+        if (work) {
+            query += ', work';
+            values += ', ?';
+            params.push(work);
+        }
+        query += ' )';
+        values += ')';
+        await db.query(
+            query + values,
+            params
+        );
+        return 'New employee created';
+    }
 
-    return result[0][0];
-  }
+    async getEmployee(id: string): Promise<{
+        id: string,
+        email: string,
+        name: string,
+        surname: string,
+        birthdate: string,
+        gender: string,
+        work: string
+    } | null> {
+        const result = await db.query(
+            'SELECT id, email, name, surname, birthdate, gender, work FROM employees WHERE id=?',
+            id
+        );
 
-  async updateEmployee(
-    id: string,
-    email: string,
-    name: string,
-    surname: string,
-    birthdate?: string,
-    gender?: string,
-    work?: string,
-  ): Promise<{
-    id: string;
-    email: string;
-    name: string;
-    surname: string;
-    birthdate?: string;
-    gender?: string;
-    work?: string;
-  } | null> {
-    await db.query(
-      'UPDATE employees SET email=?, name=?, surname=?, birthdate=?, gender=?, work=? WHERE id=?',
-      [email, name, surname, birthdate, gender, work, id],
-    );
-    const result = await db.query('SELECT * FROM employees WHERE id=?', id);
-    return result[0][0];
-  }
+        return result[0][0];
+    }
 
-  async deleteEmployee(id: string): Promise<string> {
-    await db.query('DELETE FROM employees WHERE id=?', id);
-    return `Employee with id ${id} successfully deleted`;
-  }
+    async updateEmployee(
+        id: string,
+        email?: string,
+        name?: string,
+        surname?: string,
+        birthdate?: string,
+        gender?: string,
+        work?: string,
+        password?: string
+    ): Promise<{
+        id: string,
+        email: string,
+        name: string,
+        surname: string,
+        birthdate: string,
+        gender: string,
+        work: string,
+        password: string
+    } | null> {
+        let query = 'UPDATE employees SET ';
+        let params = [];
 
-  async getCurrentEmployee(id: string): Promise<{
-    id: string;
-    email: string;
-    name: string;
-    surname: string;
-    birthdate?: string;
-    gender?: string;
-    work?: string;
-  }> {
-    const result = await db.query('SELECT * FROM employees WHERE id=?', id);
+        if (!email && !name && !surname && !birthdate && !gender && !work && !password)
+            return null;
 
-    return result[0][0];
-  }
+        if (email) {
+            query += 'email=?, ';
+            params.push(email);
+        }
+        if (name) {
+            query += 'name=?, ';
+            params.push(name);
+        }
+        if (surname) {
+            query += 'surname=?, ';
+            params.push(surname);
+        }
+        if (birthdate) {
+            query += 'birthdate=?, ';
+            params.push(birthdate);
+        }
+        if (gender) {
+            query += 'gender=?, ';
+            params.push(gender);
+        }
+        if (work) {
+            query += 'work=?, ';
+            params.push(work);
+        }
+        if (password) {
+            query += 'password=?, '
+            params.push(password);
+        }
+        query = query.slice(0, -2);
+        query += ' WHERE id=?';
+        params.push(id);
+        await db.query(
+            query,
+            params
+        );
+        const result = await db.query(
+            'SELECT * FROM employees WHERE id=?',
+            id
+        );
+        return result[0][0];
+    }
 
-  async updateCurrentEmployee(
-    id: string,
-    email: string,
-    name: string,
-    surname: string,
-    birthdate?: string,
-    gender?: string,
-    work?: string,
-  ): Promise<{
-    id: string;
-    email: string;
-    name: string;
-    surname: string;
-    birthdate?: string;
-    gender?: string;
-    work?: string;
-  } | null> {
-    await db.query(
-      'UPDATE employees SET email=?, name=?, surname=?, birthdate=?, gender=?, work=? WHERE id=?',
-      [email, name, surname, birthdate, gender, work, id],
-    );
-    const result = await db.query('SELECT * FROM employees WHERE id=?', id);
-    return result[0][0];
-  }
+    async deleteEmployee(id: string): Promise<string> {
+        await db.query('DELETE FROM employees WHERE id=?', id);
+        return `Employee with id ${id} successfully deleted`;
+    }
 
-  // deleteCurrentEmployee(): string {
-  //  return 'This service deletes the current employee';
-  // }
+    async getCurrentEmployee(id: string): Promise<{
+        id: string,
+        email: string,
+        name: string,
+        surname: string,
+        birthdate: string,
+        gender: string,
+        work: string
+    }> {
+        const result = await db.query(
+            'SELECT id, email, name, surname, birthdate, gender, work FROM employees WHERE id=?',
+            id
+        );
+
+        return result[0][0];
+    }
+
+    async updateCurrentEmployee(
+        id: string,
+        email?: string,
+        password?: string,
+        name?: string,
+        surname?: string,
+        birthdate?: string,
+        gender?: string,
+        work?: string
+    ): Promise<{
+        id: string,
+        email: string,
+        name: string,
+        surname: string,
+        birthdate: string,
+        gender: string,
+        work: string,
+        password: string
+    } | null> {
+        let query = 'UPDATE employees SET ';
+        let params = [];
+
+        if (email) {
+            query += 'email=?, ';
+            params.push(email);
+        }
+        if (name) {
+            query += 'name=?, ';
+            params.push(name);
+        }
+        if (surname) {
+            query += 'surname=?, ';
+            params.push(surname);
+        }
+        if (birthdate) {
+            query += 'birthdate=?, ';
+            params.push(birthdate);
+        }
+        if (gender) {
+            query += 'gender=?, ';
+            params.push(gender);
+        }
+        if (work) {
+            query += 'work=?, ';
+            params.push(work);
+        }
+        if (password) {
+            query += 'password=?, ';
+            params.push(password);
+        }
+        query = query.slice(0, -2);
+        query += ' WHERE id=?';
+        params.push(id);
+        await db.query(
+            query,
+            params
+        );
+        const result = await db.query(
+            'SELECT * FROM employees WHERE id=?',
+            id
+        );
+        return result[0][0];
+    }
+
+    // deleteCurrentEmployee(): string {
+    //  return 'This service deletes the current employee';
+    // }
 }
