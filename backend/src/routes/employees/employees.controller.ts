@@ -2,6 +2,7 @@ import { Body, Controller, Delete, Get, HttpException, Param, Post, Put, Request
 import { ApiTags } from '@nestjs/swagger';
 import { EmployeesService } from './employees.service';
 import { Request } from 'express';
+import * as bcrypt from 'bcryptjs';
 
 @Controller('employees')
 @ApiTags('employees')
@@ -37,6 +38,7 @@ export class EmployeesController {
         work?: string
     }): Promise<string> {
         const { email, password, name, surname, birthdate, gender, work } = data;
+
         if (!email || !password || !name || !surname)
             throw new HttpException("Required parameters not given", 422);
         return this.employeesService.createEmployee(
@@ -132,6 +134,7 @@ export class EmployeesController {
         @Req() req: Request,
         @Body() data: {
             email: string,
+            password: string,
             name: string,
             surname: string,
             birthdate?: string,
@@ -147,11 +150,15 @@ export class EmployeesController {
         gender: string,
         work: string
     }> {
-        const { email, name, surname, birthdate, gender, work } = data;
+        const { email, password, name, surname, birthdate, gender, work } = data;
 
-        if (!email || !name || !surname)
+        if (!email || !password || !name || !surname)
             throw new HttpException("Required parameters not given", 422);
-        const result = this.employeesService.updateCurrentEmployee(String(req.user.id), email, name, surname, birthdate, gender, work);
+        if (!password.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[\d])(?=.*[@$!%*#?&_^*-])[a-zA-Z0-9@$!%#?&_^*-]{8,}$/))
+            throw new HttpException("Password isn't strong enough", 422);
+        const newPassword = bcrypt.hashSync(password, 10);
+
+        const result = this.employeesService.updateCurrentEmployee(String(req.user.id), email, newPassword, name, surname, birthdate, gender, work);
 
         if (!result) {
             throw new HttpException("Current employee not found", 404);
