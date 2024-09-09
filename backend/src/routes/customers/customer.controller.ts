@@ -57,12 +57,12 @@ export class CustomerController {
       email: string;
       name: string;
       surname: string;
-      birthdate?: string;
-      gender?: string;
-      description?: string;
-      astrological_sign?: string;
-      phone_number?: string;
-      address?: string;
+      birthdate: string;
+      gender: string;
+      description: string;
+      astrological_sign: string;
+      phone: string;
+      address: string;
     }[]
   > {
     const result = await this.customerService.getAllCustomers();
@@ -134,7 +134,7 @@ export class CustomerController {
       gender?: string;
       description?: string;
       astrological_sign?: string;
-      phone_number?: string;
+      phone?: string;
       address?: string;
     },
   ): Promise<string> {
@@ -146,7 +146,7 @@ export class CustomerController {
       gender,
       description,
       astrological_sign,
-      phone_number,
+      phone,
       address,
     } = data;
 
@@ -158,7 +158,7 @@ export class CustomerController {
       gender,
       description,
       astrological_sign,
-      phone_number,
+      phone,
       address,
     );
   }
@@ -176,10 +176,8 @@ export class CustomerController {
   async getCustomer(@Param('id') id: string): Promise<Customer> {
     const result = this.customerService.getCustomer(id);
 
-    if (!result) {
+    if (!result)
       throw new HttpException(`Customer with id ${id} not found`, 404);
-      return;
-    }
     return result;
   }
 
@@ -245,7 +243,7 @@ export class CustomerController {
       gender?: string;
       description?: string;
       astrological_sign?: string;
-      phone_number?: string;
+      phone?: string;
       address?: string;
     },
   ): Promise<{
@@ -257,7 +255,7 @@ export class CustomerController {
     gender?: string;
     description?: string;
     astrological_sign?: string;
-    phone_number?: string;
+    phone?: string;
     address?: string;
   }> {
     const {
@@ -268,7 +266,7 @@ export class CustomerController {
       gender,
       description,
       astrological_sign,
-      phone_number,
+      phone,
       address,
     } = data;
 
@@ -281,12 +279,12 @@ export class CustomerController {
       gender,
       description,
       astrological_sign,
-      phone_number,
+      phone,
       address,
     );
 
     if (!result) {
-      throw new HttpException('Customer not found', 404);
+      throw new HttpException(`Customer with id ${id} not found`, 404);
     }
     return result;
   }

@@ -107,9 +107,8 @@ export class EmployeesController {
   async getEmployee(@Param('id') id: string): Promise<Employee> {
     const result = this.employeesService.getEmployee(id);
 
-    if (!result) {
+    if (!result)
       throw new HttpException(`Employee with id ${id} not found`, 404);
-    }
     return result;
   }
 
@@ -117,9 +116,18 @@ export class EmployeesController {
   async updateEmployee(
     @Param('id') id: string,
     @Body()
-    data: Employee,
+    data: {
+      email?: string;
+      name?: string;
+      surname?: string;
+      birthdate?: string;
+      gender?: string;
+      work?: string;
+      password?: string;
+    },
   ): Promise<Employee> {
-    const { email, name, surname, birthdate, gender, work } = data;
+    const { email, name, surname, birthdate, gender, work, password } = data;
+
     const result = this.employeesService.updateEmployee(
       id,
       email,
@@ -128,6 +136,7 @@ export class EmployeesController {
       birthdate,
       gender,
       work,
+      password,
     );
 
     if (!result) {
@@ -146,7 +155,15 @@ export class EmployeesController {
   }
 
   @Get('me')
-  async getCurrentEmployee(@Req() req: Request): Promise<Employee> {
+  async getCurrentEmployee(@Req() req: Request): Promise<{
+    id: string;
+    email: string;
+    name: string;
+    surname: string;
+    birthdate: string;
+    gender: string;
+    work: string;
+  }> {
     const result = this.employeesService.getCurrentEmployee(
       String(req.user.id),
     );
@@ -161,9 +178,27 @@ export class EmployeesController {
   async updateCurrentEmployee(
     @Req() req: Request,
     @Body()
-    data: Employee,
-  ): Promise<Employee> {
+    data: {
+      email: string;
+      name: string;
+      surname: string;
+      birthdate?: string;
+      gender?: string;
+      work?: string;
+    },
+  ): Promise<{
+    id: string;
+    email: string;
+    name: string;
+    surname: string;
+    birthdate: string;
+    gender: string;
+    work: string;
+  }> {
     const { email, name, surname, birthdate, gender, work } = data;
+
+    if (!email || !name || !surname)
+      throw new HttpException('Required parameters not given', 422);
     const result = this.employeesService.updateCurrentEmployee(
       String(req.user.id),
       email,
