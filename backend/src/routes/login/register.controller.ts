@@ -1,6 +1,7 @@
 import { Body, Controller, HttpException, Post } from '@nestjs/common';
 import { LoginService } from './login.service';
 import { ApiTags } from '@nestjs/swagger';
+import { Public } from 'src/auth.guard';
 
 @Controller('register')
 @ApiTags('login')
@@ -8,6 +9,7 @@ export class RegisterController {
   constructor(private loginService: LoginService) {}
 
   @Post()
+  @Public()
   async registerRoute(
     @Body()
     body: {
@@ -22,7 +24,7 @@ export class RegisterController {
     }
 
     if (
-      !this.loginService.checkPassword(body.password) ||
+      !this.loginService.checkPassword(body.password) &&
       process.env.NODE_ENV !== 'development'
       // This line ensures we can use a simple password for testing
     ) {
