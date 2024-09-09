@@ -53,11 +53,11 @@ export class EncountersService {
 
     async updateEncounter(
         id: string,
-        customer_id: string,
-        date: string,
-        rating: string,
-        comment: string,
-        source: string
+        customer_id?: string,
+        date?: string,
+        rating?: string,
+        comment?: string,
+        source?: string
     ): Promise<{
         id: string,
         customer_id: string,
@@ -65,10 +65,38 @@ export class EncountersService {
         rating: string,
         comment: string,
         source: string
-    }> {
+    } | null> {
+        let query = 'UPDATE encounters SET ';
+        let params = [];
+
+        if (!customer_id && !date && !rating && !comment && !source)
+            return null;
+        if (customer_id) {
+            query += 'customer_id=?, ';
+            params.push(customer_id);
+        }
+        if (date) {
+            query += 'date=?, ';
+            params.push(date);
+        }
+        if (rating) {
+            query += 'rating=?, ';
+            params.push(rating);
+        }
+        if (comment) {
+            query += 'comment=?, ';
+            params.push(comment);
+        }
+        if (source) {
+            query += 'source=?, ';
+            params.push(source);
+        }
+        query = query.slice(0, -2);
+        query += 'WHERE id=?';
+        params.push(id);
         await db.query(
-            'UPDATE encounters SET customer_id=?, date=?, rating=?, comment=?, source=? WHERE id=?',
-            [customer_id, date, rating, comment, source, id],
+            query,
+            params
         );
         const result = await db.query(
             'SELECT * FROM encounters WHERE id=?',

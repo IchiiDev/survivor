@@ -63,13 +63,13 @@ export class EventsService {
 
     async updateEvent(
         id: string,
-        name: string,
-        date: string,
-        max_participants: string,
-        location: string,
-        type: string,
-        employee_id: string,
-        location_name: string
+        name?: string,
+        date?: string,
+        max_participants?: string,
+        location?: string,
+        type?: string,
+        employee_id?: string,
+        location_name?: string
     ): Promise<{
         id: string,
         name: string,
@@ -79,10 +79,45 @@ export class EventsService {
         type: string,
         employee_id: string,
         location_name: string
-    }> {
+    } | null> {
+        let query = 'UPDATE events SET ';
+        let params = [];
+        if (!name && !date && !max_participants && !location && !type && !employee_id && !location_name)
+            return null;
+        if (name) {
+            query += 'name=?, ';
+            params.push(name);
+        }
+        if (date) {
+            query += 'date=?, ';
+            params.push(date);
+        }
+        if (max_participants) {
+            query += 'max_participants=?, ';
+            params.push(max_participants);
+        }
+        if (location) {
+            query += 'location=?, ';
+            params.push(location);
+        }
+        if (type) {
+            query += 'type=?, ';
+            params.push(type);
+        }
+        if (employee_id) {
+            query += 'employee_id=?, ';
+            params.push(employee_id);
+        }
+        if (location_name) {
+            query += 'location_name=?, ';
+            params.push(location_name);
+        }
+        query = query.slice(0, -2);
+        query += ' WHERE id=?';
+        params.push(id);
         await db.query(
-            'UPDATE events SET name=?, date=?, max_participants=?, location=?, type=?, employee_id=?, location_name=? WHERE id=?',
-            [name, date, max_participants, location, type, employee_id, location_name, id]
+            query,
+            params
         );
         const result = await db.query(
             'SELECT * FROM events WHERE id=?',

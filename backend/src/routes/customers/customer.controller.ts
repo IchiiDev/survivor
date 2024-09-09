@@ -13,12 +13,12 @@ export class CustomerController {
         email: string,
         name: string,
         surname: string,
-        birthdate?: string,
-        gender?: string,
-        description?: string,
-        astrological_sign?: string,
-        phone_number?: string,
-        address?: string
+        birthdate: string,
+        gender: string,
+        description: string,
+        astrological_sign: string,
+        phone_number: string,
+        address: string
     }[]> {
         const result = await this.customerService.getAllCustomers();
 
@@ -52,6 +52,9 @@ export class CustomerController {
             address
         } = data;
 
+        if (!email || !name || !surname) {
+            throw new HttpException("Required parameters not given", 422);
+        }
         return this.customerService.createCustomer(
             email,
             name,
@@ -71,18 +74,17 @@ export class CustomerController {
         email: string,
         name: string,
         surname: string,
-        birthdate?: string,
-        gender?: string,
-        description?: string,
-        astrological_sign?: string
-        phone_number?: string,
-        address?: string
+        birthdate: string,
+        gender: string,
+        description: string,
+        astrological_sign: string
+        phone_number: string,
+        address: string
     }> {
         const result = this.customerService.getCustomer(id);
 
         if (!result) {
             throw new HttpException(`Customer with id ${id} not found`, 404);
-            return;
         }
         return result;
     }
@@ -91,9 +93,9 @@ export class CustomerController {
     async updateCustomer(
         @Param('id') id: string,
         @Body() data: {
-            email: string,
-            name: string,
-            surname: string,
+            email?: string,
+            name?: string,
+            surname?: string,
             birthdate?: string,
             gender?: string,
             description?: string,

@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS `employees` (
   `email` varchar(100) NOT NULL,
   `surname` varchar(100) NOT NULL,
   `name` varchar(100) NOT NULL,
-  `birth_date` date DEFAULT NULL,
+  `birthdate` varchar(100) DEFAULT NULL,
   `gender` varchar(100) DEFAULT NULL,
   `work` varchar(100) DEFAULT NULL,
   `password` varchar(100) NOT NULL
@@ -105,6 +105,9 @@ ALTER TABLE `tips`
   ADD PRIMARY KEY (`id`);
 
 ALTER TABLE `clothes`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `customers`
   MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 ALTER TABLE `employees`

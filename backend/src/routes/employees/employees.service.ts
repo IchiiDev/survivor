@@ -8,9 +8,9 @@ export class EmployeesService {
         email: string,
         name: string,
         surname: string,
-        birthdate?: string,
-        gender?: string,
-        work?: string,
+        birthdate: string,
+        gender: string,
+        work: string,
     }[] | null> {
         const result = await db.query('SELECT * FROM employees');
         if (Array.isArray(result[0])) {
@@ -29,15 +29,37 @@ export class EmployeesService {
 
     async createEmployee(
         email: string,
+        password: string,
         name: string,
         surname: string,
         birthdate?: string,
         gender?: string,
         work?: string
     ): Promise<string> {
+        let query = 'INSERT INTO employees ( email, password, name, surname';
+        let values = ' VALUES (?, ?, ?, ?';
+        let params = [email, password, name, surname];
+
+        if (birthdate) {
+            query += ', birthdate';
+            values += ', ?';
+            params.push(birthdate);
+        }
+        if (gender) {
+            query += ', gender';
+            values += ', ?';
+            params.push(gender);
+        }
+        if (work) {
+            query += ', work';
+            values += ', ?';
+            params.push(work);
+        }
+        query += ' )';
+        values += ')';
         await db.query(
-            'INSERT INTO employees ( email, name, surname, birthdate, gender, work) VALUES (?, ?, ?, ?, ?, ?)',
-            [email, name, surname, birthdate, gender, work],
+            query + values,
+            params
         );
         return 'New employee created';
     }
@@ -47,35 +69,77 @@ export class EmployeesService {
         email: string,
         name: string,
         surname: string,
-        birthdate?: string,
-        gender?: string,
-        work?: string
+        birthdate: string,
+        gender: string,
+        work: string
     } | null> {
-        const result = await db.query('SELECT * FROM employees WHERE id=?', id);
+        const result = await db.query(
+            'SELECT id, email, name, surname, birthdate, gender, work FROM employees WHERE id=?',
+            id
+        );
 
         return result[0][0];
     }
 
     async updateEmployee(
         id: string,
-        email: string,
-        name: string,
-        surname: string,
+        email?: string,
+        name?: string,
+        surname?: string,
         birthdate?: string,
         gender?: string,
-        work?: string
+        work?: string,
+        password?: string
     ): Promise<{
         id: string,
         email: string,
         name: string,
         surname: string,
-        birthdate?: string,
-        gender?: string,
-        work?: string
+        birthdate: string,
+        gender: string,
+        work: string,
+        password: string
     } | null> {
+        let query = 'UPDATE employees SET ';
+        let params = [];
+
+        if (!email && !name && !surname && !birthdate && !gender && !work && !password)
+            return null;
+
+        if (email) {
+            query += 'email=?, ';
+            params.push(email);
+        }
+        if (name) {
+            query += 'name=?, ';
+            params.push(name);
+        }
+        if (surname) {
+            query += 'surname=?, ';
+            params.push(surname);
+        }
+        if (birthdate) {
+            query += 'birthdate=?, ';
+            params.push(birthdate);
+        }
+        if (gender) {
+            query += 'gender=?, ';
+            params.push(gender);
+        }
+        if (work) {
+            query += 'work=?, ';
+            params.push(work);
+        }
+        if (password) {
+            query += 'password=?, '
+            params.push(password);
+        }
+        query = query.slice(0, -2);
+        query += ' WHERE id=?';
+        params.push(id);
         await db.query(
-            'UPDATE employees SET email=?, name=?, surname=?, birthdate=?, gender=?, work=? WHERE id=?',
-            [email, name, surname, birthdate, gender, work, id],
+            query,
+            params
         );
         const result = await db.query(
             'SELECT * FROM employees WHERE id=?',
@@ -94,20 +158,24 @@ export class EmployeesService {
         email: string,
         name: string,
         surname: string,
-        birthdate?: string,
-        gender?: string,
-        work?: string
+        birthdate: string,
+        gender: string,
+        work: string
     }> {
-        const result = await db.query('SELECT * FROM employees WHERE id=?', id);
+        const result = await db.query(
+            'SELECT id, email, name, surname, birthdate, gender, work FROM employees WHERE id=?',
+            id
+        );
 
         return result[0][0];
     }
 
     async updateCurrentEmployee(
         id: string,
-        email: string,
-        name: string,
-        surname: string,
+        email?: string,
+        password?: string,
+        name?: string,
+        surname?: string,
         birthdate?: string,
         gender?: string,
         work?: string
@@ -116,13 +184,48 @@ export class EmployeesService {
         email: string,
         name: string,
         surname: string,
-        birthdate?: string,
-        gender?: string,
-        work?: string
+        birthdate: string,
+        gender: string,
+        work: string,
+        password: string
     } | null> {
+        let query = 'UPDATE employees SET ';
+        let params = [];
+
+        if (email) {
+            query += 'email=?, ';
+            params.push(email);
+        }
+        if (name) {
+            query += 'name=?, ';
+            params.push(name);
+        }
+        if (surname) {
+            query += 'surname=?, ';
+            params.push(surname);
+        }
+        if (birthdate) {
+            query += 'birthdate=?, ';
+            params.push(birthdate);
+        }
+        if (gender) {
+            query += 'gender=?, ';
+            params.push(gender);
+        }
+        if (work) {
+            query += 'work=?, ';
+            params.push(work);
+        }
+        if (password) {
+            query += 'password=?, ';
+            params.push(password);
+        }
+        query = query.slice(0, -2);
+        query += ' WHERE id=?';
+        params.push(id);
         await db.query(
-            'UPDATE employees SET email=?, name=?, surname=?, birthdate=?, gender=?, work=? WHERE id=?',
-            [email, name, surname, birthdate, gender, work, id],
+            query,
+            params
         );
         const result = await db.query(
             'SELECT * FROM employees WHERE id=?',

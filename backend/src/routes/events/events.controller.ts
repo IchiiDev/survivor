@@ -39,6 +39,8 @@ export class EventsController {
             location_name: string
         }): Promise<string> {
         const { name, date, max_participants, location, type, employee_id, location_name } = data;
+        if (!name || !date || !max_participants || !location || !type || !employee_id || !location_name)
+            throw new HttpException("Required parameters not given", 422);
         return this.eventsService.createEvent(
             name,
             date,
@@ -73,13 +75,13 @@ export class EventsController {
     async updateEvent(
         @Param('id') id: string,
         @Body() data: {
-            name: string,
-            date: string,
-            max_participants: string,
-            location: string,
-            type: string,
-            employee_id: string,
-            location_name: string
+            name?: string,
+            date?: string,
+            max_participants?: string,
+            location?: string,
+            type?: string,
+            employee_id?: string,
+            location_name?: string
         }
     ): Promise<{
         id: string,

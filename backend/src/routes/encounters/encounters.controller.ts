@@ -33,6 +33,8 @@ export class EncountersController {
         source: string
     }): Promise<string> {
         const { customer_id, date, rating, comment, source } = data;
+        if (!customer_id || !date || !rating || !comment || !source)
+            throw new HttpException("Required parameters not given", 422);
         return this.encountersService.createEncounter(
             customer_id,
             date,
@@ -62,11 +64,11 @@ export class EncountersController {
     async updateEncounter(
         @Param('id') id: string,
         @Body() data: {
-            customer_id: string,
-            date: string,
-            rating: string,
-            comment: string,
-            source: string
+            customer_id?: string,
+            date?: string,
+            rating?: string,
+            comment?: string,
+            source?: string
         }
     ): Promise<{
         id: string,

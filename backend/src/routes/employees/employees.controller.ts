@@ -14,9 +14,9 @@ export class EmployeesController {
         email: string,
         name: string,
         surname: string,
-        birthday?: string,
-        gender?: string,
-        work?: string
+        birthdate: string,
+        gender: string,
+        work: string,
     }[]> {
         const result = await this.employeesService.getAllEmployees();
 
@@ -29,15 +29,19 @@ export class EmployeesController {
     @Post()
     async createEmployee(@Body() data: {
         email: string,
+        password: string,
         name: string,
         surname: string,
         birthdate?: string,
         gender?: string,
         work?: string
     }): Promise<string> {
-        const { email, name, surname, birthdate, gender, work } = data;
+        const { email, password, name, surname, birthdate, gender, work } = data;
+        if (!email || !password || !name || !surname)
+            throw new HttpException("Required parameters not given", 422);
         return this.employeesService.createEmployee(
             email,
+            password,
             name,
             surname,
             birthdate,
@@ -52,9 +56,9 @@ export class EmployeesController {
         email: string,
         name: string,
         surname: string,
-        birthdate?: string,
-        gender?: string,
-        work?: string
+        birthdate: string,
+        gender: string,
+        work: string
     }> {
         const result = this.employeesService.getEmployee(id);
 
@@ -68,24 +72,27 @@ export class EmployeesController {
     async updateEmployee(
         @Param('id') id: string,
         @Body() data: {
-            email: string,
-            name: string,
-            surname: string,
+            email?: string,
+            name?: string,
+            surname?: string,
             birthdate?: string,
             gender?: string,
-            work?: string
+            work?: string,
+            password?: string
         }
     ): Promise<{
         id: string,
         email: string,
         name: string,
         surname: string,
-        birthdate?: string,
-        gender?: string,
-        work?: string
+        birthdate: string,
+        gender: string,
+        work: string,
+        password: string
     }> {
-        const { email, name, surname, birthdate, gender, work } = data;
-        const result = this.employeesService.updateEmployee(id, email, name, surname, birthdate, gender, work);
+        const { email, name, surname, birthdate, gender, work, password } = data;
+
+        const result = this.employeesService.updateEmployee(id, email, name, surname, birthdate, gender, work, password);
 
         if (!result) {
             throw new HttpException("Employee not found", 404);
@@ -108,9 +115,9 @@ export class EmployeesController {
         email: string,
         name: string,
         surname: string,
-        birthdate?: string,
-        gender?: string,
-        work?: string
+        birthdate: string,
+        gender: string,
+        work: string
     }> {
         const result = this.employeesService.getCurrentEmployee(String(req.user.id));
 
@@ -136,11 +143,14 @@ export class EmployeesController {
         email: string,
         name: string,
         surname: string,
-        birthdate?: string,
-        gender?: string,
-        work?: string
+        birthdate: string,
+        gender: string,
+        work: string
     }> {
         const { email, name, surname, birthdate, gender, work } = data;
+
+        if (!email || !name || !surname)
+            throw new HttpException("Required parameters not given", 422);
         const result = this.employeesService.updateCurrentEmployee(String(req.user.id), email, name, surname, birthdate, gender, work);
 
         if (!result) {

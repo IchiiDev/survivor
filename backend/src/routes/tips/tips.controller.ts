@@ -1,7 +1,6 @@
 import { Body, Controller, Get, HttpException, Post, Req } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { TipsService } from './tips.service';
-import { createHash } from 'crypto';
 
 @Controller('tips')
 @ApiTags('tips')
@@ -13,7 +12,6 @@ export class TipsController {
 
         if (!result) {
             throw new HttpException('No tips found', 404);
-            return;
         }
         return result;
     }
@@ -21,6 +19,8 @@ export class TipsController {
     @Post()
     async createTip(@Body() data: { title: string, tip: string }) {
         const { title, tip } = data;
+        if (!title || !tip)
+            throw new HttpException("Required parameters not given", 422);
         return await this.tipsService.createTip(title, tip);
     }
 }
