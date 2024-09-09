@@ -113,31 +113,35 @@ const Customers = () => {
 				{selectedClient && (
 					<>
 					<div className='info-meetings'>
-						<table>
-							<thead>
-								<tr>
-									<th>Date</th>
-									<th>Rating</th>
-									<th>Comment</th>
-									<th>Method</th>
-								</tr>
-							</thead>
-							<tbody>
-							</tbody>
-						</table>
+						<div className="table-container">
+							<table className='table'>
+								<thead>
+									<tr>
+										<th>Date</th>
+										<th>Rating</th>
+										<th>Comment</th>
+										<th>Method</th>
+									</tr>
+								</thead>
+								<tbody>
+								</tbody>
+							</table>
+						</div>
 					</div>
 					<div className='info-payements'>
-						<table>
-							<thead>
-								<tr>
-									<th>Date</th>
-									<th>Amount</th>
-									<th>Comment</th>
-								</tr>
-							</thead>
-							<tbody>
-							</tbody>
-						</table>
+						<div className="table-container">
+							<table className='table'>
+								<thead>
+									<tr>
+										<th>Date</th>
+										<th>Amount</th>
+										<th>Comment</th>
+									</tr>
+								</thead>
+								<tbody>
+								</tbody>
+							</table>
+						</div>
 					</div>
 					</>
 				)}
