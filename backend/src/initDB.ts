@@ -6,6 +6,7 @@ import {
 } from 'mysql2/promise';
 import { db } from './main';
 import { v4 as uuidv4 } from 'uuid';
+import { Location } from './types/Event';
 
 export class DatabaseHandler {
   private connection: Connection | null = null;
@@ -121,6 +122,30 @@ export class DatabaseHandler {
           image: clothImage_uuid,
         });
       }
+      console.log('Done.');
+
+      // fetch payments history
+      console.log('Fetching payments...');
+      const payments = await fetch(
+        `${process.env.API_URL}/customers/${customer.id}/payments_history`,
+        {
+          headers: {
+            Authorization: `Bearer ${this.token}`,
+            'X-Group-Authorization': process.env.API_KEY,
+          },
+        },
+      ).then((res) => res.json());
+      console.log(`Found ${payments.length} payments. Adding to database...`);
+      for (const payment of payments) {
+        await db.query('INSERT INTO payments SET ?', {
+          customer_id: customer.id,
+          date: payment.date,
+          amount: payment.amount,
+          comment: payment.comment,
+          method: payment.payment_method,
+        });
+      }
+      console.log('Done.');
     }
   }
 
@@ -190,6 +215,108 @@ export class DatabaseHandler {
     }
   }
 
+  async populateTips(): Promise<void> {
+    console.log('EVENT: Populating tips');
+    const tips = await fetch(`${process.env.API_URL}/tips`, {
+      headers: {
+        Authorization: `Bearer ${this.token}`,
+        'X-Group-Authorization': process.env.API_KEY,
+      },
+    }).then((res) => res.json());
+
+    console.log(`Found ${tips.length} tips. Adding to database...`);
+    for (const tip of tips) {
+      console.log(`Adding tip ${tip.title}`);
+      console.log(`Tip: ${tip.tip}`);
+      await this.query('INSERT INTO tips SET ?', {
+        title: tip.title,
+        tip: tip.tip,
+      });
+    }
+    console.log('Done.');
+  }
+
+  async populateEncounters(): Promise<void> {
+    console.log('EVENT: Populating encounters');
+    const encounters = await fetch(`${process.env.API_URL}/encounters`, {
+      headers: {
+        Authorization: `Bearer ${this.token}`,
+        'X-Group-Authorization': process.env.API_KEY,
+      },
+    }).then((res) => res.json());
+    console.log(`Found ${encounters.length} encounters. Adding to database...`);
+    for (const encounter of encounters) {
+      console.log(`Fetching encounter ${encounter.id}`);
+      const data = await fetch(
+        `${process.env.API_URL}/encounters/${encounter.id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${this.token}`,
+            'X-Group-Authorization': process.env.API_KEY,
+          },
+        },
+      ).then((res) => {
+        if (res.ok) return res.json();
+        else return null;
+      });
+      if (!data) {
+        console.log('Failed to fetch data for encounter.');
+        continue;
+      }
+      console.log(`Adding encounter ${data.id}`);
+      await this.query('INSERT INTO encounters SET ?', {
+        customer_id: data.customer_id,
+        date: data.date,
+        rating: data.rating,
+        comment: data.comment,
+        source: data.source,
+      });
+      console.log('Done.');
+    }
+  }
+
+  async populateEvents(): Promise<void> {
+    console.log('EVENT: Populating events');
+    const events = await fetch(`${process.env.API_URL}/events`, {
+      headers: {
+        Authorization: `Bearer ${this.token}`,
+        'X-Group-Authorization': process.env.API_KEY,
+      },
+    }).then((res) => res.json());
+    console.log(`Found ${events.length} events. Adding to database...`);
+    for (const event of events) {
+      console.log(`Fetching event ${event.id}`);
+      const data = await fetch(`${process.env.API_URL}/events/${event.id}`, {
+        headers: {
+          Authorization: `Bearer ${this.token}`,
+          'X-Group-Authorization': process.env.API_KEY,
+        },
+      }).then((res) => {
+        if (res.ok) return res.json();
+        else return null;
+      });
+      if (!data) {
+        console.log('Failed to fetch data for event.');
+        continue;
+      }
+      console.log(`Adding event ${data.id}`);
+      await this.query('INSERT INTO events SET ?', {
+        name: data.name,
+        duration: data.duration,
+        date: data.date,
+        location: new Location({
+          x: data.location_x,
+          y: data.location_y,
+        }).toString(),
+        type: data.type,
+        employee_id: data.employee_id,
+        location_name: data.location_name,
+        max_participants: data.max_participants,
+      });
+      console.log('Done.');
+    }
+  }
+
   async populateDatabase(): Promise<void> {
     if (!this.connection)
       throw new Error('Database connection not initialized');
@@ -214,6 +341,9 @@ export class DatabaseHandler {
 
     await this.populateCustomers();
     await this.populateEmployees();
+    await this.populateTips();
+    await this.populateEncounters();
+    await this.populateEvents();
   }
 
   async init(): Promise<DatabaseHandler> {

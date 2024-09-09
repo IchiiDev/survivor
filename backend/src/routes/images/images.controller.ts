@@ -21,6 +21,7 @@ import {
 import { Response } from 'express';
 import { ImagesService } from './images.service';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { Public } from 'src/auth.guard';
 
 @Controller('images')
 @ApiTags('images')
@@ -28,6 +29,7 @@ export class ImagesController {
   constructor(private imagesService: ImagesService) {}
 
   @Get(':id')
+  @Public()
   @ApiBearerAuth('Bearer')
   @ApiParam({
     name: 'id',

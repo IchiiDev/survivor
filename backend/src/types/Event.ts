@@ -11,7 +11,7 @@ export type EventRaw = {
   location_name: string;
 };
 
-class Location {
+export class Location {
   private x: number = 0;
   private y: number = 0;
 
