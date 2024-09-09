@@ -108,12 +108,12 @@ export class CustomerController {
         email: string,
         name: string,
         surname: string,
-        birthdate?: string,
-        gender?: string,
-        description?: string,
-        astrological_sign?: string
-        phone_number?: string,
-        address?: string
+        birthdate: string,
+        gender: string,
+        description: string,
+        astrological_sign: string
+        phone_number: string,
+        address: string
     }> {
         const {
             email,

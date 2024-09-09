@@ -24,4 +24,3 @@ export class TipsController {
         return await this.tipsService.createTip(title, tip);
     }
 }
-
