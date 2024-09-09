@@ -17,7 +17,7 @@ export class CustomerController {
         gender: string,
         description: string,
         astrological_sign: string,
-        phone_number: string,
+        phone: string,
         address: string
     }[]> {
         const result = await this.customerService.getAllCustomers();
@@ -37,7 +37,7 @@ export class CustomerController {
         gender?: string,
         description?: string,
         astrological_sign?: string,
-        phone_number?: string,
+        phone?: string,
         address?: string
     }): Promise<string> {
         const {
@@ -48,7 +48,7 @@ export class CustomerController {
             gender,
             description,
             astrological_sign,
-            phone_number,
+            phone,
             address
         } = data;
 
@@ -63,7 +63,7 @@ export class CustomerController {
             gender,
             description,
             astrological_sign,
-            phone_number,
+            phone,
             address
         );
     }
@@ -78,7 +78,7 @@ export class CustomerController {
         gender: string,
         description: string,
         astrological_sign: string
-        phone_number: string,
+        phone: string,
         address: string
     }> {
         const result = this.customerService.getCustomer(id);
@@ -100,7 +100,7 @@ export class CustomerController {
             gender?: string,
             description?: string,
             astrological_sign?: string,
-            phone_number?: string,
+            phone?: string,
             address?: string
         }
     ): Promise<{
@@ -112,7 +112,7 @@ export class CustomerController {
         gender: string,
         description: string,
         astrological_sign: string
-        phone_number: string,
+        phone: string,
         address: string
     }> {
         const {
@@ -123,7 +123,7 @@ export class CustomerController {
             gender,
             description,
             astrological_sign,
-            phone_number,
+            phone,
             address
         } = data;
 
@@ -136,7 +136,7 @@ export class CustomerController {
             gender,
             description,
             astrological_sign,
-            phone_number,
+            phone,
             address
         );
 
