@@ -60,9 +60,50 @@
     margin: 10;
 }
 
-.info-meetings {
+.info-encounters {
     width: 50%;
 }
+
+.table-customer-info {
+    width: 90%;
+    height: 300px;
+    overflow-y: auto;
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    color: black;
+    border-collapse: collapse;
+}
+
+.table-customer-info thead {
+    background-color: #f0f0f0 !important;
+    color: black !important;
+    font-size: 26px;
+}
+
+.table-customer-info tbody tr:nth-child(even) {
+    background-color: #f0f0f0;
+}
+
+.table-customer-info th,
+.table-customer-info td {
+    padding: 12px 15px;
+    text-align: center;
+    color: black !important;
+    border: none;
+}
+
+.table-customer-info th {
+    font-weight: bold;
+}
+
+.table-customer-info td {
+    font-size: 20px;
+}
+
+.table-customer-info {
+    border: 1px solid #ccc;
+}
+
 .info-payements {
     width: 50%;
 }

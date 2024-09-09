@@ -7,14 +7,38 @@ const Customers = () => {
 	const [selectedClient, setSelectedClient] = useState<any | null>(null);
 	const [clientImg, setClientImg] = useState<string>("/assets/icon-character.svg");
 
-	const handleClientChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+	const [encounters, setEncounters] = useState([]);
+
+	const handleClientChange = async (event: React.ChangeEvent<HTMLSelectElement>) => {
 		const clientId = event.target.value;
 		const client = clients.find((c: any) => c.id.toString() === clientId);
 		console.log(client);
-        setSelectedClient(client);
-		// if (client)
+        await setSelectedClient(client);
+		console.log(clientId);
+		if (client)
+			await fetchEncounters(clientId);
 			// fetchImageCustomer(clientId);
 	}
+
+	const fetchCustomers = async () => {
+		try {
+		  	const response = await fetch("http://localhost:3001/customers", {
+				method: "GET",
+				headers: {
+				  "Content-Type": "application/json",
+				  "Authorization": `Bearer ${localStorage.getItem("token")}`
+				},
+			});
+		  	if (!response.ok) {
+				throw new Error(`Erreur HTTP: ${response.status}`);
+		  	}
+			const data = await response.json();
+			console.log(data);
+			setClients(data);
+		} catch (error) {
+		  console.error("Erreur lors de l'appel API", error);
+		}
+	};
 
 	const fetchImageCustomer = async (clientId: string) => {
 		try {
@@ -39,9 +63,9 @@ const Customers = () => {
 		}
 	};
 
-	const fetchCustomers = async () => {
+	const fetchEncounters = async (clientId: string) => {
 		try {
-		  	const response = await fetch("http://localhost:3001/customers", {
+		  	const response = await fetch("http://localhost:3001/encounters?isCustomer=true/" + clientId, {
 				method: "GET",
 				headers: {
 				  "Content-Type": "application/json",
@@ -53,11 +77,16 @@ const Customers = () => {
 		  	}
 			const data = await response.json();
 			console.log(data);
-			setClients(data);
+			setEncounters(data);
 		} catch (error) {
 		  console.error("Erreur lors de l'appel API", error);
 		}
 	};
+
+	const formatDate = (dateString: string) => {
+        const options: Intl.DateTimeFormatOptions = { day: '2-digit', month: '2-digit', year: 'numeric' };
+        return new Intl.DateTimeFormat('fr-FR', options).format(new Date(dateString));
+    };
 
 	useEffect(() => {
 		fetchCustomers();
@@ -112,9 +141,9 @@ const Customers = () => {
 			<div className='info-tab'>
 				{selectedClient && (
 					<>
-					<div className='info-meetings'>
+					<div className='info-encounters'>
 						<div className="table-container">
-							<table className='table'>
+							<table className='table table-customer-info'>
 								<thead>
 									<tr>
 										<th>Date</th>
@@ -124,13 +153,21 @@ const Customers = () => {
 									</tr>
 								</thead>
 								<tbody>
+									{encounters.map((encounter: any) => (
+									<tr key={encounter.id}>
+										<td>{formatDate(encounter.date)}</td>
+										<td>{encounter.rating}</td>
+										<td>{encounter.comment}</td>
+										<td>{encounter.source}</td>
+									</tr>
+									))}
 								</tbody>
 							</table>
 						</div>
 					</div>
 					<div className='info-payements'>
 						<div className="table-container">
-							<table className='table'>
+							<table className='table table-customer-info'>
 								<thead>
 									<tr>
 										<th>Date</th>
