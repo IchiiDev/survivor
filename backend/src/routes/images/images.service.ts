@@ -24,13 +24,28 @@ export class ImagesService {
     blob: Buffer,
     scope: string,
     format: 'jpeg' | 'png' | 'pdf',
+    filename?: string,
   ): Promise<string> {
     const uuid = uuidv4();
     await db.query(
-      'INSERT INTO images (uuid, scope, content, format) VALUES (?, ?, ?, ?)',
-      [uuid, scope, blob, format],
+      'INSERT INTO images (uuid, scope, content, format, filename) VALUES (?, ?, ?, ?, ?)',
+      [uuid, scope, blob, format, filename ? filename : null],
     );
 
     return uuid;
   }
+
+  async getDocuments(): Promise<Array<Document>> {
+    const [result] = await db.query(
+      'SELECT uuid, filename FROM images WHERE format="pdf"',
+    );
+
+    if (!Array.isArray(result)) {
+      return [];
+    }
+
+    return <Array<Document>>result;
+  }
 }
+
+export type Document = { uuid: string; filename: string };

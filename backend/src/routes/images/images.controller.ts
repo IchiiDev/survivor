@@ -95,7 +95,7 @@ export class ImagesController {
   })
   async createImage(
     @UploadedFile() image: Express.Multer.File,
-    @Body() body: { scope: string },
+    @Body() body: { scope: string; filename?: string },
   ): Promise<{ uuid: string }> {
     if (!image || !body.scope) throw new HttpException('Bad Request', 400);
 
@@ -107,6 +107,7 @@ export class ImagesController {
       image.buffer,
       body.scope,
       <'jpeg' | 'png' | 'pdf'>image.mimetype.split('/')[1],
+      body.filename,
     );
 
     return { uuid };
