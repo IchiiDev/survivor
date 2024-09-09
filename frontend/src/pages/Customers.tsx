@@ -17,7 +17,7 @@ const Customers = () => {
 		console.log(clientId);
 		if (client)
 			await fetchEncounters(clientId);
-			// fetchImageCustomer(clientId);
+			await fetchImageCustomer(client);
 	}
 
 	const fetchCustomers = async () => {
@@ -40,18 +40,18 @@ const Customers = () => {
 		}
 	};
 
-	const fetchImageCustomer = async (clientId: string) => {
+	const fetchImageCustomer = async (client: any) => {
 		try {
-			const urlpath = "http://localhost:3001/customers/" + clientId + "/image";
+			const urlpath = "http://localhost:3001/images/" + client.image;
 		  	const response = await fetch(urlpath, {
 				method: "GET",
 				headers: {
-				  "Content-Type": "application/json",
+				  "Content-Type": "image/image/png",
 				  "Authorization": `Bearer ${localStorage.getItem("token")}`
 				},
 			});
-			console.log(clientId);
-			console.log("http://localhost:3001/customers/${clientId}/image");
+			console.log(client.id);
+			console.log("http://localhost:3001/images/" + client.image);
 		  	if (!response.ok) {
 				throw new Error(`Erreur HTTP: ${response.status}`);
 		  	}
