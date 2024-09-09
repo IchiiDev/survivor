@@ -54,7 +54,10 @@ export class ImagesController {
       return;
     }
 
-    res.setHeader('Content-Type', `image/${result.type}`);
+    res.setHeader(
+      'Content-Type',
+      result.type === 'pdf' ? 'application/pdf' : `image/${result.type}`,
+    );
     return new StreamableFile(result.content);
   }
 
@@ -97,13 +100,13 @@ export class ImagesController {
     if (!image || !body.scope) throw new HttpException('Bad Request', 400);
 
     const mimetype = image.mimetype.split('/')[1];
-    if (mimetype !== 'jpeg' && mimetype !== 'png')
+    if (mimetype !== 'jpeg' && mimetype !== 'png' && mimetype !== 'pdf')
       throw new HttpException('Bad Request', 400);
 
     const uuid = await this.imagesService.createImage(
       image.buffer,
       body.scope,
-      <'jpeg' | 'png'>image.mimetype.split('/')[1],
+      <'jpeg' | 'png' | 'pdf'>image.mimetype.split('/')[1],
     );
 
     return { uuid };
