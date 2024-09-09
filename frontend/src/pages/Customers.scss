@@ -45,15 +45,24 @@
 }
 
 .lower-info li {
-    margin: 35px 0;
+    margin: 25px 0;
 }
 
 .info-tab {
     display: flex;
     justify-content: space-between;
-    height: 400px;
+    align-items: center;
+    width: 100%;
 }
 
 .fixed-hr {
     width: 100%;
+    margin: 10;
+}
+
+.info-meetings {
+    width: 50%;
+}
+.info-payements {
+    width: 50%;
 }

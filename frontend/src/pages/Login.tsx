@@ -36,7 +36,7 @@ const Login: React.FC = () => {
   	const handleLogin = (event: React.FormEvent) => {
     	event.preventDefault();
 		fetchData();
-		if (email === "jeanne.martin1@soul-connection.fr" && password === "naouLeA82oeirn!") {
+		if (email === "salutc.moi@gmail.com" && password === "naouLeA82oeirn!") {
 			localStorage.setItem("isAuthenticated", "true");
 			navigate("/");
     	} else {
