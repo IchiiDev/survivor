@@ -9,7 +9,7 @@ USE `survivor`;
 CREATE TABLE IF NOT EXISTS `clothes` (
   `id` int NOT NULL,
   `type` varchar(100) NOT NULL,
-  `image` varchar(100) NOT NULL
+  `image` varchar(100) DEFAULT NULL
 );
 
 CREATE TABLE IF NOT EXISTS `customers` (
@@ -31,10 +31,11 @@ CREATE TABLE IF NOT EXISTS `employees` (
   `email` varchar(100) NOT NULL,
   `surname` varchar(100) NOT NULL,
   `name` varchar(100) NOT NULL,
-  `birthdate` varchar(100) DEFAULT NULL,
+  `birth_date` date DEFAULT NULL,
   `gender` varchar(100) DEFAULT NULL,
   `work` varchar(100) DEFAULT NULL,
-  `password` varchar(100) NOT NULL
+  `password` varchar(100) NOT NULL,
+  `image` varchar(100) DEFAULT NULL
 );
 
 CREATE TABLE IF NOT EXISTS `encounters` (
@@ -77,7 +78,7 @@ CREATE TABLE IF NOT EXISTS `payments` (
 CREATE TABLE IF NOT EXISTS `tips` (
   `id` int NOT NULL,
   `title` varchar(100) NOT NULL,
-  `tip` varchar(100) NOT NULL
+  `tip` varchar(1000) NOT NULL
 );
 
 ALTER TABLE `clothes`
@@ -105,9 +106,6 @@ ALTER TABLE `payments`
 ALTER TABLE `tips`
   ADD PRIMARY KEY (`id`);
 
-ALTER TABLE `clothes`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
-
 ALTER TABLE `customers`
   MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
@@ -124,6 +122,9 @@ ALTER TABLE `payments`
   MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 ALTER TABLE `tips`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `clothes`
   MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 ALTER TABLE `encounters`
