@@ -45,15 +45,23 @@ export class EncountersController {
     }
 
     @Get(':id')
-    async getEncounter(@Param('id') id: string): Promise<{
+    async getEncounter(
+        @Param('id') id: string,
+        @Param('isCustomer') isCustomer?: string
+    ): Promise<{
         customer_id: string,
         date: string,
         rating: string,
         comment: string,
         source: string,
-    }> {
-        const result = this.encountersService.getEncounter(id);
+    }[]> {
 
+        let result: Promise<{ customer_id: string, date: string, rating: string, comment: string, source: string }[]>;
+
+        if (isCustomer && isCustomer == 'true')
+            result = this.encountersService.getEncounterByCustomer(id);
+        else
+            result = this.encountersService.getEncounter(id);
         if (!result) {
             throw new HttpException("Encounter not found", 404);
         }
