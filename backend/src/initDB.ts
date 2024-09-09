@@ -190,6 +190,27 @@ export class DatabaseHandler {
     }
   }
 
+  async populateTips(): Promise<void> {
+    console.log('EVENT: Populating tips');
+    const tips = await fetch(`${process.env.API_URL}/tips`, {
+      headers: {
+        Authorization: `Bearer ${this.token}`,
+        'X-Group-Authorization': process.env.API_KEY,
+      },
+    }).then((res) => res.json());
+
+    console.log(`Found ${tips.length} tips. Adding to database...`);
+    for (const tip of tips) {
+      console.log(`Adding tip ${tip.title}`);
+      console.log(`Tip: ${tip.tip}`);
+      await this.query('INSERT INTO tips SET ?', {
+        title: tip.title,
+        tip: tip.tip,
+      });
+    }
+    console.log('Done.');
+  }
+
   async populateDatabase(): Promise<void> {
     if (!this.connection)
       throw new Error('Database connection not initialized');
@@ -212,8 +233,9 @@ export class DatabaseHandler {
     }).then((res) => res.json());
     this.token = result.access_token;
 
-    await this.populateCustomers();
-    await this.populateEmployees();
+    // await this.populateCustomers();
+    // await this.populateEmployees();
+    await this.populateTips();
   }
 
   async init(): Promise<DatabaseHandler> {

@@ -78,7 +78,7 @@ CREATE TABLE IF NOT EXISTS `payments` (
 CREATE TABLE IF NOT EXISTS `tips` (
   `id` int NOT NULL,
   `title` varchar(100) NOT NULL,
-  `tip` varchar(100) NOT NULL
+  `tip` varchar(1000) NOT NULL
 );
 
 ALTER TABLE `clothes`
