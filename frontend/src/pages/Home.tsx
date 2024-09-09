@@ -24,14 +24,14 @@ const Home = () => {
 
 				if (!response.ok) {
 					navigate("/login");
-					throw new Error(`Erreur HTTP: ${response.status}`);
+					throw new Error(`Error HTTP: ${response.status}`);
 				}
 
 				const customersResponse = await response.json();
 				const total = customersResponse.length;
 				setTotalClients(total);
 		  	} catch (error) {
-			console.error("Erreur lors de l'appel API", error);
+			console.error("Error in API call", error);
 		  	}
 		};
 
@@ -47,14 +47,14 @@ const Home = () => {
 
 				if (!response.ok) {
 					navigate("/login");
-					throw new Error(`Erreur HTTP: ${response.status}`);
+					throw new Error(`Error HTTP: ${response.status}`);
 				}
 
 				const coachesResponse = await response.json();
 				const totalCoach = coachesResponse.length;
 				setTotalCoaches(totalCoach);
 		  	} catch (error) {
-			console.error("Erreur lors de l'appel API", error);
+			console.error("Error in API call", error);
 		  	}
 		};
 	fetchCustomers();
