@@ -37,6 +37,10 @@ const Sidenav = ({ manageNav }: { manageNav: () => void }) => {
                     <img className="Link-icon" src="/assets/icon-events.svg" alt="events"/>
                     <Link onClick={manageNav} to="/events">Events</Link>
                 </li>
+                <li>
+                    <img className="Link-icon" src="/assets/icon-document.svg" alt="document" />
+                    <Link onClick={manageNav} to="/document" >Document</Link>
+                </li>
             </ul>
         </div>
     )

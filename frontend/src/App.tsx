@@ -12,6 +12,7 @@ import Statistics from "./pages/Statistics";
 import Tips from "./pages/Tips";
 import Events from "./pages/Events";
 import Nopage from "./pages/Nopage";
+import Document from './pages/Document';
 
 function App() {
   	return (
@@ -27,6 +28,7 @@ function App() {
           			<Route path="/statistics" element={<Statistics />} />
           			<Route path="/tips" element={<Tips />} />
           			<Route path="/events" element={<Events />} />
+					<Route path="/document" element={<Document />} />
           			<Route path="*" element={<Nopage />} />
         		</Route>
       		</Routes>
