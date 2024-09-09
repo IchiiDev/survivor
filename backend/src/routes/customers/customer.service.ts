@@ -34,8 +34,6 @@ export class CustomersService {
         }
         return null;
     }
-    return null;
-  }
 
   async createCustomer(
     email: string,
