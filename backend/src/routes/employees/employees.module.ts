@@ -3,8 +3,8 @@ import { EmployeesController } from './employees.controller';
 import { EmployeesService } from './employees.service';
 
 @Module({
-    imports: [],
-    controllers: [EmployeesController],
-    providers: [EmployeesService],
+  imports: [],
+  controllers: [EmployeesController],
+  providers: [EmployeesService],
 })
-export class EmployeesModule { }
+export class EmployeesModule {}

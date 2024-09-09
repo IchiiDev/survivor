@@ -3,8 +3,8 @@ import { EncountersController } from './encounters.controller';
 import { EncountersService } from './encounters.service';
 
 @Module({
-    imports: [],
-    controllers: [EncountersController],
-    providers: [EncountersService],
+  imports: [],
+  controllers: [EncountersController],
+  providers: [EncountersService],
 })
-export class EncountersModule { }
+export class EncountersModule {}

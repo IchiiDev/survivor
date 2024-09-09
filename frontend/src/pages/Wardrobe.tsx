@@ -59,7 +59,6 @@ const Wardrobe = () => {
     return (
     	<div>
 			<Titlebox title="Wardrobe"></Titlebox>
-        	<h1 className="basic-text-color wardrobe">Wardrobe</h1>
 			<div className="wardrobe-container">
 				<div className="select-client-container">
       	      		<div className="select is-responsive">
