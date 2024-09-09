@@ -9,9 +9,32 @@ import {
   Put,
   Request as Req,
 } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import {
+  ApiBody,
+  ApiProperty,
+  ApiPropertyOptional,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { EmployeesService } from './employees.service';
 import { Request } from 'express';
+
+export class Employee {
+  @ApiProperty()
+  id: string;
+  @ApiProperty()
+  email: string;
+  @ApiProperty()
+  name: string;
+  @ApiProperty()
+  surname: string;
+  @ApiPropertyOptional()
+  birthdate?: string;
+  @ApiPropertyOptional()
+  gender?: string;
+  @ApiPropertyOptional()
+  work?: string;
+}
 
 @Controller('employees')
 @ApiTags('employees')
@@ -19,6 +42,11 @@ export class EmployeesController {
   constructor(private readonly employeesService: EmployeesService) {}
 
   @Get()
+  @ApiResponse({
+    status: 200,
+    description: 'Return all employees',
+    type: [Employee],
+  })
   async getAllEmployees(): Promise<
     {
       id: string;
@@ -39,6 +67,20 @@ export class EmployeesController {
   }
 
   @Post()
+  @ApiBody({
+    schema: {
+      type: 'object',
+      required: ['email', 'name', 'surname'],
+      properties: {
+        email: { type: 'string' },
+        name: { type: 'string' },
+        surname: { type: 'string' },
+        birthdate: { type: 'string' },
+        gender: { type: 'string' },
+        work: { type: 'string' },
+      },
+    },
+  })
   async createEmployee(
     @Body()
     data: {
@@ -62,15 +104,7 @@ export class EmployeesController {
   }
 
   @Get(':id')
-  async getEmployee(@Param('id') id: string): Promise<{
-    id: string;
-    email: string;
-    name: string;
-    surname: string;
-    birthdate?: string;
-    gender?: string;
-    work?: string;
-  }> {
+  async getEmployee(@Param('id') id: string): Promise<Employee> {
     const result = this.employeesService.getEmployee(id);
 
     if (!result) {
@@ -83,23 +117,8 @@ export class EmployeesController {
   async updateEmployee(
     @Param('id') id: string,
     @Body()
-    data: {
-      email: string;
-      name: string;
-      surname: string;
-      birthdate?: string;
-      gender?: string;
-      work?: string;
-    },
-  ): Promise<{
-    id: string;
-    email: string;
-    name: string;
-    surname: string;
-    birthdate?: string;
-    gender?: string;
-    work?: string;
-  }> {
+    data: Employee,
+  ): Promise<Employee> {
     const { email, name, surname, birthdate, gender, work } = data;
     const result = this.employeesService.updateEmployee(
       id,
@@ -127,15 +146,7 @@ export class EmployeesController {
   }
 
   @Get('me')
-  async getCurrentEmployee(@Req() req: Request): Promise<{
-    id: string;
-    email: string;
-    name: string;
-    surname: string;
-    birthdate?: string;
-    gender?: string;
-    work?: string;
-  }> {
+  async getCurrentEmployee(@Req() req: Request): Promise<Employee> {
     const result = this.employeesService.getCurrentEmployee(
       String(req.user.id),
     );
@@ -150,23 +161,8 @@ export class EmployeesController {
   async updateCurrentEmployee(
     @Req() req: Request,
     @Body()
-    data: {
-      email: string;
-      name: string;
-      surname: string;
-      birthdate?: string;
-      gender?: string;
-      work?: string;
-    },
-  ): Promise<{
-    id: string;
-    email: string;
-    name: string;
-    surname: string;
-    birthdate?: string;
-    gender?: string;
-    work?: string;
-  }> {
+    data: Employee,
+  ): Promise<Employee> {
     const { email, name, surname, birthdate, gender, work } = data;
     const result = this.employeesService.updateCurrentEmployee(
       String(req.user.id),
