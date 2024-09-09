@@ -1,30 +1,29 @@
-import { Outlet, Navigate, useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import "./pages.scss"
 import Sidenav from "../components/Sidenav"
 import { useEffect, useState } from "react";
 
 const Layout = () => {
-	const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
-	const [loading, setLoading] = useState(true);
+	const [loading, setLoading] = useState<boolean>(true);
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		const auth = localStorage.getItem("isAuthenticated");
-		setIsAuthenticated(auth === "true");
-		setLoading(false)
-	}, []);
+	  const token = localStorage.getItem("token");
+	  const auth = localStorage.getItem("isAuthenticated");
+
+	if (token === null || auth !== "true") {
+		navigate("/login");
+	  }
+	  setLoading(false);
+	}, [navigate]);
 
 	const handleLogout = () => {
 		localStorage.setItem("isAuthenticated", "false");
 		navigate("/login");
   	};
 
-
 	if (loading) {
 			return <button className="button is-info is-fullwidth is-loading loading-screen">Loading</button>;
-	}
-	if (isAuthenticated === false) {
-		return <Navigate to="/login" />;
 	}
 
 	function manageNav() {

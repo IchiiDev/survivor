@@ -8,32 +8,35 @@ const Compatibility: React.FC = () => {
 	const [secondSelectedClient, setSecondSelectedClient] = useState<string | null>(null);
 	const [compatibilityValue, setCompatibilityValue] = useState<string | null>(null);
 	const [data, setData] = useState<any[]>([]);
-	const apiUrlLogin = "http://localhost:3001/customers";
+	const apiUrlCust = "http://localhost:3001/customers";
 	const token = localStorage.getItem("token")
 
-	const fetchCustomers = async () => {
-		try {
-		  	const response = await fetch(apiUrlLogin, {
-				method: "GET",
-				headers: {
-				  "Content-Type": "application/json",
-				  "Authorization": `Bearer ${token}`
-				},
-			});
+	useEffect(() => {
+		const fetchCustomers = async () => {
+			try {
+			  	const response = await fetch(apiUrlCust, {
+					method: "GET",
+					headers: {
+					  "Content-Type": "application/json",
+					  "Authorization": `Bearer ${token}`
+					},
+				});
 
-		  	if (!response.ok) {
-				throw new Error(`Erreur HTTP: ${response.status}`);
-		  	}
-			const customersResponse = await response.json();
-			const updatedClients = customersResponse.map((customer: { name: string; surname: string }) =>
-				`${customer.name} ${customer.surname}`
-			);
-			setData(customersResponse)
-			setClients(updatedClients);
-		} catch (error) {
-		  console.error("Erreur lors de l'appel API", error);
-		}
-	};
+			  	if (!response.ok) {
+					throw new Error(`Error HTTP: ${response.status}`);
+			  	}
+				const customersResponse = await response.json();
+				const updatedClients = customersResponse.map((customer: { name: string; surname: string }) =>
+					`${customer.name} ${customer.surname}`
+				);
+				setData(customersResponse)
+				setClients(updatedClients);
+			} catch (error) {
+			  console.error("Error on API call", error);
+			}
+		};
+	fetchCustomers();
+	}, [apiUrlCust, token]);
 	const findAstrologicalSign = (fullName: string | null) => {
 		if (!fullName || !data)
 			return null;
@@ -44,11 +47,7 @@ const Compatibility: React.FC = () => {
 		);
 
 		return client ? client.astrological_sign : null;
-	  };
-
-	useEffect(() => {
-		fetchCustomers();
-	}, []);
+	};
 
 	const handleFirstSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
 		setFirstSelectedClient(event.target.value);
