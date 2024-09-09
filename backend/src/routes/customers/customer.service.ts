@@ -3,39 +3,37 @@ import { db } from '../../main';
 
 @Injectable()
 export class CustomersService {
-  async getAllCustomers(): Promise<
-    | {
-        id: string;
-        email: string;
-        name: string;
-        surname: string;
-        birthdate?: string;
-        gender?: string;
-        description?: string;
-        astrological_sign?: string;
-        phone_number?: string;
-        address?: string;
-      }[]
-    | null
-  > {
-    const result = await db.query('SELECT * FROM customers');
+    async getAllCustomers(): Promise<{
+        id: string,
+        email: string,
+        name: string,
+        surname: string,
+        birthdate?: string,
+        gender?: string,
+        description?: string,
+        astrological_sign?: string,
+        phone?: string,
+        address?: string
+    }[]
+        | null> {
+        const result = await db.query('SELECT * FROM customers');
 
-    if (Array.isArray(result[0])) {
-      return result[0].map((row: any) => ({
-        id: row.id,
-        email: row.email,
-        name: row.name,
-        surname: row.surname,
-        birthdate: row.birthdate,
-        gender: row.gender,
-        description: row.description,
-        astrological_sign: row.astrological_sign,
-        phone_number: row.phone_number,
-        address: row.address,
-      }));
+        if (Array.isArray(result[0])) {
+            return result[0].map((row: any) => ({
+                id: row.id,
+                email: row.email,
+                name: row.name,
+                surname: row.surname,
+                birthdate: row.birthdate,
+                gender: row.gender,
+                description: row.description,
+                astrological_sign: row.astrological_sign,
+                phone: row.phone,
+                address: row.address
+            }));
+        }
+        return null;
     }
-    return null;
-  }
 
   async createCustomer(
     email: string,

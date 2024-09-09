@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import Titlebox from "../components/Titlebox"
 import './Wardrobe.scss';
 
 const Wardrobe = () => {
@@ -28,7 +29,7 @@ const Wardrobe = () => {
 	};
     return (
     	<div>
-        	<h1 className="basic-text-color wardrobe">Wardrobe</h1>
+			<Titlebox title="Wardrobe"></Titlebox>
 			<div className="wardrobe-container">
 				<div className="select-client-container">
       	      		<div className="select is-responsive">
