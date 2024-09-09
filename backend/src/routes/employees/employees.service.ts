@@ -84,12 +84,12 @@ export class EmployeesService {
     async updateEmployee(
         id: string,
         email?: string,
+        password?: string,
         name?: string,
         surname?: string,
         birthdate?: string,
         gender?: string,
         work?: string,
-        password?: string
     ): Promise<{
         id: string,
         email: string,
