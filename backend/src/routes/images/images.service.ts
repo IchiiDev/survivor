@@ -23,7 +23,7 @@ export class ImagesService {
   async createImage(
     blob: Buffer,
     scope: string,
-    format: 'jpeg' | 'png',
+    format: 'jpeg' | 'png' | 'pdf',
   ): Promise<string> {
     const uuid = uuidv4();
     await db.query(

@@ -8,12 +8,12 @@ export class CustomersService {
         email: string,
         name: string,
         surname: string,
-        birthdate?: string,
-        gender?: string,
-        description?: string,
-        astrological_sign?: string,
-        phone?: string,
-        address?: string
+        birthdate: string,
+        gender: string,
+        description: string,
+        astrological_sign: string,
+        phone: string,
+        address: string
     }[]
         | null> {
         const result = await db.query('SELECT * FROM customers');
@@ -35,95 +35,157 @@ export class CustomersService {
         return null;
     }
 
-  async createCustomer(
-    email: string,
-    name: string,
-    surname: string,
-    birthdate?: string,
-    gender?: string,
-    description?: string,
-    astrological_sign?: string,
-    phone_number?: string,
-    address?: string,
-  ): Promise<string> {
-    await db.query(
-      'INSERT INTO customers ( email, name, surname, birthdate, gender, description, astrological_sign, phone_number, address ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
-      [
-        email,
-        name,
-        surname,
-        birthdate,
-        gender,
-        description,
-        astrological_sign,
-        phone_number,
-        address,
-      ],
-    );
-    return 'New customer created';
-  }
+    async createCustomer(
+        email: string,
+        name: string,
+        surname: string,
+        birthdate?: string,
+        gender?: string,
+        description?: string,
+        astrological_sign?: string,
+        phone?: string,
+        address?: string
+    ): Promise<string> {
+        let query = 'INSERT INTO customers ( email, name, surname';
+        let values = ' VALUES (?, ?, ?';
+        let params = [email, name, surname];
 
-  async getCustomer(id: string): Promise<{
-    id: string;
-    email: string;
-    name: string;
-    surname: string;
-    birthdate?: string;
-    gender?: string;
-    description?: string;
-    astrological_sign?: string;
-    phone_number?: string;
-    address?: string;
-  }> {
-    const result = await db.query('SELECT * FROM customers WHERE id=?', id);
+        if (birthdate) {
+            query += ', birthdate';
+            values += ', ?';
+            params.push(birthdate);
+        }
+        if (gender) {
+            query += ', gender';
+            values += ', ?';
+            params.push(gender);
+        }
+        if (description) {
+            query += ', description';
+            values += ', ?';
+            params.push(description);
+        }
+        if (astrological_sign) {
+            query += ', astrological_sign';
+            values += ', ?';
+            params.push(astrological_sign);
+        }
+        if (phone) {
+            query += ', phone';
+            values += ', ?';
+            params.push(phone);
+        }
+        if (address) {
+            query += ', address';
+            values += ', ?';
+            params.push(address);
+        }
+        query += ' )';
+        values += ')';
+        await db.query(
+            query + values,
+            params
+        );
+        return 'New customer created';
+    }
 
-    return result[0][0];
-  }
+    async getCustomer(id: string): Promise<{
+        id: string,
+        email: string,
+        name: string,
+        surname: string,
+        birthdate: string,
+        gender: string,
+        description: string,
+        astrological_sign: string,
+        phone: string,
+        address: string
+    }> {
+        const result = await db.query('SELECT * FROM customers WHERE id=?', id);
 
-  async updateCustomer(
-    id: string,
-    email: string,
-    name: string,
-    surname: string,
-    birthdate?: string,
-    gender?: string,
-    description?: string,
-    astrological_sign?: string,
-    phone_number?: string,
-    address?: string,
-  ): Promise<{
-    id: string;
-    email: string;
-    name: string;
-    surname: string;
-    birthdate?: string;
-    gender?: string;
-    description?: string;
-    astrological_sign?: string;
-    phone_number?: string;
-    address?: string;
-  } | null> {
-    await db.query(
-      'UPDATE customers SET email=?, name=?, surname=?, birthdate=?, gender=?, description=?, astrological_sign=?, phone_number=?, address=? WHERE id=?',
-      [
-        email,
-        name,
-        surname,
-        birthdate,
-        gender,
-        description,
-        astrological_sign,
-        phone_number,
-        address,
-        id,
-      ],
-    );
-    const result = await db.query('SELECT * FROM customers WHERE id=?', id);
-    return result[0][0];
-  }
+        return result[0][0];
+    }
 
-  async deleteCustomer(id: string): Promise<string> {
-    await db.query('DELETE FROM customers WHERE id=?', id);
-    return `Customer with id ${id} successfully deleted`;
-  }
+    async updateCustomer(
+        id: string,
+        email?: string,
+        name?: string,
+        surname?: string,
+        birthdate?: string,
+        gender?: string,
+        description?: string,
+        astrological_sign?: string,
+        phone?: string,
+        address?: string
+    ): Promise<{
+        id: string,
+        email: string,
+        name: string,
+        surname: string,
+        birthdate: string,
+        gender: string,
+        description: string,
+        astrological_sign: string
+        phone: string,
+        address: string
+    } | null> {
+        let query = 'UPDATE customers SET ';
+        let params = [];
+
+        if (!email && !name && !surname && !birthdate && !gender && !description && !astrological_sign && !phone && !address)
+            return null;
+        if (email) {
+            query += 'email=?, ';
+            params.push(email);
+        }
+        if (name) {
+            query += 'name=?, ';
+            params.push(name);
+        }
+        if (surname) {
+            query += 'surname=?, ';
+            params.push(surname);
+        }
+        if (birthdate) {
+            query += 'birthdate=?, ';
+            params.push(birthdate);
+        }
+        if (gender) {
+            query += 'gender=?, ';
+            params.push(gender);
+        }
+        if (description) {
+            query += 'description=?, ';
+            params.push(description);
+        }
+        if (astrological_sign) {
+            query += 'astrological_sign=?, ';
+            params.push(astrological_sign);
+        }
+        if (phone) {
+            query += 'phone=?, ';
+            params.push(phone);
+        }
+        if (address) {
+            query += 'address=?, ';
+            params.push(address);
+        }
+        query = query.slice(0, -2);
+        query += ' WHERE id=?';
+        params.push(id);
+        await db.query(
+            query,
+            params
+        );
+        const result = await db.query(
+            'SELECT * FROM customers WHERE id=?',
+            id
+        );
+        return result[0][0];
+    }
+
+    async deleteCustomer(id: string): Promise<string> {
+        await db.query('DELETE FROM customers WHERE id=?', id);
+        return `Customer with id ${id} successfully deleted`;
+    }
 }
