@@ -34,6 +34,26 @@ const Wardrobe = () => {
 		}
 	};
 
+	const fetchImageCustomer = async (client: any) => {
+		try {
+			const urlpath = "http://localhost:3001/images/" + client.image;
+		  	const response = await fetch(urlpath, {
+				method: "GET",
+				headers: {
+				  "Authorization": `Bearer ${localStorage.getItem("token")}`
+				},
+			});
+		  	if (!response.ok) {
+				throw new Error(`Erreur HTTP: ${response.status}`);
+		  	}
+			const blob = await response.blob();
+			const imageUrl = URL.createObjectURL(blob);
+			setClientImg(imageUrl);
+		} catch (error) {
+		  console.error("Erreur lors de l'appel API", error);
+		}
+	};
+
 	const changeClothe = (type: keyof typeof clothes, direction: number) => {
         setIndices(prevIndices => {
             const newIndex = prevIndices[type] + direction;
@@ -45,12 +65,13 @@ const Wardrobe = () => {
         });
     };
 
-	const handleClientChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+	const handleClientChange = async (event: React.ChangeEvent<HTMLSelectElement>) => {
 		const clientId = event.target.value;
 		const client = clients.find((c: any) => c.id.toString() === clientId);
 		console.log(client);
 		setSelectedClient(client);
-		setClientImg("/assets/icon-customer-service.svg"); // selectedClient.img
+		if (client)
+			await fetchImageCustomer(client);
 	};
 
 	useEffect(() => {

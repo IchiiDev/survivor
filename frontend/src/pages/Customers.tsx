@@ -46,18 +46,15 @@ const Customers = () => {
 		  	const response = await fetch(urlpath, {
 				method: "GET",
 				headers: {
-				  "Content-Type": "image/image/png",
 				  "Authorization": `Bearer ${localStorage.getItem("token")}`
 				},
 			});
-			console.log(client.id);
-			console.log("http://localhost:3001/images/" + client.image);
 		  	if (!response.ok) {
 				throw new Error(`Erreur HTTP: ${response.status}`);
 		  	}
-			const data = await response.json();
-			console.log(data);
-			setClientImg(data);
+			const blob = await response.blob();
+			const imageUrl = URL.createObjectURL(blob);
+			setClientImg(imageUrl);
 		} catch (error) {
 		  console.error("Erreur lors de l'appel API", error);
 		}
