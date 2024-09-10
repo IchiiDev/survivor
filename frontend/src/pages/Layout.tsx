@@ -96,7 +96,7 @@ const Layout = () => {
 				<img onClick={manageNav} className="navbar-item menu-button" src="/assets/icon-menu.svg" alt="menu"/>
 				<button onClick={handleSetting} className="button setting">
 					<img src="assets/setting-icon.svg" alt="Settings"/>
-				</button>x
+				</button>
 				{showPopup && (
                 	<div className="popup">
                 	    <div className="popup-inner">
