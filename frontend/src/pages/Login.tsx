@@ -33,7 +33,7 @@ const Login: React.FC = () => {
 		  	}
 			const rawResponse = await response.json();
 			localStorage.setItem("token", rawResponse.token);
-
+			console.log(`Token from fetch: ${rawResponse.token}`);
 		} catch (error) {
 		  console.error("Error on API call", error);
 		}
@@ -47,6 +47,7 @@ const Login: React.FC = () => {
 			await fetchData();
 
 			const token = localStorage.getItem("token");
+			console.log("After fetch : ", token);
 
 			if (token) {
 				localStorage.setItem("isAuthenticated", "true");

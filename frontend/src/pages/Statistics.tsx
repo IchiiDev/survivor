@@ -52,7 +52,12 @@ const Statistics = () => {
 	const [valentines2021Flower, setValentines2021Flower] = useState<Number>(0);
 	const [valentines2022Flower, setValentines2022Flower] = useState<Number>(0);
 	const [valentines2023Flower, setValentines2023Flower] = useState<Number>(0);
+	const [eventCounters, setEventCounters] = useState(Array(12).fill(0));
+	const [encounterCounters, setEncounterCounters] = useState(Array(12).fill(0));
+	const [encounterRating, setEncounterRating] = useState(Array(5).fill(0));
 	const apiUrlCust = "http://localhost:3001/customers";
+	const apiUrlEvent = "http://localhost:3001/events";
+	const apiUrlEncounters = "http://localhost:3001/encounters";
 	const token = localStorage.getItem("token")
 
 	useEffect(() => {
@@ -100,8 +105,6 @@ const Statistics = () => {
 				const birth11 = customersResponse.filter((customer: { birthdate: string }) => customer.birthdate.split('-')[1] === "11").length;
 				const birth12 = customersResponse.filter((customer: { birthdate: string }) => customer.birthdate.split('-')[1] === "12").length;
 
-				console.log("a", astro1, " ", astro2, " ", astro3, " ", astro4, " ", astro5, " ", astro6, " ", astro7, " ", astro8, " ", astro9, " ", astro10, " ", astro11, " ", astro12)
-				console.log("b", birth1, " ", birth2, " ", birth3, " ", birth4, " ", birth5, " ", birth6, " ", birth7, " ", birth8, " ", birth9, " ", birth10, " ", birth11, " ", birth12)
 				setFemaleCount(female);
 				setMaleCount(male);
 				setOtherCount(other);
@@ -187,24 +190,97 @@ const Statistics = () => {
 				console.error("Error in file import", error);
 			}
 		};
+		const fetchEvents = async () => {
+			try {
+			  	const response = await fetch(apiUrlEvent, {
+					method: 'GET',
+					headers: {
+				  		'Content-Type': 'application/json',
+				  		'Authorization': `Bearer ${token}`,
+					},
+			  	});
+			  	if (!response.ok) {
+					throw new Error(`Error HTTP: ${response.status}`);
+			  	}
+			  	const eventResponse = await response.json();
+			  	setEventCounters((prevCounters) => {
+					const newCounters = [...prevCounters];
+					eventResponse.forEach((event:any) => {
+				  		const eventDate = new Date(event.date);
+				  		const year = eventDate.getFullYear();
+				  		if (year === 2024) {
+							const month = eventDate.getMonth();
+							newCounters[month] += 1;
+				  		}
+					});
+					return newCounters;
+			  	});
+			} catch (error) {
+			  console.error('Error fetching events:', error);
+			}
+		};
+		const fetchEncounters = async () => {
+			try {
+			  	const response = await fetch(apiUrlEncounters, {
+					method: 'GET',
+					headers: {
+				  		'Content-Type': 'application/json',
+				  		'Authorization': `Bearer ${token}`,
+					},
+			  	});
+			  	if (!response.ok) {
+					throw new Error(`Error HTTP: ${response.status}`);
+			  	}
+			  	const encounterResponse = await response.json();
+			  	setEncounterCounters(() => {
+					const newCounters = Array(12).fill(0);
+					encounterResponse.forEach((encounter:any) => {
+				  		const encounterDate = new Date(encounter.date);
+				  		const year = encounterDate.getFullYear();
+				  			if (year === 2024) {
+								const month = encounterDate.getMonth();
+								newCounters[month] += 1;
+				  			}
+					});
+				return newCounters;
+			  	});
+
+			  	setEncounterRating(() => {
+					const newRatings = Array(5).fill(0);
+					encounterResponse.forEach((encounter:any) => {
+					  	const rating = encounter.rating;
+					  	if (rating >= 1 && rating <= 5) {
+							newRatings[rating - 1] += 1;
+					  	}
+					});
+					return newRatings;
+			  	});
+			} catch (error) {
+			  console.error('Error fetching encounters:', error);
+			}
+		  };
 	fetchCustomers();
 	fetchValentinesData();
-	}, [apiUrlCust, token]);
+	fetchEvents();
+	fetchEncounters();
+	}, [apiUrlCust, apiUrlEvent, apiUrlEncounters, token]);
 
-	const newCustomers = {
-		labels: [""],
+	const encounters = {
+		labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
 		datasets: [{
-			label: "Meetings",
-			data: [],
-			backgroundColor: "rgba(75, 192, 192, 1)",
-	},],};
-	const event = {
-		labels: [""],
+		  label: "Meetings organized per month",
+		  data: encounterCounters,
+		  backgroundColor: "rgba(75, 192, 192, 1)",
+		}],
+	  };
+	  const event = {
+		labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
 		datasets: [{
-			label: "Event organized",
-			data: [],
-			backgroundColor: "rgba(75, 192, 192, 1)",
-	},],};
+		  label: "Events organized per month",
+		  data: eventCounters,
+		  backgroundColor: "rgba(75, 192, 192, 1)",
+		}],
+	  };
 	const birthday = {
 		labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
 		datasets: [{
@@ -293,21 +369,25 @@ const Statistics = () => {
 		],
 	};
 
-	const otherData = {
-		label: "Genders",
-		labels: ["Women", "Men", "Others"],
+	const ratingData = {
+		label: "Ratings",
+		labels: ["1", "2", "3", "4", "5"],
 		datasets: [
 	  		{
-				data: [femaleCount, maleCount, otherCount],
+				data: encounterRating,
 				backgroundColor: [
-		  			"rgba(255, 105, 180, 1)",
-		  			"rgba(0, 255, 255, 1)",
-					"rgba(128, 128, 128, 1)",
+		  			"rgba(255, 0, 0, 1)",
+		  			"rgba(255, 165, 0, 1)",
+					"rgba(255, 255, 0, 1)",
+					"rgba(144, 238, 144, 1)",
+					"rgba(0, 100, 0, 1)"
 				],
 				borderColor: [
-					"rgba(255, 105, 180, 1)",
-					"rgba(0, 255, 255, 1)",
-					"rgba(128, 128, 128, 1)",
+					"rgba(255, 0, 0, 1)",
+					"rgba(255, 165, 0, 1)",
+				  	"rgba(255, 255, 0, 1)",
+				  	"rgba(144, 238, 144, 1)",
+				  	"rgba(0, 100, 0, 1)"
 				],
 				borderWidth: 1,
 	  		},
@@ -340,6 +420,16 @@ const Statistics = () => {
 		  	},
 		},
 	};
+	const optionsRating = {
+		responsive: true,
+		maintainAspectRatio: false,
+		plugins: {
+		  	legend: { display: false, },
+		  	title: { display: true, text: "Rating charts",
+				font: { size: 18, },
+		  	},
+		},
+	};
 
     return (
     	<>
@@ -352,14 +442,14 @@ const Statistics = () => {
 			</div>
 			<div className="box-pie">
 				<div style={{ height: "250px", width: "250px" }}>
-      				<Pie data={genderData} options={optionsGender} />
+      				<Bar data={moneyUsed} options={options} />
     			</div>
 			</div>
 			<div className="box-pie">
-				<div style={{ height: "250px", width: "250px" }}>
-      				<Pie data={otherData} options={optionsGender} />
-    			</div>
-			</div>
+          		<div style={{ height: "250px" }}>
+					<Bar data={encounters} options={options} />
+          		</div>
+        	</div>
 		</div>
       	<div className="container">
         	<div className="box-pie">
@@ -369,26 +459,26 @@ const Statistics = () => {
         	</div>
 			<div className="box-pie">
           		<div style={{ height: "250px" }}>
-					<Bar data={newCustomers} options={options} />
-          		</div>
-        	</div>
-			<div className="box">
-          		<div style={{ height: "250px" }}>
 					<Bar data={birthday} options={options} />
-          		</div>
-        	</div>
-      	</div>
-      	<div className="container">
-		  	<div className="box">
-          		<div style={{ height: "250px" }}>
-					<Bar data={celebrating} options={options} />
           		</div>
         	</div>
 			<div className="box-pie">
 				<div style={{ height: "250px", width: "250px" }}>
-      				<Bar data={moneyUsed} options={options} />
+      				<Pie data={genderData} options={optionsGender} />
     			</div>
 			</div>
+      	</div>
+      	<div className="container">
+		  	<div className="box-pie">
+				<div style={{ height: "250px", width: "250px" }}>
+      				<Pie data={ratingData} options={optionsRating} />
+    			</div>
+			</div>
+		  	<div className="box-pie">
+          		<div style={{ height: "250px" }}>
+					<Bar data={celebrating} options={options} />
+          		</div>
+        	</div>
 			<div className="box-pie">
 				<div style={{ height: "250px", width: "250px" }}>
       				<Bar data={flowersGiven} options={options} />

@@ -6,8 +6,11 @@ import "./Stats.scss";
 const Home = () => {
 	const [totalClients, setTotalClients] = useState<number>(0);
 	const [totalCoaches, setTotalCoaches] = useState<number>(0);
+	const [totalEvent, setTotalEvent] = useState<number>(0);
+	const [events, setEvents] = useState<any[]>([]);
 	const apiUrlCust = "http://localhost:3001/customers";
 	const apiUrlCoaches = "http://localhost:3001/employees";
+	const apiUrlEvent = "http://localhost:3001/events";
 	const token = localStorage.getItem("token")
 	const navigate = useNavigate();
 
@@ -46,7 +49,6 @@ const Home = () => {
 				});
 
 				if (!response.ok) {
-					navigate("/login");
 					throw new Error(`Error HTTP: ${response.status}`);
 				}
 
@@ -57,9 +59,39 @@ const Home = () => {
 			console.error("Error in API call", error);
 		  	}
 		};
+		const fetchEvents = async () => {
+			try {
+				const response = await fetch(apiUrlEvent, {
+			  		method: "GET",
+			  		headers: {
+						"Content-Type": "application/json",
+						"Authorization": `Bearer ${token}`
+			  		},
+				});
+
+				if (!response.ok) {
+					throw new Error(`Error HTTP: ${response.status}`);
+				}
+
+				const eventResponse = await response.json();
+				const totalEvent = eventResponse.length;
+
+				const sortedEvents = eventResponse.sort(
+					(a: any, b: any) => new Date(b.date).getTime() - new Date(a.date).getTime()
+				);
+
+				const lastFiveEvents = sortedEvents.slice(0, 5);
+
+				setEvents(lastFiveEvents);
+				setTotalEvent(totalEvent);
+		  	} catch (error) {
+			console.error("Error in API call", error);
+		  	}
+		}
 	fetchCustomers();
 	fetchCoaches();
-	}, [apiUrlCust, apiUrlCoaches, navigate, token]);
+	fetchEvents();
+	}, [apiUrlCust, apiUrlCoaches, apiUrlEvent, navigate, token]);
     return (
     	<>
 		<Titlebox title=""></Titlebox>
@@ -74,7 +106,7 @@ const Home = () => {
         	</div>
         	<div className="box centered-box">
           		<h3 className="title is-4 dark-text">Events</h3>
-          		<h3 className="subtitle is-2 dark-text">126</h3>
+          		<h3 className="subtitle is-2 dark-text">{totalEvent}</h3>
         	</div>
       </div>
 
@@ -88,25 +120,15 @@ const Home = () => {
               			<th>Max Participants</th>
             		</tr>
           		</thead>
-          		<tbody>
-            		<tr>
-              			<td>Event 1</td>
-              			<td>2024-09-05</td>
-              			<td>2 hours</td>
-              			<td>100</td>
-            		</tr>
-            		<tr>
-              			<td>Event 2</td>
-              			<td>2024-09-10</td>
-              			<td>3 hours</td>
-              			<td>50</td>
-            		</tr>
-            		<tr>
-              			<td>Event 3</td>
-              			<td>2024-09-15</td>
-              			<td>1.5 hours</td>
-              			<td>200</td>
-            		</tr>
+				<tbody>
+            		{events.map((event) => (
+              			<tr key={event.id}>
+							<td>{event.name}</td>
+							<td>{new Date(event.date).toISOString().split('T')[0]}</td>
+							<td>{event.location_name}</td>
+							<td>{event.max_participants}</td>
+						</tr>
+            		))}
           		</tbody>
         	</table>
       	</div>
