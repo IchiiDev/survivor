@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 const Layout = () => {
 	const [loading, setLoading] = useState<boolean>(true);
 	const [showPopup, setShowPopup] = useState(false);
-	const apiUrlMe = "http://localhost:3001/employees/me";
+	const apiUrlMe = "http://localhost:3001/me";
 	const token = localStorage.getItem("token")
 	const navigate = useNavigate();
 
@@ -34,6 +34,11 @@ const Layout = () => {
 				  },
 				body: jsonBody,
 			});
+
+			if (response.status === 422) {
+				alert("Password Invalid");
+				return;
+			}
 
 			if (!response.ok) {
 				throw new Error(`Error HTTP: ${response.status}`);
