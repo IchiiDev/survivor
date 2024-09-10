@@ -63,8 +63,7 @@ CREATE TABLE IF NOT EXISTS `images` (
   `uuid` varchar(100) NOT NULL,
   `scope` varchar(100) NOT NULL,
   `content` mediumblob NOT NULL,
-  `format` varchar(10) NOT NULL,
-  `filename` varchar(100) DEFAULT NULL
+  `format` varchar(10) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS `payments` (
@@ -80,6 +79,14 @@ CREATE TABLE IF NOT EXISTS `tips` (
   `id` int NOT NULL,
   `title` varchar(100) NOT NULL,
   `tip` varchar(1000) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS `documents` (
+  `id` int NOT NULL,
+  `title` varchar(100) NOT NULL,
+  `uuid` varchar(100) NOT NULL,
+  `owner_id` int NOT NULL,
+  `shared_id` int NOT NULL
 );
 
 ALTER TABLE `clothes`
@@ -107,6 +114,11 @@ ALTER TABLE `payments`
 ALTER TABLE `tips`
   ADD PRIMARY KEY (`id`);
 
+ALTER TABLE `documents`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `owner_id` (`owner_id`),
+  ADD KEY `shared_id` (`shared_id`);
+
 ALTER TABLE `customers`
   MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
@@ -128,6 +140,9 @@ ALTER TABLE `tips`
 ALTER TABLE `clothes`
   MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
+ALTER TABLE `documents`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+
 ALTER TABLE `encounters`
   ADD CONSTRAINT `encounters_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`);
 
@@ -136,4 +151,9 @@ ALTER TABLE `events`
 
 ALTER TABLE `payments`
   ADD CONSTRAINT `payments_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`);
+
+ALTER TABLE `documents`
+  ADD CONSTRAINT `documents_ibfk_1` FOREIGN KEY (`owner_id`) REFERENCES `employees` (`id`);
+ALTER TABLE `documents`
+  ADD CONSTRAINT `documents_ibfk_2` FOREIGN KEY (`shared_id`) REFERENCES `employees` (`id`);
 COMMIT;
