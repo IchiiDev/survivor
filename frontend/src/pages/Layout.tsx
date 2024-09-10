@@ -36,7 +36,7 @@ const Layout = () => {
 			});
 
 			if (response.status === 422) {
-				alert("Password Invalid");
+				alert("Need minimum 8 characters, 1 upcase, 1 lowcase, 1 number and 1 special");
 				return;
 			}
 
@@ -62,7 +62,7 @@ const Layout = () => {
         if (inputElement) {
             const newPassword = inputElement.value;
 			fetchMe(newPassword);
-            console.log("Nouveau mot de passe :", newPassword);
+            console.log("New password :", newPassword);
         }
         setShowPopup(false);
     };
