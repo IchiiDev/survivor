@@ -8,16 +8,17 @@ const Customers = () => {
 	const [clientImg, setClientImg] = useState<string>("/assets/icon-character.svg");
 
 	const [encounters, setEncounters] = useState([]);
+	const [payments, setPayments] = useState<any>({paymentHistory: []});
 
 	const handleClientChange = async (event: React.ChangeEvent<HTMLSelectElement>) => {
 		const clientId = event.target.value;
 		const client = clients.find((c: any) => c.id.toString() === clientId);
 		console.log(client);
         await setSelectedClient(client);
-		console.log(clientId);
 		if (client)
 			await fetchEncounters(clientId);
 			await fetchImageCustomer(client);
+			await fetchPayements(clientId);
 	}
 
 	const fetchCustomers = async () => {
@@ -33,7 +34,6 @@ const Customers = () => {
 				throw new Error(`Erreur HTTP: ${response.status}`);
 		  	}
 			const data = await response.json();
-			console.log(data);
 			setClients(data);
 		} catch (error) {
 		  console.error("Erreur lors de l'appel API", error);
@@ -75,6 +75,26 @@ const Customers = () => {
 			const data = await response.json();
 			console.log(data);
 			setEncounters(data);
+		} catch (error) {
+		  console.error("Erreur lors de l'appel API", error);
+		}
+	};
+
+	const fetchPayements = async (clientId: string) => {
+		try {
+		  	const response = await fetch("http://localhost:3001/customers/" + clientId + "?includePaymentsHistory", {
+				method: "GET",
+				headers: {
+				  "Content-Type": "application/json",
+				  "Authorization": `Bearer ${localStorage.getItem("token")}`
+				},
+			});
+		  	if (!response.ok) {
+				throw new Error(`Erreur HTTP: ${response.status}`);
+		  	}
+			const data = await response.json();
+			console.log(data);
+			setPayments(data);
 		} catch (error) {
 		  console.error("Erreur lors de l'appel API", error);
 		}
@@ -139,6 +159,7 @@ const Customers = () => {
 				{selectedClient && (
 					<>
 					<div className='info-encounters'>
+						<h2 className='basic-text-color'>Meetings</h2>
 						<div className="table-container">
 							<table className='table table-customer-info'>
 								<thead>
@@ -163,6 +184,7 @@ const Customers = () => {
 						</div>
 					</div>
 					<div className='info-payements'>
+						<h4 className='basic-text-color'>Payments History</h4>
 						<div className="table-container">
 							<table className='table table-customer-info'>
 								<thead>
@@ -173,6 +195,13 @@ const Customers = () => {
 									</tr>
 								</thead>
 								<tbody>
+									{payments.paymentHistory.map((payment: any) => (
+									<tr key={payment.id}>
+										<td>{formatDate(payment.date)}</td>
+										<td>{payment.amount}</td>
+										<td>{payment.comment}</td>
+									</tr>
+									))}
 								</tbody>
 							</table>
 						</div>
