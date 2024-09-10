@@ -12,8 +12,9 @@ export class MeService {
         gender: string,
         work: string
     }> {
+        console.log(id);
         const result = await db.query(
-            'SELECT id, email, name, surname, birthdate, gender, work FROM employees WHERE id=?',
+            'SELECT id, email, name, surname, birth_date, gender, work FROM employees WHERE id=?',
             id
         );
 
@@ -57,7 +58,7 @@ export class MeService {
             params.push(surname);
         }
         if (birthdate) {
-            query += 'birthdate=?, ';
+            query += 'birth_date=?, ';
             params.push(birthdate);
         }
         if (gender) {
