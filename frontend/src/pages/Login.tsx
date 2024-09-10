@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Login.scss";
 
@@ -8,6 +8,10 @@ const Login: React.FC = () => {
 	const [loading, setLoading] = useState<boolean>(false);
 	const apiUrlLogin = "http://localhost:3001/login";
   	const navigate = useNavigate();
+
+	useEffect(() => {
+		localStorage.removeItem("token");
+	})
 
 	const fetchData = async () => {
 		try {
@@ -29,6 +33,7 @@ const Login: React.FC = () => {
 		  	}
 			const rawResponse = await response.json();
 			localStorage.setItem("token", rawResponse.token);
+
 		} catch (error) {
 		  console.error("Error on API call", error);
 		}
