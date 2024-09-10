@@ -47,9 +47,14 @@ export class MeController {
     }> {
         const { email, password, name, surname, birthdate, gender, work } = data;
 
-        if (!password.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[\d])(?=.*[@$!%*#?&_^*-])[a-zA-Z0-9@$!%#?&_^*-]{8,}$/))
+        if (password && !password.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[\d])(?=.*[@$!%*#?&_^*-])[a-zA-Z0-9@$!%#?&_^*-]{8,}$/))
             throw new HttpException("Password isn't strong enough", 422);
-        const newPassword = bcrypt.hashSync(password, 10);
+        if (email &&
+            !email.match(
+            /^((?:[A-Za-z0-9!#$%&'*+\-\/=?^_`{|}~]|(?<=^|\.)"|"(?=$|\.|@)|(?<=".*)[ .](?=.*")|(?<!\.)\.){1,64})(@)((?:[A-Za-z0-9.\-])*(?:[A-Za-z0-9])\.(?:[A-Za-z0-9]){2,})$/,
+          ))
+            throw new HttpException("Invalid email", 422);
+        const newPassword = (password) ? bcrypt.hashSync(password, 10) : undefined;
         const result = this.meService.updateCurrentEmployee(
             String(req.user.id),
             email,
