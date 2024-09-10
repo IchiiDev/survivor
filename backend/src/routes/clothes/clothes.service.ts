@@ -6,7 +6,8 @@ export class ClothesService {
     async getClothesByType(type: string): Promise<{
         id: string,
         type: string,
-        image: string
+        image: string,
+        customerId: string
     }[] | null> {
         const result = await db.query('SELECT * FROM clothes WHERE type=?', type);
 
@@ -14,7 +15,27 @@ export class ClothesService {
             return result[0].map((row: any) => ({
                 id: row.id,
                 type: row.type,
-                image: row.type
+                image: row.image,
+                customerId: row.customerId
+            }));
+        }
+        return null;
+    }
+
+    async getClothesByCustomer(customerId: string): Promise<{
+        id: string,
+        type: string,
+        image: string,
+        customerId: string
+    }[] | null> {
+        const result = await db.query('SELECT * FROM clothes WHERE customerId=?', customerId);
+
+        if (Array.isArray(result[0])) {
+            return result[0].map((row: any) => ({
+                id: row.id,
+                type: row.type,
+                image: row.image,
+                customerId: row.customerId
             }));
         }
         return null;
