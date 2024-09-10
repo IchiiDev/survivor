@@ -7,6 +7,7 @@ import {
   Param,
   Post,
   Put,
+  Request as Req,
 } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
@@ -21,6 +22,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { CustomersService } from './customer.service';
+import { Request } from 'express';
 
 export class Customer {
   @ApiProperty()
@@ -173,8 +175,15 @@ export class CustomerController {
     description: 'The customer has been successfully found.',
     type: Customer,
   })
-  async getCustomer(@Param('id') id: string): Promise<Customer> {
-    const result = this.customerService.getCustomer(id);
+  async getCustomer(
+    @Param('id') id: string,
+    @Req() req: Request,
+  ): Promise<Customer> {
+    const result = this.customerService.getCustomer(
+      id,
+      req.query.includePaymentsHistory == '' ||
+        req.query.includePaymentsHistory == 'true',
+    );
 
     if (!result)
       throw new HttpException(`Customer with id ${id} not found`, 404);
