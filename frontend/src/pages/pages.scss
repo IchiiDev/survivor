@@ -55,7 +55,22 @@ html {
 .logout {
   position: absolute;
   top: 4%;
-  left: 90%;
+  left: 93%;
+  background-color: #ff7a7a;
+  border: 2px solid #ff3030;
+  border-radius: 10px;
+}
+
+.setting {
+  position: absolute;
+  top: 4%;
+  left: 89%;
+  width: 45px;
+  height: 45px;
+  padding: 0%;
+  background-color: #f0f0f0;
+  border: 2px solid #ccc;
+  border-radius: 10px;
 }
 
 .loading-screen {
@@ -71,4 +86,32 @@ html {
 @media screen and (max-height: 450px) {
   .sidenav {padding-top: 15px;}
   .sidenav a {font-size: 18px;}
+}
+
+.popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  border: 1px solid black;
+  padding: 20px;
+  z-index: 1000;
+}
+
+.popup-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.popup-inner input {
+  margin-bottom: 10px;
+  padding: 5px;
+}
+
+.popup-button {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
 }

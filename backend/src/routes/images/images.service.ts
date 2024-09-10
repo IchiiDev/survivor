@@ -24,20 +24,20 @@ export class ImagesService {
     blob: Buffer,
     scope: string,
     format: 'jpeg' | 'png' | 'pdf',
-    filename?: string,
   ): Promise<string> {
     const uuid = uuidv4();
     await db.query(
-      'INSERT INTO images (uuid, scope, content, format, filename) VALUES (?, ?, ?, ?, ?)',
-      [uuid, scope, blob, format, filename ? filename : null],
+      'INSERT INTO images (uuid, scope, content, format) VALUES (?, ?, ?, ?)',
+      [uuid, scope, blob, format],
     );
 
     return uuid;
   }
 
-  async getDocuments(): Promise<Array<Document>> {
+  async getDocuments(id: number): Promise<Array<Document>> {
     const [result] = await db.query(
-      'SELECT uuid, filename FROM images WHERE format="pdf"',
+      'SELECT * FROM documents WHERE owner_id=? OR shared_id=?',
+      [id, id],
     );
 
     if (!Array.isArray(result)) {
@@ -45,6 +45,25 @@ export class ImagesService {
     }
 
     return <Array<Document>>result;
+  }
+
+  async createDocument(
+    uuid: string,
+    filename: string,
+    owner: string,
+    shared: string,
+  ): Promise<{
+    uuid: string;
+    filename: string;
+    shared_with: string;
+    owner_id: string;
+  }> {
+    await db.query(
+      'INSERT INTO documents (uuid, title, owner_id, shared_id) VALUES (?, ?, ?, ?)',
+      [uuid, filename, owner, shared],
+    );
+
+    return { uuid, filename, shared_with: shared, owner_id: owner };
   }
 }
 
