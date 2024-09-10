@@ -1,12 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Login.scss";
 
 const Login: React.FC = () => {
   	const [email, setEmail] = useState("");
   	const [password, setPassword] = useState("");
+	const [loading, setLoading] = useState<boolean>(false);
 	const apiUrlLogin = "http://localhost:3001/login";
   	const navigate = useNavigate();
+
+	useEffect(() => {
+		localStorage.removeItem("token");
+	});
 
 	const fetchData = async () => {
 		try {
@@ -24,26 +29,41 @@ const Login: React.FC = () => {
 			});
 
 		  	if (!response.ok) {
-				throw new Error(`Erreur HTTP: ${response.status}`);
+				throw new Error(`Error HTTP: ${response.status}`);
 		  	}
 			const rawResponse = await response.json();
 			localStorage.setItem("token", rawResponse.token);
+
 		} catch (error) {
-		  console.error("Erreur lors de l'appel API", error);
+		  console.error("Error on API call", error);
 		}
 	};
 
-  	const handleLogin = (event: React.FormEvent) => {
+	const handleLogin = async (event: React.FormEvent) => {
     	event.preventDefault();
-		fetchData();
-		if (email === "salutc.moi@gmail.com" && password === "naouLeA82oeirn!") {
-			localStorage.setItem("isAuthenticated", "true");
-			navigate("/");
-    	} else {
-    		alert("Wrong login");
-    	}
-  	};
+		setLoading(true);
 
+		try {
+			await fetchData();
+
+			const token = localStorage.getItem("token");
+
+			if (token) {
+				localStorage.setItem("isAuthenticated", "true");
+				navigate("/");
+			} else {
+				alert("Wrong login");
+			}
+		} catch (error) {
+			alert("An error occurred during login");
+		} finally {
+			setLoading(false);
+		}
+    };
+
+	if (loading) {
+		return <button className="button is-info is-fullwidth is-loading loading-screen">Loading</button>;
+	}
   	return (
     	<div className="login-page">
     		<form onSubmit={handleLogin} className="login-form">
