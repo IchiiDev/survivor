@@ -5,6 +5,7 @@ import "./Login.scss";
 const Login: React.FC = () => {
   	const [email, setEmail] = useState("");
   	const [password, setPassword] = useState("");
+	const [loading, setLoading] = useState<boolean>(false);
 	const apiUrlLogin = "http://localhost:3001/login";
   	const navigate = useNavigate();
 
@@ -24,25 +25,34 @@ const Login: React.FC = () => {
 			});
 
 		  	if (!response.ok) {
-				throw new Error(`Erreur HTTP: ${response.status}`);
+				throw new Error(`Error HTTP: ${response.status}`);
 		  	}
 			const rawResponse = await response.json();
 			localStorage.setItem("token", rawResponse.token);
 		} catch (error) {
-		  console.error("Erreur lors de l'appel API", error);
+		  console.error("Error on API call", error);
 		}
 	};
 
   	const handleLogin = (event: React.FormEvent) => {
     	event.preventDefault();
 		fetchData();
-		if (email === "jeanne.martin1@soul-connection.fr" && password === "naouLeA82oeirn!") {
+		const token = localStorage.getItem("token");
+		if (token !== null) {
+			setLoading(true);
 			localStorage.setItem("isAuthenticated", "true");
-			navigate("/");
+			setTimeout(() => {
+				setLoading(false);
+				navigate("/");
+			}, 1000)
     	} else {
     		alert("Wrong login");
     	}
   	};
+
+	if (loading) {
+		return <button className="button is-info is-fullwidth is-loading loading-screen">Loading</button>;
+	}
 
   	return (
     	<div className="login-page">
