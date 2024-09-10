@@ -120,6 +120,7 @@ export class DatabaseHandler {
                 await db.query('INSERT INTO clothes SET ?', {
                     type: cloth.type,
                     image: clothImage_uuid,
+                    customer_id: customer.id,
                 });
             }
             console.log('Done.');
