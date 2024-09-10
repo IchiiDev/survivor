@@ -9,7 +9,8 @@ USE `survivor`;
 CREATE TABLE IF NOT EXISTS `clothes` (
   `id` int NOT NULL,
   `type` varchar(100) NOT NULL,
-  `image` varchar(100) DEFAULT NULL
+  `image` varchar(100) DEFAULT NULL,
+  `customer_id` int DEFAULT NULL
 );
 
 CREATE TABLE IF NOT EXISTS `customers` (
