@@ -7,6 +7,7 @@ import { EventsModule } from './routes/events/events.module';
 import { LoginModule } from './routes/login/login.module';
 import { ImagesModule } from './routes/images/images.module';
 import { TipsModule } from './routes/tips/tips.module';
+import { MeModule } from './routes/me/me.module';
 import { AuthGuard } from './auth.guard';
 import { JwtService } from '@nestjs/jwt';
 
@@ -20,6 +21,7 @@ import { JwtService } from '@nestjs/jwt';
         ImagesModule,
         LoginModule,
         TipsModule,
+        MeModule,
     ],
     controllers: [],
     providers: [
