@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Titlebox from "../components/Titlebox"
 import './Wardrobe.scss';
 
@@ -9,10 +9,51 @@ const Wardrobe = () => {
 		bottom: ["https://icons.veryicon.com/png/o/miscellaneous/buckle/pants-5.png", "/assets/shoe.svg"],
 		shoes: ["https://www.svgrepo.com/show/50532/shoes.svg", "/assets/shoe.svg", "/assets/boots.svg"]
 	}
-	let clients = ["Client 1", "Client 2", "Client 3"]; // Call API to get the clients
+	const [clients, setClients] = useState([]);
 	const [clientImg, setClientImg] = useState<string>("/assets/icon-character.svg");
 	const [indices, setIndices] = useState({ hat: 0, top: 0, bottom: 0, shoes: 0 });
-	const [selectedClient, setSelectedClient] = useState<string | null>(null);
+	const [selectedClient, setSelectedClient] = useState<any | null>(null);
+
+	const fetchCustomers = async () => {
+		try {
+		  	const response = await fetch("http://localhost:3001/customers", {
+				method: "GET",
+				headers: {
+				  "Content-Type": "application/json",
+				  "Authorization": `Bearer ${localStorage.getItem("token")}`
+				},
+			});
+		  	if (!response.ok) {
+				throw new Error(`Erreur HTTP: ${response.status}`);
+		  	}
+			const data = await response.json();
+			console.log(data);
+			setClients(data);
+		} catch (error) {
+		  console.error("Erreur lors de l'appel API", error);
+		}
+	};
+
+	const fetchImageCustomer = async (client: any) => {
+		try {
+			const urlpath = "http://localhost:3001/images/" + client.image;
+		  	const response = await fetch(urlpath, {
+				method: "GET",
+				headers: {
+				  "Authorization": `Bearer ${localStorage.getItem("token")}`
+				},
+			});
+		  	if (!response.ok) {
+				throw new Error(`Erreur HTTP: ${response.status}`);
+		  	}
+			const blob = await response.blob();
+			const imageUrl = URL.createObjectURL(blob);
+			setClientImg(imageUrl);
+		} catch (error) {
+		  console.error("Erreur lors de l'appel API", error);
+		}
+	};
+
 	const changeClothe = (type: keyof typeof clothes, direction: number) => {
         setIndices(prevIndices => {
             const newIndex = prevIndices[type] + direction;
@@ -23,22 +64,31 @@ const Wardrobe = () => {
             };
         });
     };
-	const handleClientChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-		  setSelectedClient(event.target.value);
-		  setClientImg("/assets/icon-customer-service.svg"); // selectedClient.img
+
+	const handleClientChange = async (event: React.ChangeEvent<HTMLSelectElement>) => {
+		const clientId = event.target.value;
+		const client = clients.find((c: any) => c.id.toString() === clientId);
+		console.log(client);
+		setSelectedClient(client);
+		if (client)
+			await fetchImageCustomer(client);
 	};
+
+	useEffect(() => {
+		fetchCustomers();
+	}, []);
     return (
     	<div>
 			<Titlebox title="Wardrobe"></Titlebox>
 			<div className="wardrobe-container">
 				<div className="select-client-container">
       	      		<div className="select is-responsive">
-      	        		<select onChange={handleClientChange} value={selectedClient || ""}>
-      	        			<option value="" disabled>Select first client</option>
-      	        			{clients.map((client, index) => (
-								  <option key={index} value={client}>
-      	        	  				{client}
-      	        				</option>
+      	        		<select onChange={handleClientChange} value={selectedClient?.id || ""}>
+      	        			<option value="" disabled>Select client</option>
+      	        			{clients.map((client: any) => (
+							<option key={client.id} value={client.id}>
+      	        	  			{client.name} {client.surname}
+      	        			</option>
       	        			))}
       	        		</select>
       	      		</div>

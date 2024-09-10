@@ -9,7 +9,8 @@ USE `survivor`;
 CREATE TABLE IF NOT EXISTS `clothes` (
   `id` int NOT NULL,
   `type` varchar(100) NOT NULL,
-  `image` varchar(100) DEFAULT NULL
+  `image` varchar(100) DEFAULT NULL,
+  `customer_id` int DEFAULT NULL
 );
 
 CREATE TABLE IF NOT EXISTS `customers` (
@@ -63,7 +64,8 @@ CREATE TABLE IF NOT EXISTS `images` (
   `uuid` varchar(100) NOT NULL,
   `scope` varchar(100) NOT NULL,
   `content` mediumblob NOT NULL,
-  `format` varchar(10) NOT NULL
+  `format` varchar(10) NOT NULL,
+  `filename` varchar(100) DEFAULT NULL
 );
 
 CREATE TABLE IF NOT EXISTS `payments` (

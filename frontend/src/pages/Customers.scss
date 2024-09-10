@@ -1,0 +1,119 @@
+.client-img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30%;
+    height: 320px;
+}
+
+.client-img img {
+    width: 150px;
+    height: 150px;
+}
+
+.info-client {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 350px;
+    width: 100%;
+}
+
+.basic-info-client {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+    height: 350px;
+    width: 70%;
+}
+
+.upper-info {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+
+.lower-info {
+    display: flex;
+    flex: 2;
+    height: 100%;
+    width: 100%;
+    align-items: center;
+}
+
+.lower-info li {
+    margin: 25px 0;
+}
+
+.info-tab {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 350px;
+}
+
+.fixed-hr {
+    width: 100%;
+    margin: 10;
+}
+
+.info-encounters {
+    height: 350px;
+    width: 50%;
+    display: flex;
+}
+
+.table-container {
+    flex: 1;
+    overflow-y: auto;
+}
+
+.table-customer-info {
+    width: 95%;
+    height: 350px;
+    overflow-y: auto;
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    color: black;
+    border-collapse: collapse;
+}
+
+.table-customer-info thead {
+    background-color: #f0f0f0 !important;
+    color: black !important;
+    font-size: 17px;
+}
+
+.table-customer-info tbody tr:nth-child(even) {
+    background-color: #f0f0f0;
+}
+
+.table-customer-info th,
+.table-customer-info td {
+    padding: 12px 15px;
+    text-align: center;
+    color: black !important;
+    border: none;
+}
+
+.table-customer-info th {
+    font-weight: bold;
+}
+
+.table-customer-info td {
+    font-size: 14px;
+}
+
+.table-customer-info {
+    border: 1px solid #ccc;
+}
+
+.info-payements {
+    height: 350px;
+    width: 50%;
+    display: flex;
+}

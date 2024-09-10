@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, HttpException, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpException, Param, Post, Put, Query } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { EncountersService } from './encounters.service';
 
@@ -47,7 +47,7 @@ export class EncountersController {
     @Get(':id')
     async getEncounter(
         @Param('id') id: string,
-        @Param('isCustomer') isCustomer?: string
+        @Query('isCustomer') isCustomer?: string
     ): Promise<{
         customer_id: string,
         date: string,
@@ -58,7 +58,7 @@ export class EncountersController {
 
         let result: Promise<{ customer_id: string, date: string, rating: string, comment: string, source: string }[]>;
 
-        if (isCustomer && isCustomer == 'true')
+        if (isCustomer == "true")
             result = this.encountersService.getEncounterByCustomer(id);
         else
             result = this.encountersService.getEncounter(id);
