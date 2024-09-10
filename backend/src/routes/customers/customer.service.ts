@@ -12,6 +12,7 @@ export class CustomersService {
         gender: string,
         description: string,
         astrological_sign: string,
+        image: string,
         phone: string,
         address: string
     }[]
@@ -28,6 +29,7 @@ export class CustomersService {
                 gender: row.gender,
                 description: row.description,
                 astrological_sign: row.astrological_sign,
+                image: row.image,
                 phone: row.phone,
                 address: row.address
             }));
