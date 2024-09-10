@@ -137,6 +137,8 @@ export class EmployeesService {
         query = query.slice(0, -2);
         query += ' WHERE id=?';
         params.push(id);
+        console.log(query);
+        console.log(params);
         await db.query(
             query,
             params

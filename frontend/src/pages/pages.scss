@@ -56,14 +56,21 @@ html {
   position: absolute;
   top: 4%;
   left: 93%;
+  background-color: #ff7a7a;
+  border: 2px solid #ff3030;
+  border-radius: 10px;
 }
 
 .setting {
   position: absolute;
   top: 4%;
-  left: 90%;
-  width: 40px;
-  height: 40px;
+  left: 89%;
+  width: 45px;
+  height: 45px;
+  padding: 0%;
+  background-color: #f0f0f0;
+  border: 2px solid #ccc;
+  border-radius: 10px;
 }
 
 .loading-screen {
@@ -101,4 +108,10 @@ html {
 .popup-inner input {
   margin-bottom: 10px;
   padding: 5px;
+}
+
+.popup-button {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
 }

@@ -52,7 +52,7 @@ const Layout = () => {
 		  setShowPopup(true);
 	};
 
-    const handleClosePopup = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const handleSubmitPopup = (event: React.MouseEvent<HTMLButtonElement>) => {
         const inputElement = document.getElementById("password-input") as HTMLInputElement;
         if (inputElement) {
             const newPassword = inputElement.value;
@@ -61,6 +61,10 @@ const Layout = () => {
         }
         setShowPopup(false);
     };
+
+	const handleClosePopup = (event: React.MouseEvent<HTMLButtonElement>) => {
+		setShowPopup(false);
+	}
 
 	if (loading) {
 			return <button className="button is-info is-fullwidth is-loading loading-screen">Loading</button>;
@@ -85,16 +89,19 @@ const Layout = () => {
       		<Sidenav manageNav={manageNav} />
 			<div>
 				<img onClick={manageNav} className="navbar-item menu-button" src="/assets/icon-menu.svg" alt="menu"/>
-				<button onClick={handleSetting} className="button is-light setting" >
-					<img src="assets/setting-icon.svg" alt="Settings" style={{ width: '100%', height: '100%' }} />
+				<button onClick={handleSetting} className="button setting">
+					<img src="assets/setting-icon.svg" alt="Settings"/>
 				</button>x
 				{showPopup && (
                 	<div className="popup">
                 	    <div className="popup-inner">
                 	        <h2>New Password:</h2>
                 	        <input type="password" id="password-input" placeholder="Enter new password"/>
-                	        <button onClick={handleClosePopup}>Submit</button>
-                	    </div>
+							<div className="popup-button">
+                	        	<button onClick={handleClosePopup}>Cancel</button>
+                	        	<button onClick={handleSubmitPopup}>Submit</button>
+							</div>
+						</div>
                 	</div>
            		)}
 				<button onClick={handleLogout} className="button is-danger logout" > Logout </button>
