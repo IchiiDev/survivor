@@ -62,7 +62,7 @@ const Customers = () => {
 
 	const fetchEncounters = async (clientId: string) => {
 		try {
-		  	const response = await fetch("http://localhost:3001/encounters?isCustomer=true/" + clientId, {
+		  	const response = await fetch("http://localhost:3001/encounters/" + clientId + "?isCustomer=true", {
 				method: "GET",
 				headers: {
 				  "Content-Type": "application/json",
