@@ -63,7 +63,8 @@ CREATE TABLE IF NOT EXISTS `images` (
   `uuid` varchar(100) NOT NULL,
   `scope` varchar(100) NOT NULL,
   `content` mediumblob NOT NULL,
-  `format` varchar(10) NOT NULL
+  `format` varchar(10) NOT NULL,
+  `filename` varchar(100) DEFAULT NULL
 );
 
 CREATE TABLE IF NOT EXISTS `payments` (
