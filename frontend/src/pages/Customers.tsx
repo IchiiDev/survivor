@@ -38,6 +38,7 @@ const Customers = () => {
 				throw new Error(`Erreur HTTP: ${response.status}`);
 		  	}
 			const data = await response.json();
+			console.log(data);
 			setPayments(data);
 		} catch (error) {
 		  console.error("Erreur lors de l'appel API", error);
@@ -57,7 +58,13 @@ const Customers = () => {
 					<p className='basic-text-color'>You have total {clients.length} customers.</p>
 				</div>
 				<div className='title-right'>
-					<button className='btn btn-primary'>Add new customer</button>
+					<button className='button is-light'>
+						<img className='icon' src="/assets/icon-cloud-arrow.svg" alt='export' />
+						<span>Export</span>
+					</button>
+					<button className='button is-info'>
+						<img className='icon' src="/assets/icon-plus.svg" alt='add' />
+					</button>
 				</div>
 			</div>
 			<div className="table-container">
@@ -66,23 +73,27 @@ const Customers = () => {
 						<tr>
 							<th colSpan={6}>
 								<div className='param-tab'>
-									<div className="select is-responsive is-info">
-      	        						<select value={"default" || "delete"}>
-      	        							<option value="default" disabled>Bulk Action</option>
-											<option value="delete">Delete</option>
-      	        						</select>
-      	      						</div>
-									<button className='button is-light' disabled>Apply</button>
-									<span className='icon'>
-										<img src="/assets/icon-search.svg" alt='search' />
-									</span>
-									<div className='vertical-bar'></div>
-									<span className='icon'>
-										<img src="/assets/icon-menu-alt.svg" alt='filter' />
-									</span>
-									<span className='icon'>
-										<img src="/assets/icon-settings.svg" alt='settings' />
-									</span>
+									<div className='param-tab-left'>
+										<div className="select is-responsive is-info">
+      	        							<select value={"default" || "delete"}>
+      	        								<option value="default" disabled>Bulk Action</option>
+												<option value="delete">Delete</option>
+      	        							</select>
+      	      							</div>
+										<button className='button is-light' disabled>Apply</button>
+									</div>
+									<div className='param-tab-right'>
+										<span className='icon'>
+											<img src="/assets/icon-search.svg" alt='search' />
+										</span>
+										<div className='vertical-bar'></div>
+										<span className='icon'>
+											<img src="/assets/icon-menu-alt.svg" alt='filter' />
+										</span>
+										<span className='icon'>
+											<img src="/assets/icon-settings.svg" alt='settings' />
+										</span>
+									</div>
 								</div>
 							</th>
 						</tr>
@@ -111,16 +122,11 @@ const Customers = () => {
 							<td>{client.email}</td>
 							<td>{client.phone}</td>
 							<td>
-								{payments.length > 0 && (
-									<>
-									{/* {payments[client.id].paymentHistory.map((payment: any) => (
-										<p key={payment.id}>{payment.method} </p>
-									))} */}
-									oui
-									</>
-								)}
+								{[...new Set<string>(payments.filter((payment: { customer_id: any; }) => payment.customer_id === client.id).map((payment: any) => payment.method))].map((method, index) => (
+                                    <p key={index}>{method}</p>
+                                ))}
 							</td>
-							<td className='icon-column'>
+							<td>
 								<span className='icon'>
 									<img src="/assets/icon-points.svg" alt="three points" />
 								</span>
