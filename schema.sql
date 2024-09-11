@@ -24,7 +24,8 @@ CREATE TABLE IF NOT EXISTS `customers` (
   `astrological_sign` varchar(100) DEFAULT NULL,
   `image` varchar(100) DEFAULT NULL,
   `phone` varchar(100) DEFAULT NULL,
-  `address` varchar(100) DEFAULT NULL
+  `address` varchar(100) DEFAULT NULL,
+  `coach_id` int DEFAULT NULL
 );
 
 CREATE TABLE IF NOT EXISTS `employees` (
@@ -94,7 +95,9 @@ ALTER TABLE `clothes`
   ADD PRIMARY KEY (`id`);
 
 ALTER TABLE `customers`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `coach_id` (`coach_id`),
+  ADD UNIQUE KEY `email` (`email`);
 
 ALTER TABLE `employees`
   ADD PRIMARY KEY (`id`),
@@ -143,6 +146,9 @@ ALTER TABLE `clothes`
 
 ALTER TABLE `documents`
   MODIFY `id` int NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `customers`
+  ADD CONSTRAINT `customers_ibfk_1` FOREIGN KEY (`coach_id`) REFERENCES `employees` (`id`);
 
 ALTER TABLE `encounters`
   ADD CONSTRAINT `encounters_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`);
