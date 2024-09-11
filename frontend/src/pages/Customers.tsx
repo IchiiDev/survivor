@@ -156,66 +156,6 @@ const Customers = () => {
 
 export default Customers;
 
-	// const fetchEncounters = async (clientId: string) => {
-	// 	try {
-	// 	  	const response = await fetch("http://localhost:3001/encounters/" + clientId + "?isCustomer=true", {
-	// 			method: "GET",
-	// 			headers: {
-	// 			  "Content-Type": "application/json",
-	// 			  "Authorization": `Bearer ${localStorage.getItem("token")}`
-	// 			},
-	// 		});
-	// 	  	if (!response.ok) {
-	// 			throw new Error(`Erreur HTTP: ${response.status}`);
-	// 	  	}
-	// 		const data = await response.json();
-	// 		console.log(data);
-	// 		setEncounters(data);
-	// 	} catch (error) {
-	// 	  console.error("Erreur lors de l'appel API", error);
-	// 	}
-	// };
-
-	// const fetchPayements = async (clientId: string) => {
-	// 	try {
-	// 	  	const response = await fetch("http://localhost:3001/customers/" + clientId + "?includePaymentsHistory", {
-	// 			method: "GET",
-	// 			headers: {
-	// 			  "Content-Type": "application/json",
-	// 			  "Authorization": `Bearer ${localStorage.getItem("token")}`
-	// 			},
-	// 		});
-	// 	  	if (!response.ok) {
-	// 			throw new Error(`Erreur HTTP: ${response.status}`);
-	// 	  	}
-	// 		const data = await response.json();
-	// 		console.log(data);
-	// 		setPayments(data);
-	// 	} catch (error) {
-	// 	  console.error("Erreur lors de l'appel API", error);
-	// 	}
-	// };
-
-	// const fetchImageCustomer = async (client: any) => {
-	// 	try {
-	// 		const urlpath = "http://localhost:3001/images/" + client.image;
-	// 	  	const response = await fetch(urlpath, {
-	// 			method: "GET",
-	// 			headers: {
-	// 			  "Authorization": `Bearer ${localStorage.getItem("token")}`
-	// 			},
-	// 		});
-	// 	  	if (!response.ok) {
-	// 			throw new Error(`Erreur HTTP: ${response.status}`);
-	// 	  	}
-	// 		const blob = await response.blob();
-	// 		const imageUrl = URL.createObjectURL(blob);
-	// 		setClientImg(imageUrl);
-	// 	} catch (error) {
-	// 	  console.error("Erreur lors de l'appel API", error);
-	// 	}
-	// };
-
 	// const formatDate = (dateString: string) => {
     //     const options: Intl.DateTimeFormatOptions = { day: '2-digit', month: '2-digit', year: 'numeric' };
     //     return new Intl.DateTimeFormat('fr-FR', options).format(new Date(dateString));
