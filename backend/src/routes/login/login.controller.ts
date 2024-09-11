@@ -24,6 +24,8 @@ export class LoginController {
     if (!this.loginService.compareHash(user.password, body.password))
       throw new HttpException('Invalid password', 400);
 
-    return { token: this.loginService.genToken({ id: user.id }) };
+    return {
+      token: this.loginService.genToken({ id: user.id, role: user.work }),
+    };
   }
 }

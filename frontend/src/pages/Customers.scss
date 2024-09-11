@@ -7,12 +7,19 @@
 
 .title-left {
     flex: 1;
-    align-items: left;
+    align-items: center;
+    justify-content: left;
 }
 
 .title-right {
     flex: 1;
-    align-items: right;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.title {
+    color: rgb(0, 0, 0);
 }
 
 ///////////////////////// Table //////////////////////////
@@ -20,7 +27,7 @@
 .table-container {
     flex: 1;
     overflow-y: auto;
-    width: 95%;
+    width: 100%;
 }
 
 .param-tab {
@@ -36,13 +43,13 @@
     overflow-y: auto;
     background-color: #f0f0f0;
     border-radius: 10px;
-    color: black;
+    color: rgb(82, 78, 78);
     border-collapse: collapse;
 }
 
 .table-customers thead {
     background-color: #f0f0f0 !important;
-    color: black !important;
+    color: rgb(82, 78, 78) !important;
     font-size: 17px;
 }
 
@@ -54,7 +61,7 @@
 .table-customers td {
     padding: 12px 15px;
     text-align: center;
-    color: black !important;
+    color: rgb(82, 78, 78) !important;
     border: none;
 }
 
@@ -68,4 +75,12 @@
 
 .table-customers {
     border: 1px solid #ccc;
+}
+
+.icon {
+    display: inline-block;
+}
+
+.icon-column {
+    text-align: right;
 }

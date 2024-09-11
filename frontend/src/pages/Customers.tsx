@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 
 const Customers = () => {
 	const [clients, setClients] = useState([]);
-	const [clientImg, setClientImg] = useState<string>("/assets/icon-character.svg");
 	const [payments, setPayments] = useState<any>([]);
 
 	const fetchCustomers = async () => {
@@ -45,26 +44,6 @@ const Customers = () => {
 		}
 	};
 
-	// const fetchImageCustomer = async (client: any) => {
-	// 	try {
-	// 		const urlpath = "http://localhost:3001/images/" + client.image;
-	// 	  	const response = await fetch(urlpath, {
-	// 			method: "GET",
-	// 			headers: {
-	// 			  "Authorization": `Bearer ${localStorage.getItem("token")}`
-	// 			},
-	// 		});
-	// 	  	if (!response.ok) {
-	// 			throw new Error(`Erreur HTTP: ${response.status}`);
-	// 	  	}
-	// 		const blob = await response.blob();
-	// 		const imageUrl = URL.createObjectURL(blob);
-	// 		setClientImg(imageUrl);
-	// 	} catch (error) {
-	// 	  console.error("Erreur lors de l'appel API", error);
-	// 	}
-	// };
-
 	useEffect(() => {
 		fetchCustomers();
 		fetchPayements();
@@ -74,53 +53,70 @@ const Customers = () => {
     	<>
 			<div className='title-line'>
 				<div className='title-left'>
-					<h1>Customers List</h1>
-					<p>You have total {clients.length} customers.</p>
+					<h1 className='title'>Customers List</h1>
+					<p className='basic-text-color'>You have total {clients.length} customers.</p>
 				</div>
 				<div className='title-right'>
 					<button className='btn btn-primary'>Add new customer</button>
 				</div>
 			</div>
 			<div className="table-container">
-				<div className='param-tab'>
-					<p>Bulk Action</p>
-				</div>
-				<div>
-					<table className='table table-customer-info'>
-						<thead>
-							<tr>
-								<th>Customer</th>
-								<th>Email</th>
-								<th>Phone</th>
-								<th>Payment Methods</th>
-								<th>Actions</th>
-							</tr>
-						</thead>
-						<tbody>
-							{clients.map((client: any) => (
-							<tr key={client.id}>
-								<td>
-									<Link to="/customers/">
-									{client.name} {client.surname}
-									</Link>
-								</td>
-								<td>{client.email}</td>
-								<td>{client.phone}</td>
-								<td>
-									{payments.length > 0 && (
-										<>
-										{payments[client.id].paymentHistory.map((payment: any) => (
-											<p key={payment.id}>{payment.method} </p>
-										))}
-										</>
-									)}
-								</td>
-								<td>...</td>
-							</tr>
-							))}
-						</tbody>
-					</table>
-				</div>
+				<table className='table table-customers is-light'>
+					<thead>
+						<tr>
+							<th colSpan={6}>
+								<div className='param-tab'>
+									<div className="select is-responsive is-info">
+      	        						<select value={"default" || "delete"}>
+      	        							<option value="default" disabled>Bulk Action</option>
+											<option value="delete">Delete</option>
+      	        						</select>
+      	      						</div>
+								</div>
+							</th>
+						</tr>
+						<tr>
+							<th>
+                        	    <input type="checkbox" className='checkbox' />
+                        	</th>
+							<th>Customer</th>
+							<th>Email</th>
+							<th>Phone</th>
+							<th>Payment Methods</th>
+							<th>Actions</th>
+						</tr>
+					</thead>
+					<tbody>
+						{clients.map((client: any) => (
+						<tr key={client.id}>
+							<td>
+								<input type="checkbox" className='checkbox' />
+							</td>
+							<td>
+								<Link to={`/customers/${client.id}`}>
+								{client.name} {client.surname}
+								</Link>
+							</td>
+							<td>{client.email}</td>
+							<td>{client.phone}</td>
+							<td>
+								{payments.length > 0 && (
+									<>
+									{payments[client.id].paymentHistory.map((payment: any) => (
+										<p key={payment.id}>{payment.method} </p>
+									))}
+									</>
+								)}
+							</td>
+							<td className='icon-column'>
+								<span className='icon'>
+									<img src="/assets/icon-points.svg" alt="three points" />
+								</span>
+							</td>
+						</tr>
+						))}
+					</tbody>
+				</table>
 			</div>
       	</>
     )
@@ -163,6 +159,26 @@ export default Customers;
 	// 		const data = await response.json();
 	// 		console.log(data);
 	// 		setPayments(data);
+	// 	} catch (error) {
+	// 	  console.error("Erreur lors de l'appel API", error);
+	// 	}
+	// };
+
+	// const fetchImageCustomer = async (client: any) => {
+	// 	try {
+	// 		const urlpath = "http://localhost:3001/images/" + client.image;
+	// 	  	const response = await fetch(urlpath, {
+	// 			method: "GET",
+	// 			headers: {
+	// 			  "Authorization": `Bearer ${localStorage.getItem("token")}`
+	// 			},
+	// 		});
+	// 	  	if (!response.ok) {
+	// 			throw new Error(`Erreur HTTP: ${response.status}`);
+	// 	  	}
+	// 		const blob = await response.blob();
+	// 		const imageUrl = URL.createObjectURL(blob);
+	// 		setClientImg(imageUrl);
 	// 	} catch (error) {
 	// 	  console.error("Erreur lors de l'appel API", error);
 	// 	}
