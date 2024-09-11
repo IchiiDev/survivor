@@ -24,6 +24,14 @@
 
 ///////////////////////// Table //////////////////////////
 
+.vertical-bar {
+    display: inline-block;
+    width: 1px;
+    height: 20px;
+    background-color: #b4b2b2;
+    margin: 0 10px;
+}
+
 .table-container {
     flex: 1;
     overflow-y: auto;

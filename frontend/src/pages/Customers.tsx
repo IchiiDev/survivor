@@ -72,6 +72,17 @@ const Customers = () => {
 											<option value="delete">Delete</option>
       	        						</select>
       	      						</div>
+									<button className='button is-light' disabled>Apply</button>
+									<span>
+										<img src="/assets/icon-search.svg" alt='search' />
+									</span>
+									<div className='vertical-bar'></div>
+									<span>
+										<img src="/assets/icon-menu-alt.svg" alt='filter' />
+									</span>
+									<span>
+										<img src="/assets/icon-settings.svg" alt='settings' />
+									</span>
 								</div>
 							</th>
 						</tr>

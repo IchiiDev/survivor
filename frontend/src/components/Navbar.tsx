@@ -1,4 +1,4 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, Link } from "react-router-dom";
 import { useState } from "react";
 import "./Navbar.scss";
 
@@ -87,52 +87,52 @@ const Navbar = () => {
     	  	</a>
     	</li>
     	<li>
-    	  	<a href="/compatibility" className={isActive("/compatibility")}>
+    	  	<Link to={"/compatibility"} className={isActive("/compatibility")}>
     	  	  	<img className="Link-icon" src="/assets/icon-heart.svg" alt="compatibility" />
     	  	  	Compatibility
-    	  	</a>
+    	  	</Link>
     	</li>
     	<li >
-    	  	<a href="/wardrobe" className={isActive("/wardrobe")}>
+    	  	<Link to={"/wardrobe"} className={isActive("/wardrobe")}>
     	  		<img className="Link-icon" src="/assets/icon-dress.svg" alt="wardrobe" />
     	  		Wardrobe
-    	  	</a>
+    	  	</Link>
     	</li>
     	<li >
-    	  	<a href="/coaches" className={isActive("/coaches")}>
+    	  	<Link to={"/coaches"} className={isActive("/coaches")}>
     	  		<img className="Link-icon" src="/assets/icon-customer-service.svg" alt="coaches" />
     	  		Coaches
-    	  	</a>
+    	  	</Link>
     	</li>
     	<li >
-    	  	<a href="/customers" className={isActive("/customers")}>
+    	  	<Link to={"/customers"} className={isActive("/customers")}>
     	  		<img className="Link-icon" src="/assets/icon-character.svg" alt="customers" />
     	  		Customers
-    	  	</a>
+    	  	</Link>
     	</li>
     	<li >
-    	  	<a href="/statistics" className={isActive("/statistics")}>
+    	  	<Link to={"/statistics"} className={isActive("/statistics")}>
     	  		<img className="Link-icon" src="/assets/icon-stats.svg" alt="statistics" />
     	  		Statistics
-    	  	</a>
+    	  	</Link>
     	</li>
     	<li >
-    	  	<a href="/tips" className={isActive("/tips")}>
+    	  	<Link to={"/tips"} className={isActive("/tips")}>
     	  		<img className="Link-icon" src="/assets/icon-light-bulb.svg" alt="tips" />
     	  		Tips
-    	  	</a>
+    	  	</Link>
     	</li>
     	<li >
-    	  	<a href="/events" className={isActive("/events")}>
+    	  	<Link to={"/events"} className={isActive("/events")}>
     	  	  	<img className="Link-icon" src="/assets/icon-events.svg" alt="events" />
     	  	  	Events
-    	  	</a>
+    	  	</Link>
     	</li>
     	<li >
-    	  	<a href="/document" className={isActive("/document")}>
+    	  	<Link to={"/document"} className={isActive("/document")}>
     	    	<img className="Link-icon" src="/assets/icon-document.svg" alt="document" />
     	    	Document
-			</a>
+			</Link>
     	</li>
   	</ul>
 
