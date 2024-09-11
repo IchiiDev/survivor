@@ -138,6 +138,7 @@ export class CustomerController {
       astrological_sign?: string;
       phone?: string;
       address?: string;
+      image?: string;
     },
   ): Promise<string> {
     const {
@@ -150,6 +151,7 @@ export class CustomerController {
       astrological_sign,
       phone,
       address,
+      image,
     } = data;
 
     return this.customerService.createCustomer(
@@ -162,6 +164,7 @@ export class CustomerController {
       astrological_sign,
       phone,
       address,
+      image,
     );
   }
 
@@ -254,6 +257,8 @@ export class CustomerController {
       astrological_sign?: string;
       phone?: string;
       address?: string;
+      image?: string;
+      coach_id?: string;
     },
   ): Promise<{
     id: string;
@@ -266,6 +271,8 @@ export class CustomerController {
     astrological_sign?: string;
     phone?: string;
     address?: string;
+    image?: string;
+    coach_id?: string;
   }> {
     const {
       email,
@@ -277,6 +284,8 @@ export class CustomerController {
       astrological_sign,
       phone,
       address,
+      image,
+      coach_id,
     } = data;
 
     const result = this.customerService.updateCustomer(
@@ -290,6 +299,8 @@ export class CustomerController {
       astrological_sign,
       phone,
       address,
+      image,
+      coach_id,
     );
 
     if (!result) {
