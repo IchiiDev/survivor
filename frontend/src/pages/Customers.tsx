@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import './Customers.scss';
-import Titlebox from "../components/Titlebox";
 
 const Customers = () => {
 	const [clients, setClients] = useState([]);
@@ -111,7 +110,6 @@ const Customers = () => {
 
     return (
     	<>
-			<Titlebox title="Customers"></Titlebox>
 			<div className='info-client'>
 				<div className='basic-info-client'>
 					<div className='upper-info'>

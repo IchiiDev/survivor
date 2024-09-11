@@ -1,0 +1,124 @@
+.Link-icon {
+    margin-left: 20px;
+    width: 28px;
+    height: 28px;
+}
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #ffffff;
+    border-bottom: 1px solid #ccc;
+    height: 60px;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+
+    .navbar-left,
+    .navbar-right {
+        position: relative;
+        .dropdown {
+            position: relative;
+            transform: translateX(-10px);
+            .character-dropdown {
+                background: none;
+                border: none;
+                cursor: pointer;
+            }
+            .dropdown-menu {
+                position: absolute;
+                top: 100%;
+                transform: translateX(-30px);
+                background-color: white;
+                border: 1px solid #ccc;
+                box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+                border-radius: 4px;
+                z-index: 1000;
+                display: flex;
+                flex-direction: column;
+                .dropdown-item {
+                    padding: 10px 20px;
+                    background: none;
+                    border: none;
+                    text-align: left;
+                    width: 100%;
+                    cursor: pointer;
+                    &:hover {
+                        background-color: #f5f5f5;
+                    }
+                    &.is-dark {
+                        color: black;
+                    }
+                    &.is-danger {
+                        color: red;
+                    }
+                }
+            }
+        }
+    }
+
+    .navbar-center {
+        display: flex;
+        list-style: none;
+        justify-content: center;
+        flex-grow: 1;
+        padding-left: 0;
+        li {
+            margin: 0 15px;
+            a {
+              text-decoration: none;
+              color: rgb(0, 0, 0);
+              display: flex;
+              align-items: center;
+              position: relative;
+
+              .Link-icon {
+                margin-right: 8px;
+              }
+            }
+		    a.active {
+		    	color: blue;
+		    	font-weight: bold;
+		    	&::after {
+		    		content: '';
+		    		position: absolute;
+		    		bottom: -15px;
+		    		left: 0;
+		    		right: 0;
+		    		height: 2px;
+		    		background-color: blue;
+		    		width: 100%;
+		    	}
+		    }
+        }
+    }
+
+    .navbar-item {
+      cursor: pointer;
+      width: 10%;
+      height: auto;
+      display: block;
+      transform: translateY(-5px);
+    }
+
+    .menu-button,
+    .setting,
+    .logout {
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+  
+    .button.logout {
+      margin-left: 15px;
+      color: #ff4d4d;
+    }
+  
+    .button.setting img {
+      width: 25px;
+      height: 25px;
+    }
+  }
+  
