@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import "./Document.scss";
-import Titlebox from "../components/Titlebox";
 
 const Document = () => {
     const [files, setFiles] = useState<any[]>([]);
@@ -45,7 +44,6 @@ const Document = () => {
 
     return (
     	<>
-        	<Titlebox title="Document" />
             <div className="button-part">
                 <form>
                     <input className="type-input" type="file" accept="application/pdf" onChange={handleFileChange} />

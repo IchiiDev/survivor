@@ -1,5 +1,4 @@
 import "./Tips.scss";
-import Titlebox from "../components/Titlebox";
 import { useEffect, useState } from "react";
 
 const Tips = () => {
@@ -33,10 +32,9 @@ const Tips = () => {
 
 	useEffect(() => {
 		fetchCustomers();
-	}, []);
+	});
     return (
     	<>
-        	<Titlebox title="Tips"></Titlebox>
 			{tips.length > 0 && (
 				<>
 				<div className="box-container">
