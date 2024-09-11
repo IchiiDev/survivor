@@ -67,7 +67,7 @@ export class CustomerController {
       address: string;
     }[]
   > {
-    if (req.user.role.includes('coach'))
+    if (req.user.role.includes('Coach'))
       throw new HttpException('Forbidden', 403);
 
     const result = await this.customerService.getAllCustomers();
@@ -192,7 +192,7 @@ export class CustomerController {
     );
 
     if (
-      req.user.role.includes('coach') &&
+      req.user.role.includes('Coach') &&
       (!result || parseInt(result.coach_id) !== req.user.id)
     )
       throw new HttpException('Forbidden', 403);
@@ -298,7 +298,7 @@ export class CustomerController {
       coach_id,
     } = data;
 
-    if (req.user.role.includes('coach'))
+    if (req.user.role.includes('Coach'))
       throw new HttpException('Forbidden', 403);
 
     const result = this.customerService.updateCustomer(
