@@ -24,7 +24,7 @@ export class RegisterController {
         }
 
         if (
-            !this.loginService.checkPassword(body.password) ||
+            !this.loginService.checkPassword(body.password) &&
             process.env.NODE_ENV !== 'development'
             // This line ensures we can use a simple password for testing
         ) {

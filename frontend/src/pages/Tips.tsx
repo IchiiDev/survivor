@@ -32,7 +32,7 @@ const Tips = () => {
 
 	useEffect(() => {
 		fetchCustomers();
-	}, []);
+	});
     return (
     	<>
 			{tips.length > 0 && (
