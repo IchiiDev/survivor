@@ -1,0 +1,132 @@
+.dashboard-container {
+  width: 100%;
+  display: flex;
+}
+
+.dashboard-text {
+  width: 85%;
+  align-items: left;
+}
+
+.dashboard-custom-text {
+  color: black;
+  font-size: 40px;
+}
+
+.home-buttons {
+  width: 15%;
+  align-items: right;
+}
+
+.reports-button {
+  margin-left: 15px;
+}
+
+.stats-container {
+  margin-top: 10px;
+  width: 100%;
+}
+
+.box-customers {
+  background-color: white;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  width: 55%;
+}
+
+.box-events {
+  background-color: white;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  width: 40%;
+  margin-left: 15px;
+}
+
+.box-meetings {
+  background-color: white;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  width: 55%;
+  height: 400px;
+}
+
+.box-rating {
+  background-color: white;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  width: 40%;
+  margin-left: 15px;
+  height: 400px;
+}
+
+.box-header {
+  display: flex;
+  margin-top: 20px;
+  margin-left: 20px;
+
+  .box-header-text {
+    h1 {
+      color: black;
+      font-size: 15px;
+      font-weight: bold;
+      margin-left: 5px;
+    }
+
+    h2 {
+      margin-left: 5px;
+      font-size: 15px;
+      font-weight: bold;
+    }
+  }
+}
+
+.box-overview {
+  display: flex;
+  margin-top: 30px;
+  margin-left: 20px;
+
+  .box-overview-element {
+    margin-left: 5px;
+    margin-right: 100px;
+
+    .box-overview-element-title {
+      color: gray;
+      font-weight: bold;
+    }
+
+    .box-overview-element-value {
+      color: black;
+      font-size: 35px;
+    }
+  }
+}
+
+.box-stats {
+  margin: 15px;
+}
+
+.rating-average {
+  .rating-average-data {
+    margin-left: 25px;
+    position: absolute;
+    top: 100px;
+    left: 0%;
+
+    .rating-average-data-title {
+      color: gray;
+      font-weight: bold;
+    }
+
+    .rating-average-data-value {
+      color: black;
+      font-size: 35px;
+    }
+  }
+
+  .rating-pie {
+    position: absolute;
+    width: 250px;
+    height: 250px;
+    right: auto;
+  }
+}
