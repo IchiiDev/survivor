@@ -92,8 +92,13 @@ export class EmployeesController {
       gender?: string;
       work?: string;
     },
+    @Req() req: Request,
   ): Promise<string> {
     const { email, name, surname, birthdate, gender, work } = data;
+
+    if (!req.user.role.includes('coach'))
+      throw new HttpException('Forbidden', 403);
+
     return this.employeesService.createEmployee(
       email,
       name,
@@ -126,8 +131,12 @@ export class EmployeesController {
       work?: string;
       password?: string;
     },
+    @Req() req: Request,
   ): Promise<Employee> {
     const { email, name, surname, birthdate, gender, work, password } = data;
+
+    if (req.user.role.includes('coach'))
+      throw new HttpException('Forbidden', 403);
 
     const result = this.employeesService.updateEmployee(
       id,
@@ -147,7 +156,13 @@ export class EmployeesController {
   }
 
   @Delete(':id')
-  async deleteEmployee(@Param('id') id: string): Promise<string> {
+  async deleteEmployee(
+    @Param('id') id: string,
+    @Req() req: Request,
+  ): Promise<string> {
+    if (req.user.role.includes('coach'))
+      throw new HttpException('Forbidden', 403);
+
     const result = this.employeesService.deleteEmployee(id);
     if (!result) {
       throw new HttpException('Employee not found', 404);
@@ -181,7 +196,7 @@ export class EmployeesController {
     @Body()
     data: {
       email?: string;
-      password?: string,
+      password?: string;
       name?: string;
       surname?: string;
       birthdate?: string;
@@ -201,8 +216,12 @@ export class EmployeesController {
 
     if (!email || !name || !surname)
       throw new HttpException('Required parameters not given', 422);
-    if (!password.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[\d])(?=.*[@$!%*#?&_^*-])[a-zA-Z0-9@$!%#?&_^*-]{8,}$/))
-       throw new HttpException("Password isn't strong enough", 422);
+    if (
+      !password.match(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*[\d])(?=.*[@$!%*#?&_^*-])[a-zA-Z0-9@$!%#?&_^*-]{8,}$/,
+      )
+    )
+      throw new HttpException("Password isn't strong enough", 422);
     const newPassword = bcrypt.hashSync(password, 10);
     const result = this.employeesService.updateCurrentEmployee(
       String(req.user.id),

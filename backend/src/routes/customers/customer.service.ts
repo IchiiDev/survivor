@@ -111,6 +111,7 @@ export class CustomersService {
     phone: string;
     address: string;
     image: string;
+    coach_id: string;
     payment_history?: Array<{
       date: string;
       amount: number;
