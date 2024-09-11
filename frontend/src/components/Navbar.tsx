@@ -81,10 +81,10 @@ const Navbar = () => {
 
   	<ul className="navbar-center">
     	<li >
-    	  	<a href="/" className={isActive("/")}>
+    	  	<Link to="/" className={isActive("/")}>
     	  		<img className="Link-icon" src="/assets/icon-home.svg" alt="home" />
     	  		Home
-    	  	</a>
+    	  	</Link>
     	</li>
     	<li>
     	  	<Link to={"/compatibility"} className={isActive("/compatibility")}>
