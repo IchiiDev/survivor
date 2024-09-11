@@ -18,6 +18,7 @@ import {
 } from '@nestjs/swagger';
 import { EmployeesService } from './employees.service';
 import { Request } from 'express';
+import * as bcrypt from 'bcryptjs';
 
 export class Employee {
   @ApiProperty()
@@ -99,9 +100,18 @@ export class EmployeesController {
     if (req.user.role.includes('Coach'))
       throw new HttpException('Forbidden', 403);
 
+    if (
+      !password.match(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*[\d])(?=.*[@$!%*#?&_^*-])[a-zA-Z0-9@$!%#?&_^*-]{8,}$/,
+      )
+    )
+      throw new HttpException('Invalid password', 400);
+
+    const hash = bcrypt.hashSync(password, 10);
+
     return this.employeesService.createEmployee(
       email,
-      password,
+      hash,
       name,
       surname,
       birthdate,
