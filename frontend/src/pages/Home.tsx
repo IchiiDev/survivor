@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Titlebox from "../components/Titlebox"
 import "./Stats.scss";
 
 const Home = () => {
@@ -94,7 +93,6 @@ const Home = () => {
 	}, [apiUrlCust, apiUrlCoaches, apiUrlEvent, navigate, token]);
     return (
     	<>
-		<Titlebox title=""></Titlebox>
       	<div className="container">
         	<div className="box centered-box">
           		<h3 className="title is-4 dark-text">Customers</h3>
