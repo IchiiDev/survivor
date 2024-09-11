@@ -26,15 +26,17 @@ export class LoginService {
     return bcrypt.compareSync(password, hash);
   }
 
-  genToken(user: { id: number }): string {
+  genToken(user: { id: number; role: string }): string {
     return jwt.sign(user, process.env.JWT_SECRET, {
       expiresIn: process.env.JWT_EXPIRATION_TIME,
     });
   }
 
-  async getUser(email: string): Promise<{ id: number; password: string }> {
+  async getUser(
+    email: string,
+  ): Promise<{ id: number; password: string; work: string }> {
     const user = await db.query(
-      'SELECT id, password FROM employees WHERE email=?',
+      'SELECT id, password, work FROM employees WHERE email=?',
       [email],
     );
 
