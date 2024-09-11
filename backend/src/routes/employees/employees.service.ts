@@ -137,6 +137,8 @@ export class EmployeesService {
         query = query.slice(0, -2);
         query += ' WHERE id=?';
         params.push(id);
+        console.log(query);
+        console.log(params);
         await db.query(
             query,
             params
@@ -151,87 +153,6 @@ export class EmployeesService {
     async deleteEmployee(id: string): Promise<string> {
         await db.query('DELETE FROM employees WHERE id=?', id);
         return `Employee with id ${id} successfully deleted`;
-    }
-
-    async getCurrentEmployee(id: string): Promise<{
-        id: string,
-        email: string,
-        name: string,
-        surname: string,
-        birthdate: string,
-        gender: string,
-        work: string
-    }> {
-        const result = await db.query(
-            'SELECT id, email, name, surname, birthdate, gender, work FROM employees WHERE id=?',
-            id
-        );
-
-        return result[0][0];
-    }
-
-    async updateCurrentEmployee(
-        id: string,
-        email?: string,
-        password?: string,
-        name?: string,
-        surname?: string,
-        birthdate?: string,
-        gender?: string,
-        work?: string
-    ): Promise<{
-        id: string,
-        email: string,
-        name: string,
-        surname: string,
-        birthdate: string,
-        gender: string,
-        work: string,
-        password: string
-    } | null> {
-        let query = 'UPDATE employees SET ';
-        let params = [];
-
-        if (email) {
-            query += 'email=?, ';
-            params.push(email);
-        }
-        if (name) {
-            query += 'name=?, ';
-            params.push(name);
-        }
-        if (surname) {
-            query += 'surname=?, ';
-            params.push(surname);
-        }
-        if (birthdate) {
-            query += 'birthdate=?, ';
-            params.push(birthdate);
-        }
-        if (gender) {
-            query += 'gender=?, ';
-            params.push(gender);
-        }
-        if (work) {
-            query += 'work=?, ';
-            params.push(work);
-        }
-        if (password) {
-            query += 'password=?, ';
-            params.push(password);
-        }
-        query = query.slice(0, -2);
-        query += ' WHERE id=?';
-        params.push(id);
-        await db.query(
-            query,
-            params
-        );
-        const result = await db.query(
-            'SELECT * FROM employees WHERE id=?',
-            id
-        );
-        return result[0][0];
     }
 
     // deleteCurrentEmployee(): string {

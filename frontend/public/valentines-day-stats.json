@@ -1,0 +1,38 @@
+[
+    {
+        "Year": 2018,
+        "PercentCelebrating": 55,
+        "PerPerson": 143,
+        "PercentBuyingFlowersForDate": 30
+    },
+    {
+        "Year": 2019,
+        "PercentCelebrating": 51,
+        "PerPerson": 161,
+        "PercentBuyingFlowersForDate": 28
+    },
+    {
+        "Year": 2020,
+        "PercentCelebrating": 55,
+        "PerPerson": 196,
+        "PercentBuyingFlowersForDate": 32
+    },
+    {
+        "Year": 2021,
+        "PercentCelebrating": 52,
+        "PerPerson": 164,
+        "PercentBuyingFlowersForDate": 27
+    },
+    {
+        "Year": 2022,
+        "PercentCelebrating": 53,
+        "PerPerson": 175,
+        "PercentBuyingFlowersForDate": 33
+    },
+    {
+        "Year": 2023,
+        "PercentCelebrating": 60,
+        "PerPerson": 183,
+        "PercentBuyingFlowersForDate": 35
+    }
+]

@@ -1,15 +1,26 @@
 .container {
   display: flex;
-  justify-content: space-between;
-  padding: 20px;
+  justify-content: center;
+  padding: 5px;
+  flex-wrap: wrap;
 }
 
 .box {
   background-color: #f0f0f0;
   border: 2px solid #ccc;
   border-radius: 10px;
-  width: 400px;
-  padding: 40px;
+  width: 275px;
+  padding: 15px;
+  margin: 10px;
+}
+
+.box-pie {
+  background-color: #f0f0f0;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  width: 275px;
+  padding: 15px;
+  margin: 10px;
 }
 
 .centered-box {
@@ -30,7 +41,7 @@
   padding-top: 30px;
 }
 .custom-table-stats {
-  width: 70%;
+  width: 46%;
   position: relative;
   background-color: #f0f0f0;
   border-radius: 10px;
