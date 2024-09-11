@@ -73,14 +73,14 @@ const Customers = () => {
       	        						</select>
       	      						</div>
 									<button className='button is-light' disabled>Apply</button>
-									<span>
+									<span className='icon'>
 										<img src="/assets/icon-search.svg" alt='search' />
 									</span>
 									<div className='vertical-bar'></div>
-									<span>
+									<span className='icon'>
 										<img src="/assets/icon-menu-alt.svg" alt='filter' />
 									</span>
-									<span>
+									<span className='icon'>
 										<img src="/assets/icon-settings.svg" alt='settings' />
 									</span>
 								</div>
@@ -113,9 +113,10 @@ const Customers = () => {
 							<td>
 								{payments.length > 0 && (
 									<>
-									{payments[client.id].paymentHistory.map((payment: any) => (
+									{/* {payments[client.id].paymentHistory.map((payment: any) => (
 										<p key={payment.id}>{payment.method} </p>
-									))}
+									))} */}
+									oui
 									</>
 								)}
 							</td>
