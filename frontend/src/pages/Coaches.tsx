@@ -5,6 +5,12 @@ import { Link } from "react-router-dom";
 const Coaches = () => {
 	const [coaches, setCoaches] = useState([]);
 	const [showPopup, setShowPopup] = useState(false);
+	const [email, setEmail] = useState("");
+	const [password, setPassword] = useState("");
+	const [name, setName] = useState("");
+	const [surname, setSurname] = useState("");
+	const [gender, setGender] = useState("");
+	const [work, setWork] = useState("");
 
 	useEffect(() => {
 		const fetchCoaches = async () => {
@@ -32,17 +38,46 @@ const Coaches = () => {
 		setShowPopup(true);
   	};
 
+	const sendCoaches = async () => {
+		try {
+			const requestBody = {
+				email: email,
+				password: password,
+				name: name,
+				surname: surname,
+				gender: gender,
+				work: work
+			};
+			const jsonBody = JSON.stringify(requestBody);
+			console.log(jsonBody);
+			const response = await fetch("http://localhost:3001/employees", {
+				method: "POST",
+				headers: {
+				  "Content-Type": "application/json",
+				  "Authorization": `Bearer ${localStorage.getItem("token")}`
+				},
+				body: jsonBody
+			});
+			if (!response.ok) {
+				throw new Error(`Erreur HTTP: ${response.status}`);
+			}
+			if (response.status === 422) {
+				alert("Need minimum 8 characters, 1 upcase, 1 lowcase, 1 number and 1 special");
+				return;
+			}
+			const data = await response.json();
+			setCoaches(data);
+		} catch (error) {
+		  console.error("Erreur lors de l'appel API", error);
+		}
+	};
+
   const handleSubmitPopup = (event: React.MouseEvent<HTMLButtonElement>) => {
-	  	const email = document.getElementById("email-input") as HTMLInputElement;
-	  	const password = document.getElementById("password-input") as HTMLInputElement;
-	  	const name = document.getElementById("name-input") as HTMLInputElement;
-	  	const surname = document.getElementById("surname-input") as HTMLInputElement;
-	  	const gender = document.getElementById("gender-input") as HTMLInputElement;
-	  	const work = document.getElementById("work-input") as HTMLInputElement;
 	  	if (email && password && name && surname && gender && work) {
-		  	console.log("New infos");
+		  	console.log("New infos : ", email, password, name, surname, gender, work);
+			sendCoaches();
 	  	} else {
-			alert("Infos requiered")
+			alert("Infos missing")
 	  	}
 	  	setShowPopup(false);
   };
@@ -139,13 +174,13 @@ const Coaches = () => {
     		<div className="popup">
       			<div className="popup-inner">
         			<h2>New coach:</h2>
-        			<input type="email" id="email-input" placeholder="Email" />
-        			<input type="password" id="password-input" placeholder="Password" />
-        			<input type="name" id="name-input" placeholder="Name" />
-        			<input type="surname" id="surname-input" placeholder="Surname" />
+        			<input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" />
+        			<input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" />
+        			<input type="name" value={name} onChange={(e) => setName(e.target.value)} placeholder="Name" />
+        			<input type="surname" value={surname} onChange={(e) => setSurname(e.target.value)} placeholder="Surname" />
         			<input type="birthdate" id="birthday-input" placeholder="Birthdate" />
-        			<input type="gender" id="gender-input" placeholder="Male/Female/Other" />
-        			<input type="work" id="work-input" placeholder="Coach/Other" />
+        			<input type="gender" value={gender} onChange={(e) => setGender(e.target.value)} placeholder="Male/Female/Other" />
+        			<input type="work" value={work} onChange={(e) => setWork(e.target.value)} placeholder="Coach/Other" />
         			<div className="popup-button">
           				<button onClick={handleClosePopup} style={{color: "red"}}>Cancel</button>
           				<button onClick={handleSubmitPopup} style={{color: "green"}}>Submit</button>
