@@ -121,9 +121,23 @@ const Customers = () => {
 							</td>
 							<td>{client.email}</td>
 							<td>{client.phone}</td>
-							<td>
+							<td className='payment-methods'>
 								{[...new Set<string>(payments.filter((payment: { customer_id: any; }) => payment.customer_id === client.id).map((payment: any) => payment.method))].map((method, index) => (
-                                    <p key={index}>{method}</p>
+                                    <p key={index}>
+										{method === 'PayPal' ? (
+											<span className='icon'>
+												<img src="/assets/visa.svg" alt="paypal" />
+											</span>
+										) : method === 'Bank Transfer' ? (
+											<span className='icon'>
+												<img src="/assets/american-express.svg" alt="bank transfer" />
+											</span>
+										) : (
+											<span className='icon'>
+												<img src="/assets/mastercard.svg" alt="credit card" />
+											</span>
+										)}
+									</p>
                                 ))}
 							</td>
 							<td>

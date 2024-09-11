@@ -97,3 +97,16 @@
 .table-customers {
     border: 1px solid #ccc;
 }
+
+.payment-methods {
+    display: flex;
+    align-items: center;
+}
+
+.payment-methods span {
+    align-items: center;
+}
+
+.payment-methods p {
+    margin: 3px;
+}

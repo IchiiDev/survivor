@@ -13,26 +13,6 @@ const Wardrobe = () => {
 	const [indices, setIndices] = useState({ hat: 0, top: 0, bottom: 0, shoes: 0 });
 	const [selectedClient, setSelectedClient] = useState<any | null>(null);
 
-	const fetchCustomers = async () => {
-		try {
-		  	const response = await fetch("http://localhost:3001/customers", {
-				method: "GET",
-				headers: {
-				  "Content-Type": "application/json",
-				  "Authorization": `Bearer ${localStorage.getItem("token")}`
-				},
-			});
-		  	if (!response.ok) {
-				throw new Error(`Erreur HTTP: ${response.status}`);
-		  	}
-			const data = await response.json();
-			console.log(data);
-			setClients(data);
-		} catch (error) {
-		  console.error("Erreur lors de l'appel API", error);
-		}
-	};
-
 	const fetchImageCustomer = async (client: any) => {
 		try {
 			const urlpath = "http://localhost:3001/images/" + client.image;
@@ -74,6 +54,25 @@ const Wardrobe = () => {
 	};
 
 	useEffect(() => {
+		const fetchCustomers = async () => {
+			try {
+				  const response = await fetch("http://localhost:3001/customers", {
+					method: "GET",
+					headers: {
+					  "Content-Type": "application/json",
+					  "Authorization": `Bearer ${localStorage.getItem("token")}`
+					},
+				});
+				  if (!response.ok) {
+					throw new Error(`Erreur HTTP: ${response.status}`);
+				  }
+				const data = await response.json();
+				console.log(data);
+				setClients(data);
+			} catch (error) {
+			  console.error("Erreur lors de l'appel API", error);
+			}
+		};
 		fetchCustomers();
 	}, []);
     return (

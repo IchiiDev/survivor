@@ -45,6 +45,7 @@ const Tips = () => {
                     <li key={index}>
                         <div onClick={() => handleTipClick(index)} className="tip-title">
                             {tip.title}
+							<span className={`chevron ${expandedTip === index ? 'expanded' : ''}`}></span>
                         </div>
                         <div className={`tip-content ${expandedTip === index ? 'expanded' : ''}`}>
                             {tip.tip}
