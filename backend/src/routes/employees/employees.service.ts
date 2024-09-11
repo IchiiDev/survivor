@@ -74,7 +74,7 @@ export class EmployeesService {
         work: string
     } | null> {
         const result = await db.query(
-            'SELECT id, email, name, surname, birthdate, gender, work FROM employees WHERE id=?',
+            'SELECT id, email, name, surname, birth_date, gender, work FROM employees WHERE id=?',
             id
         );
 
