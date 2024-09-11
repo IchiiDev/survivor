@@ -1,6 +1,5 @@
-import React from 'react';
 import './App.css';
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import Login from './pages/Login';
 import Layout from "./pages/Layout";
 import Home from "./pages/Home";
@@ -13,6 +12,7 @@ import Tips from "./pages/Tips";
 import Events from "./pages/Events";
 import Nopage from "./pages/Nopage";
 import Document from './pages/Document';
+import Customer from './pages/Customer';
 
 function App() {
   	return (
@@ -25,6 +25,7 @@ function App() {
           			<Route path="/wardrobe" element={<Wardrobe />} />
           			<Route path="/coaches" element={<Coaches />} />
           			<Route path="/customers" element={<Customers />} />
+					<Route path="/customers/:id" element={<Customer />} />
           			<Route path="/statistics" element={<Statistics />} />
           			<Route path="/tips" element={<Tips />} />
           			<Route path="/events" element={<Events />} />

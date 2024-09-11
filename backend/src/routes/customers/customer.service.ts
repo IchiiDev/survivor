@@ -19,23 +19,22 @@ export class CustomersService {
         | null> {
         const result = await db.query('SELECT * FROM customers');
 
-        if (Array.isArray(result[0])) {
-            return result[0].map((row: any) => ({
-                id: row.id,
-                email: row.email,
-                name: row.name,
-                surname: row.surname,
-                birthdate: row.birthdate,
-                gender: row.gender,
-                description: row.description,
-                astrological_sign: row.astrological_sign,
-                image: row.image,
-                phone: row.phone,
-                address: row.address
-            }));
-        }
-        return null;
-    }
+    if (Array.isArray(result[0])) {
+      return result[0].map((row: any) => ({
+        id: row.id,
+        email: row.email,
+        name: row.name,
+        surname: row.surname,
+        birthdate: row.birthdate,
+        gender: row.gender,
+        description: row.description,
+        astrological_sign: row.astrological_sign,
+        phone: row.phone,
+        address: row.address,
+        image: row.image,
+        coach_id: row.coach_id,
+      }));
+    }}
 
   async createCustomer(
     email: string,
@@ -47,6 +46,7 @@ export class CustomersService {
     astrological_sign?: string,
     phone?: string,
     address?: string,
+    image?: string,
   ): Promise<string> {
     let query = 'INSERT INTO customers ( email, name, surname';
     let values = ' VALUES (?, ?, ?';
@@ -82,6 +82,11 @@ export class CustomersService {
       values += ', ?';
       params.push(address);
     }
+    if (image) {
+      query += ', image';
+      values += ', ?';
+      params.push(image);
+    }
     query += ' )';
     values += ')';
     await db.query(query + values, params);
@@ -102,6 +107,8 @@ export class CustomersService {
     astrological_sign: string;
     phone: string;
     address: string;
+    image: string;
+    coach_id: string;
     payment_history?: Array<{
       date: string;
       amount: number;
@@ -136,6 +143,8 @@ export class CustomersService {
     astrological_sign?: string,
     phone?: string,
     address?: string,
+    image?: string,
+    coach_id?: string,
   ): Promise<{
     id: string;
     email: string;
@@ -147,6 +156,8 @@ export class CustomersService {
     astrological_sign: string;
     phone: string;
     address: string;
+    image: string;
+    coach_id: string;
   } | null> {
     let query = 'UPDATE customers SET ';
     const params = [];
@@ -160,7 +171,9 @@ export class CustomersService {
       !description &&
       !astrological_sign &&
       !phone &&
-      !address
+      !address &&
+      !image &&
+      !coach_id
     )
       return null;
     if (email) {
@@ -198,6 +211,14 @@ export class CustomersService {
     if (address) {
       query += 'address=?, ';
       params.push(address);
+    }
+    if (image) {
+      query += 'image=?, ';
+      params.push(image);
+    }
+    if (coach_id) {
+      query += 'coach_id=?, ';
+      params.push(coach_id);
     }
     query = query.slice(0, -2);
     query += ' WHERE id=?';

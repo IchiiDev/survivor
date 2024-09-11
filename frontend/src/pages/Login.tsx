@@ -47,7 +47,6 @@ const Login: React.FC = () => {
 			await fetchData();
 
 			const token = localStorage.getItem("token");
-			console.log("After fetch : ", token);
 
 			if (token) {
 				localStorage.setItem("isAuthenticated", "true");

@@ -1,4 +1,3 @@
-import Titlebox from "../components/Titlebox"
 import { useEffect, useState } from "react";
 import "./Stats.scss";
 import { Bar, Line, Pie } from "react-chartjs-2";
@@ -475,7 +474,6 @@ const Statistics = () => {
 
     return (
         <>
-            <Titlebox title="Statistics"></Titlebox>
             <div className="container">
                 <div className="box-pie">
                     <div style={{ height: "250px", width: "250px" }}>

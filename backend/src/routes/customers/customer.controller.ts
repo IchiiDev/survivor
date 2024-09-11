@@ -53,7 +53,7 @@ export class CustomerController {
   constructor(private readonly customerService: CustomersService) {}
 
   @Get()
-  async getAllCustomers(): Promise<
+  async getAllCustomers(@Req() req: Request): Promise<
     {
       id: string;
       email: string;
@@ -67,6 +67,9 @@ export class CustomerController {
       address: string;
     }[]
   > {
+    if (req.user.role && req.user.role.includes('Coach'))
+      throw new HttpException('Forbidden', 403);
+
     const result = await this.customerService.getAllCustomers();
 
     if (!result) {
@@ -138,6 +141,7 @@ export class CustomerController {
       astrological_sign?: string;
       phone?: string;
       address?: string;
+      image?: string;
     },
   ): Promise<string> {
     const {
@@ -150,6 +154,7 @@ export class CustomerController {
       astrological_sign,
       phone,
       address,
+      image,
     } = data;
 
     return this.customerService.createCustomer(
@@ -162,6 +167,7 @@ export class CustomerController {
       astrological_sign,
       phone,
       address,
+      image,
     );
   }
 
@@ -179,11 +185,17 @@ export class CustomerController {
     @Param('id') id: string,
     @Req() req: Request,
   ): Promise<Customer> {
-    const result = this.customerService.getCustomer(
+    const result = await this.customerService.getCustomer(
       id,
       req.query.includePaymentsHistory == '' ||
         req.query.includePaymentsHistory == 'true',
     );
+
+    if (
+      req.user.role && req.user.role.includes('Coach') &&
+      (!result || parseInt(result.coach_id) !== req.user.id)
+    )
+      throw new HttpException('Forbidden', 403);
 
     if (!result)
       throw new HttpException(`Customer with id ${id} not found`, 404);
@@ -254,7 +266,10 @@ export class CustomerController {
       astrological_sign?: string;
       phone?: string;
       address?: string;
+      image?: string;
+      coach_id?: string;
     },
+    @Req() req: Request,
   ): Promise<{
     id: string;
     email: string;
@@ -266,6 +281,8 @@ export class CustomerController {
     astrological_sign?: string;
     phone?: string;
     address?: string;
+    image?: string;
+    coach_id?: string;
   }> {
     const {
       email,
@@ -277,7 +294,12 @@ export class CustomerController {
       astrological_sign,
       phone,
       address,
+      image,
+      coach_id,
     } = data;
+
+    if (req.user.role && req.user.role.includes('Coach'))
+      throw new HttpException('Forbidden', 403);
 
     const result = this.customerService.updateCustomer(
       id,
@@ -290,6 +312,8 @@ export class CustomerController {
       astrological_sign,
       phone,
       address,
+      image,
+      coach_id,
     );
 
     if (!result) {
