@@ -87,19 +87,21 @@ export class EmployeesController {
       email: string;
       name: string;
       surname: string;
+      password: string;
       birthdate?: string;
       gender?: string;
       work?: string;
     },
     @Req() req: Request,
   ): Promise<string> {
-    const { email, name, surname, birthdate, gender, work } = data;
+    const { email, name, surname, birthdate, password, gender, work } = data;
 
     if (req.user.role.includes('Coach'))
       throw new HttpException('Forbidden', 403);
 
     return this.employeesService.createEmployee(
       email,
+      password,
       name,
       surname,
       birthdate,
