@@ -1,8 +1,8 @@
 @import "../../node_modules/bulma/bulma.scss";
 
 html {
-    background-color: white;
-    color: black;
+  background-color: #f5f5f8;
+  color: black;
 }
 
 .menu-button {
@@ -16,6 +16,7 @@ html {
   height: auto;
   cursor: pointer;
 }
+
 .sidenav {
   height: calc(100% - 50px);
   width: 0;
@@ -84,8 +85,13 @@ html {
 }
 
 @media screen and (max-height: 450px) {
-  .sidenav {padding-top: 15px;}
-  .sidenav a {font-size: 18px;}
+  .sidenav {
+    padding-top: 15px;
+  }
+
+  .sidenav a {
+    font-size: 18px;
+  }
 }
 
 .popup {
