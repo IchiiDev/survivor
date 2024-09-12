@@ -2,9 +2,20 @@ import { useState, useEffect } from 'react';
 import './Coaches.scss';
 import { Link } from "react-router-dom";
 
+type Coach = {
+	id: string,
+	email: string,
+	name: string,
+	surname: string,
+	birthdate: string,
+	gender: string,
+	work: string
+}
+
 const Coaches = () => {
 	const [showPopup, setShowPopup] = useState(false);
 	const [dropdownVisible, setDropdownVisible] = useState<{ [key: string]: boolean }>({});
+	const [me, setMe] = useState({} as Coach);
 	const [coaches, setCoaches] = useState([]);
     const [customers, setCustomers] = useState([]);
 	const [email, setEmail] = useState("");
@@ -15,6 +26,24 @@ const Coaches = () => {
 	const [work, setWork] = useState("");
 
 	useEffect(() => {
+		const fetchMe = async () => {
+			try {
+				const response = await fetch("http://localhost:3001/me", {
+					method: "GET",
+					headers: {
+						"Content-Type": "application/json",
+						"Authorization": `Bearer ${localStorage.getItem("token")}`
+					},
+				});
+				if (!response.ok) {
+					throw new Error(`Erreur HTTP: ${response.status}`);
+				}
+				const data = await response.json();
+				setMe(data);
+			} catch (error) {
+				console.error("Erreur lors de l'appel API", error);
+			}
+		};
 		const fetchCoaches = async () => {
 			try {
 				  const response = await fetch("http://localhost:3001/employees", {
@@ -53,7 +82,15 @@ const Coaches = () => {
 		};
 		fetchCustomers();
 		fetchCoaches();
+		fetchMe();
 	}, []);
+
+	if (me.work === "Coach")
+		return (
+			<>
+				<h1 className="basic-text-color" style={{ textAlign: 'center', fontSize: '30px' }}>You are not allowed to access this data.</h1>
+			</>
+		);
 
 	const handleNewCoach = () => {
 		setShowPopup(true);

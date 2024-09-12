@@ -138,10 +138,10 @@ const Navbar = () => {
 
   	<div className="navbar-right">
 	  	<button>
-			<img className="Link-icon" src="/assets/chat-icon.svg" alt="chat"/>
+			<img className="Link-icon move-icon" src="/assets/chat-icon.svg" alt="chat"/>
 		</button>
 		<button>
-			<img className="Link-icon" src="/assets/usa-flag.png" alt="flag"/>
+			<img className="Link-icon move-icon" src="/assets/usa-flag.png" alt="flag"/>
 		</button>
 		<div className="dropdown">
         	<button onClick={toggleDropdown} className="character-dropdown">
