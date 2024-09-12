@@ -3,22 +3,21 @@ import { db } from '../../main';
 
 @Injectable()
 export class CustomersService {
-  async getAllCustomers(): Promise<
-    | {
-        id: string;
-        email: string;
-        name: string;
-        surname: string;
-        birthdate: string;
-        gender: string;
-        description: string;
-        astrological_sign: string;
-        phone: string;
-        address: string;
-      }[]
-    | null
-  > {
-    const result = await db.query('SELECT * FROM customers');
+    async getAllCustomers(): Promise<{
+        id: string,
+        email: string,
+        name: string,
+        surname: string,
+        birthdate: string,
+        gender: string,
+        description: string,
+        astrological_sign: string,
+        image: string,
+        phone: string,
+        address: string
+    }[]
+        | null> {
+        const result = await db.query('SELECT * FROM customers');
 
     if (Array.isArray(result[0])) {
       return result[0].map((row: any) => ({
@@ -35,9 +34,7 @@ export class CustomersService {
         image: row.image,
         coach_id: row.coach_id,
       }));
-    }
-    return null;
-  }
+    }}
 
   async createCustomer(
     email: string,

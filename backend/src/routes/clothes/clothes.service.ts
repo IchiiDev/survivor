@@ -28,7 +28,7 @@ export class ClothesService {
         image: string,
         customerId: string
     }[] | null> {
-        const result = await db.query('SELECT * FROM clothes WHERE customerId=?', customerId);
+        const result = await db.query('SELECT * FROM clothes WHERE customer_id=?', customerId);
 
         if (Array.isArray(result[0])) {
             return result[0].map((row: any) => ({

@@ -1,0 +1,50 @@
+.tips-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.tip-title {
+    cursor: pointer;
+    padding: 10px;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #000000;
+    font-weight: bold;
+}
+
+.tip-title:hover {
+    background-color: #f0f0f0;
+}
+
+.tip-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+    padding: 0 10px;
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    background-color: #fff;
+    color: #000000;
+    font-size: 15px;
+}
+
+.tip-content.expanded {
+    max-height: 200px;
+    padding: 10px;
+}
+
+.chevron {
+    width: 10px;
+    height: 10px;
+    border-right: 2px solid #000;
+    border-bottom: 2px solid #000;
+    transform: rotate(45deg);
+    transition: transform 0.3s ease;
+}
+
+.chevron.expanded {
+    transform: rotate(-135deg);
+}

@@ -77,7 +77,6 @@ export class EmployeesService {
       'SELECT id, email, name, surname, birthdate, gender, work FROM employees WHERE id=?',
       id,
     );
-
     return result[0][0];
   }
 

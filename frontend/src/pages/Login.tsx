@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Login.scss";
 
@@ -8,6 +8,10 @@ const Login: React.FC = () => {
 	const [loading, setLoading] = useState<boolean>(false);
 	const apiUrlLogin = "http://localhost:3001/login";
   	const navigate = useNavigate();
+
+	useEffect(() => {
+		localStorage.removeItem("token");
+	});
 
 	const fetchData = async () => {
 		try {
@@ -29,31 +33,37 @@ const Login: React.FC = () => {
 		  	}
 			const rawResponse = await response.json();
 			localStorage.setItem("token", rawResponse.token);
+			console.log(`Token from fetch: ${rawResponse.token}`);
 		} catch (error) {
 		  console.error("Error on API call", error);
 		}
 	};
 
-  	const handleLogin = (event: React.FormEvent) => {
+	const handleLogin = async (event: React.FormEvent) => {
     	event.preventDefault();
-		fetchData();
-		const token = localStorage.getItem("token");
-		if (token !== null) {
-			setLoading(true);
-			localStorage.setItem("isAuthenticated", "true");
-			setTimeout(() => {
-				setLoading(false);
+		setLoading(true);
+
+		try {
+			await fetchData();
+
+			const token = localStorage.getItem("token");
+
+			if (token) {
+				localStorage.setItem("isAuthenticated", "true");
 				navigate("/");
-			}, 1000)
-    	} else {
-    		alert("Wrong login");
-    	}
-  	};
+			} else {
+				alert("Wrong login");
+			}
+		} catch (error) {
+			alert("An error occurred during login");
+		} finally {
+			setLoading(false);
+		}
+    };
 
 	if (loading) {
 		return <button className="button is-info is-fullwidth is-loading loading-screen">Loading</button>;
 	}
-
   	return (
     	<div className="login-page">
     		<form onSubmit={handleLogin} className="login-form">

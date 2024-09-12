@@ -1,0 +1,135 @@
+.title-line {
+    display: flex;
+    align-items: center;
+    height: 100px;
+    width: 100%;
+}
+
+.title-left {
+    flex: 1;
+    align-items: center;
+    justify-content: left;
+}
+
+.title-right {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.title {
+    color: rgb(0, 0, 0);
+}
+
+.popup {
+    border: 2px solid #ccc;
+    border-radius: 5px;
+}
+
+.character-dropdown {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.dropdown {
+    position: absolute;
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+  }
+
+  .dropdown ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .dropdown ul li {
+    padding: 5px 0;
+    cursor: pointer;
+  }
+
+  .dropdown ul li:hover {
+    background-color: #f0f0f0;
+  }
+
+
+///////////////////////// Table //////////////////////////
+
+.vertical-bar {
+    display: inline-block;
+    width: 1px;
+    height: 20px;
+    background-color: #b4b2b2;
+    margin: 0 10px;
+}
+
+.table-container {
+    flex: 1;
+    overflow-y: auto;
+    width: 100%;
+}
+
+.param-tab {
+    display: flex;
+    align-items: center;
+    height: 50px;
+    width: 100%;
+}
+
+.param-tab-left {
+    flex: 1;
+    justify-content: left;
+    align-items: center;
+}
+
+.param-tab-right {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.table-customers {
+    width: 100%;
+    height: 600px;
+    overflow-y: auto;
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    color: rgb(82, 78, 78);
+    border-collapse: collapse;
+}
+
+.table-customers thead {
+    background-color: #f0f0f0 !important;
+    color: rgb(82, 78, 78) !important;
+    font-size: 17px;
+}
+
+.table-customers tbody tr:nth-child(even) {
+    background-color: #f0f0f0;
+}
+
+.table-customers th,
+.table-customers td {
+    padding: 12px 15px;
+    text-align: center;
+    color: rgb(82, 78, 78) !important;
+    border: none;
+}
+
+.table-customers th {
+    font-weight: bold;
+}
+
+.table-customers td {
+    font-size: 14px;
+}
+
+.table-customers {
+    border: 1px solid #ccc;
+}

@@ -1,13 +1,17 @@
+import './Nopage.scss';
+
 const Nopage = () => {
     return (
-    	<>
-        	<div className="columns">
-				<div className="column">
-					<h1 className="basic-text-color">ERROR 404</h1>
-				</div>
-        	</div>
-      	</>
+        <>
+            <div className='leek-image'>
+                <img src="/assets/leek.png" />
+                <div className='leek-text'>
+                    <strong>404 not found</strong>
+                    <p>Looks like you found a leek!</p>
+                </div>
+            </div>
+        </>
     )
-  };
+};
 
 export default Nopage;

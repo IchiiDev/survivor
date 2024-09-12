@@ -98,7 +98,7 @@ export class EmployeesController {
   ): Promise<string> {
     const { email, name, surname, birthdate, password, gender, work } = data;
 
-    if (req.user.role.includes('Coach'))
+    if (req.user.role && req.user.role.includes('Coach'))
       throw new HttpException('Forbidden', 403);
 
     const employee = await db.query(
@@ -153,7 +153,7 @@ export class EmployeesController {
   ): Promise<Employee> {
     const { email, name, surname, birthdate, gender, work, password } = data;
 
-    if (req.user.role.includes('Coach'))
+    if (req.user.role && req.user.role.includes('Coach'))
       throw new HttpException('Forbidden', 403);
 
     const result = this.employeesService.updateEmployee(
@@ -178,7 +178,7 @@ export class EmployeesController {
     @Param('id') id: string,
     @Req() req: Request,
   ): Promise<string> {
-    if (req.user.role.includes('Coach'))
+    if (req.user.role && req.user.role.includes('Coach'))
       throw new HttpException('Forbidden', 403);
 
     const result = this.employeesService.deleteEmployee(id);
