@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Titlebox from "../components/Titlebox"
 import "./Home.scss";
 import { Line, Bar, Pie } from "react-chartjs-2";
 import { Chart as ChartJS, CategoryScale, LinearScale, LineElement, PointElement, BarElement, Title, Tooltip, Legend, ArcElement, Filler } from "chart.js";
@@ -11,8 +10,6 @@ const Home = () => {
     const [averageRating, setAverageRating] = useState<number>(0);
     const [totalCustomers, setTotalCustomers] = useState<number>(0);
     const [totalEvents, setTotalEvents] = useState<number>(0);
-    const [totalMeetings, setTotalMeetings] = useState<number>(0);
-    const [totalRating, setTotalRating] = useState<number>(0);
     const [custJanuary, setCustJanuary] = useState<number>(0);
     const [custFebruary, setCustFebruary] = useState<number>(0);
     const [custMarch, setCustMarch] = useState<Number>(0);
@@ -85,26 +82,6 @@ const Home = () => {
             }
         };
 
-        const fetchCoaches = async () => {
-            try {
-                const response = await fetch(apiUrlCoaches, {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Authorization": `Bearer ${token}`
-                    },
-                });
-
-                if (!response.ok) {
-                    throw new Error(`Error HTTP: ${response.status}`);
-                }
-
-                const coachesResponse = await response.json();
-                const totalCoach = coachesResponse.length;
-            } catch (error) {
-                console.error("Error in API call", error);
-            }
-        };
         const fetchEvents = async () => {
             try {
                 const response = await fetch(apiUrlEvent, {
@@ -152,8 +129,6 @@ const Home = () => {
                     throw new Error(`Error HTTP: ${response.status}`);
                 }
                 const encounterResponse = await response.json();
-                const totalMeetings = encounterResponse.length;
-                setTotalMeetings(totalMeetings);
                 setEncounterCounters(() => {
                     const newCounters = Array(12).fill(0);
                     encounterResponse.forEach((encounter: any) => {
@@ -177,13 +152,6 @@ const Home = () => {
                     });
                     return newRatings;
                 });
-                setTotalRating(() => {
-                    let result: number = 0;
-                    encounterResponse.forEach(() => {
-                        result += 1;
-                    });
-                    return result;
-                });
 
                 setAverageRating(() => {
                     let result: number = 0;
@@ -200,7 +168,6 @@ const Home = () => {
         };
 
         fetchCustomers();
-        fetchCoaches();
         fetchEvents();
         fetchEncounters();
     }, [apiUrlCust, apiUrlCoaches, apiUrlEvent, apiUrlEncounters, navigate, token]);
@@ -303,7 +270,6 @@ const Home = () => {
     };
     return (
         <>
-            <Titlebox title=""></Titlebox>
             <div className="dashboard-container">
                 <div className="dashboard-text">
                     <div className="dashboard-custom-text">Dashboard</div>
