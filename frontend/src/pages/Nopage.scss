@@ -1,0 +1,28 @@
+.leek-image {
+  display: flex;
+  justify-content: center;
+
+  img {
+    width: 600px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+  }
+}
+
+.leek-text {
+  strong {
+    font-size: 50px;
+    font-weight: bold;
+    color: black;
+    position: absolute;
+    left: 42.5%;
+    bottom: 15%;
+  }
+
+  p {
+    color: black;
+    position: absolute;
+    bottom: 10%;
+    left: 45.5%;
+  }
+}
