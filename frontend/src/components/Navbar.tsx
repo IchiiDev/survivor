@@ -166,8 +166,8 @@ const Navbar = () => {
         	<h2>New Password:</h2>
         	<input type="password" id="password-input" placeholder="Enter new password" />
         	<div className="popup-button">
-          		<button onClick={handleClosePopup}>Cancel</button>
-          		<button onClick={handleSubmitPopup}>Submit</button>
+				<button onClick={handleClosePopup} style={{color: "red"}}>Cancel</button>
+				<button onClick={handleSubmitPopup} style={{color: "green"}}>Submit</button>
         	</div>
       	</div>
     </div>
