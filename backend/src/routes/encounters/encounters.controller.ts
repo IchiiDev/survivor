@@ -7,6 +7,7 @@ import {
   Param,
   Post,
   Put,
+  Query,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { EncountersService } from './encounters.service';
@@ -61,7 +62,7 @@ export class EncountersController {
   @Get(':id')
   async getEncounter(
     @Param('id') id: string,
-    @Param('isCustomer') isCustomer?: string,
+    @Query('isCustomer') isCustomer?: string,
   ): Promise<
     {
       customer_id: string;
@@ -81,9 +82,11 @@ export class EncountersController {
       }[]
     >;
 
-    if (isCustomer && isCustomer == 'true')
+    if (isCustomer && isCustomer == 'true') {
       result = this.encountersService.getEncounterByCustomer(id);
-    else result = this.encountersService.getEncounter(id);
+    } else {
+      result = this.encountersService.getEncounter(id);
+    }
     if (!result) {
       throw new HttpException('Encounter not found', 404);
     }

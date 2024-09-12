@@ -121,9 +121,23 @@ const Customers = () => {
 							</td>
 							<td>{client.email}</td>
 							<td>{client.phone}</td>
-							<td>
+							<td className='payment-methods'>
 								{[...new Set<string>(payments.filter((payment: { customer_id: any; }) => payment.customer_id === client.id).map((payment: any) => payment.method))].map((method, index) => (
-                                    <p key={index}>{method}</p>
+                                    <p key={index}>
+										{method === 'PayPal' ? (
+											<span className='icon'>
+												<img src="/assets/visa.svg" alt="paypal" />
+											</span>
+										) : method === 'Bank Transfer' ? (
+											<span className='icon'>
+												<img src="/assets/american-express.svg" alt="bank transfer" />
+											</span>
+										) : (
+											<span className='icon'>
+												<img src="/assets/mastercard.svg" alt="credit card" />
+											</span>
+										)}
+									</p>
                                 ))}
 							</td>
 							<td>
@@ -141,147 +155,3 @@ const Customers = () => {
   };
 
 export default Customers;
-
-	// const fetchEncounters = async (clientId: string) => {
-	// 	try {
-	// 	  	const response = await fetch("http://localhost:3001/encounters/" + clientId + "?isCustomer=true", {
-	// 			method: "GET",
-	// 			headers: {
-	// 			  "Content-Type": "application/json",
-	// 			  "Authorization": `Bearer ${localStorage.getItem("token")}`
-	// 			},
-	// 		});
-	// 	  	if (!response.ok) {
-	// 			throw new Error(`Erreur HTTP: ${response.status}`);
-	// 	  	}
-	// 		const data = await response.json();
-	// 		console.log(data);
-	// 		setEncounters(data);
-	// 	} catch (error) {
-	// 	  console.error("Erreur lors de l'appel API", error);
-	// 	}
-	// };
-
-	// const fetchPayements = async (clientId: string) => {
-	// 	try {
-	// 	  	const response = await fetch("http://localhost:3001/customers/" + clientId + "?includePaymentsHistory", {
-	// 			method: "GET",
-	// 			headers: {
-	// 			  "Content-Type": "application/json",
-	// 			  "Authorization": `Bearer ${localStorage.getItem("token")}`
-	// 			},
-	// 		});
-	// 	  	if (!response.ok) {
-	// 			throw new Error(`Erreur HTTP: ${response.status}`);
-	// 	  	}
-	// 		const data = await response.json();
-	// 		console.log(data);
-	// 		setPayments(data);
-	// 	} catch (error) {
-	// 	  console.error("Erreur lors de l'appel API", error);
-	// 	}
-	// };
-
-	// const fetchImageCustomer = async (client: any) => {
-	// 	try {
-	// 		const urlpath = "http://localhost:3001/images/" + client.image;
-	// 	  	const response = await fetch(urlpath, {
-	// 			method: "GET",
-	// 			headers: {
-	// 			  "Authorization": `Bearer ${localStorage.getItem("token")}`
-	// 			},
-	// 		});
-	// 	  	if (!response.ok) {
-	// 			throw new Error(`Erreur HTTP: ${response.status}`);
-	// 	  	}
-	// 		const blob = await response.blob();
-	// 		const imageUrl = URL.createObjectURL(blob);
-	// 		setClientImg(imageUrl);
-	// 	} catch (error) {
-	// 	  console.error("Erreur lors de l'appel API", error);
-	// 	}
-	// };
-
-	// const formatDate = (dateString: string) => {
-    //     const options: Intl.DateTimeFormatOptions = { day: '2-digit', month: '2-digit', year: 'numeric' };
-    //     return new Intl.DateTimeFormat('fr-FR', options).format(new Date(dateString));
-    // };
-
-{/* <div className="client-img">
-					{selectedClient && (
-						<img src={clientImg} alt="client" />
-					)}
-				</div> */}
-
-// {selectedClient && (
-// 	<ul>
-// 		<li>
-// 			<p className='basic-text-color'>Name: {selectedClient.name}</p>
-// 		</li>
-// 		<li>
-// 			<p className='basic-text-color'>Birth Date: {selectedClient.birthdate}</p>
-// 		</li>
-// 		<li>
-// 			<p className='basic-text-color'>Phone number: {selectedClient.phone}</p>
-// 		</li>
-// 		<li>
-// 			<p className='basic-text-color'>Adress: {selectedClient.address}</p>
-// 		</li>
-// 		<li>
-// 			<p className='basic-text-color'>Description: {selectedClient.description}</p>
-// 		</li>
-// 	</ul>
-// 	)}
-
-// {selectedClient && (
-// 	<>
-// 	<div className='info-encounters'>
-// 		<h2 className='basic-text-color'>Meetings</h2>
-// 		<div className="table-container">
-// 			<table className='table table-customer-info'>
-// 				<thead>
-// 					<tr>
-// 						<th>Date</th>
-// 						<th>Rating</th>
-// 						<th>Comment</th>
-// 						<th>Method</th>
-// 					</tr>
-// 				</thead>
-// 				<tbody>
-// 					{encounters.map((encounter: any) => (
-// 					<tr key={encounter.id}>
-// 						<td>{formatDate(encounter.date)}</td>
-// 						<td>{encounter.rating}</td>
-// 						<td>{encounter.comment}</td>
-// 						<td>{encounter.source}</td>
-// 					</tr>
-// 					))}
-// 				</tbody>
-// 			</table>
-// 		</div>
-// 	</div>
-// 	<div className='info-payements'>
-// 		<h4 className='basic-text-color'>Payments History</h4>
-// 		<div className="table-container">
-// 			<table className='table table-customer-info'>
-// 				<thead>
-// 					<tr>
-// 						<th>Date</th>
-// 						<th>Amount</th>
-// 						<th>Comment</th>
-// 					</tr>
-// 				</thead>
-// 				<tbody>
-// 					{payments.paymentHistory.map((payment: any) => (
-// 					<tr key={payment.id}>
-// 						<td>{formatDate(payment.date)}</td>
-// 						<td>{payment.amount}</td>
-// 						<td>{payment.comment}</td>
-// 					</tr>
-// 					))}
-// 				</tbody>
-// 			</table>
-// 		</div>
-// 	</div>
-// 	</>
-// )}
